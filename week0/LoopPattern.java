@@ -39,17 +39,52 @@ public class LoopPattern {
     public static void printPattern(int n) {
         int[][] pattern = new int[n][n];
         int start = 1;
-        int bx1 = 0, bx2 = n-1, by1 = 0, by2 = n-1;
-        int noOfElements = calcNoOfElementsInLoop(n);
-        int turns = 1;
-        int i=0,j=0;
-        while(noOfElements>0) {
-            
+        int row = n-1;
+        int col = n-1;
+        int rowShift = -1;
+        for(int i=0;i<n;i++) {
+            for(int j=0;j<n;j++) 
+            {
+                if(i==j) {
+                    pattern[i][j] = start++;
+                }
+                if(i==n-1 && j==n-1) {
+                    row = i-1;
+                    col = j;
+
+                    while(pattern[row][col]==0) {
+                        while(row > rowShift) {
+                            pattern[row][col] = start++;
+                            row--;
+                        }
+                        row++;
+                        rowShift++;
+                        col--;
+                        while(pattern[row][col]==0) {
+                            pattern[row][col] = start++;
+                            col--;
+                        }
+                        row++;
+                        col+=2;
+
+                        while(pattern[row][col]==0) {
+                            pattern[row][col] =start++;
+                            row++;
+                            col++;
+                        }
+                        row-=2;
+                        col--;
+                    }         
+
+                }
+            }
         }
-       
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < n; j++) {
-                System.out.print(pattern[i][j] + " ");
+        for(int i=0;i<n;i++) {
+            for(int j=0;j<n;j++) {
+                if(pattern[i][j]!=0)
+                    System.out.print(pattern[i][j]+" ");
+                else 
+                    System.out.print("   ");
             }
             System.out.println();
         }
@@ -57,5 +92,4 @@ public class LoopPattern {
     public static void main(String[] args) {
         printPattern(5);   
     }
-    
 }

@@ -31,6 +31,6 @@ public class ZigZagPattern {
     }
 
     public static void main(String[] args) {
-        printZigZagPattern("PAYPALISHIRING", 3);
+        printZigZagPattern("ZOHOOISHIRING", 3);
     }
 }

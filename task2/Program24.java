@@ -2,27 +2,33 @@ package task2;
 
 import java.util.Scanner;
 
-
+/*
+Input: 10
+ *        1
+ *       2 3
+ *      4 5 6
+ *     7 8 9 10
+ * 
+ */
 
 public class Program24 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int count = 1;
-        int i=1;
-        while(i<=n) {
+        
+        int num = 1;
+        for(int i=1;i<=n;i++) {
             for(int j=1;j<=n-i;j++) {
                 System.out.print(" ");
             }
-            int j=0;
-            while(j<count && j<=i) {
-                System.out.print(i+" ");
-                j++;
-                i++;
+            for(int j=1;j<=i;j++) {
+                System.out.print(num+" ");
+                num++;
             }
+            if(num==n+1) break;
             System.out.println();
-            count++;
         }
+
         sc.close();
     }
 }

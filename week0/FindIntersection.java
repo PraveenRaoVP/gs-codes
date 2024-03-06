@@ -27,7 +27,7 @@ public class FindIntersection {
     }
     
     public static void main(String[] args) {
-        int[][] c1 = {{1,1},{2,4}};
+        int[][] c1 = {{1,1},{2,4}}; 
         int[][] c2 = {{1,4},{4,1}};
         System.out.println(isIntersect(c1, c2));
     }
