@@ -25,7 +25,6 @@ public class NoOfDaysInMonthAndYear {
                 break;
             default:
                 System.out.println("Invalid month");
-                System.exit(0);
         }
         System.out.println("The number of days in the month " + month + " of the year " + year + " is: " + days);
     }
