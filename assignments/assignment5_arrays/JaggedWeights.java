@@ -105,6 +105,6 @@ public class JaggedWeights {
             }
         }
         System.out.println("The minimum weight of user "+user+" is: "+minWeight);
-        System.out.println();
+        System.out.println(); 
     }
 }
