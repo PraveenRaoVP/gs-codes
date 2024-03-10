@@ -1,5 +1,7 @@
 package task2;
 
+import java.util.Scanner;
+
 /*
  * Write a program to print the following pattern for the given input number.
 Eg 1:  Input: 4
@@ -16,43 +18,46 @@ Eg 1:  Input: 4
 
 public class WeirdPattern {
     public static void printWeirdPattern(int n) {
-        for(int i=1;i<=n;i++) {
-            for(int j=1;j<=n;j++) {
-                if(j<=n-i+1) {
-                    System.out.print("*");
+        int totalLength = 2*n;
+        for(int i=0;i<totalLength;i++) {
+            for(int j=0;j<totalLength;j++) {
+                if(i<n) {
+                    if(j<n) {
+                        if(j<n-i) {
+                            System.out.print("*");
+                        } else {
+                            System.out.print("_");
+                        }
+                    } else {
+                        if(j>=n+i) {
+                            System.out.print("*");
+                        } else {
+                            System.out.print("_");
+                        }
+                    }
                 } else {
-                    System.out.print("_");
-                }
-            }
-            for(int j=1;j<=n;j++) {
-                if(j<=i) {
-                    System.out.print("_");
-                } else {
-                    System.out.print("*");
+                    if(j<n) {
+                        if(j<i-n) {
+                            System.out.print("*");
+                        } else {
+                            System.out.print("_");
+                        }
+                    } else {
+                        if(j>=totalLength-(i-n)) {
+                            System.out.print("*");
+                        } else {
+                            System.out.print("_");
+                        }
+                    }
                 }
             }
             System.out.println();
-        }
-        for(int i=1;i<=n;i++) {
-            for(int j=1;j<=n;j++) {
-                if(j<=i) {
-                    System.out.print("*");
-                } else {
-                    System.out.print("_");
-                }
-            }
-            for(int j=1;j<=n;j++) {
-                if(j<=n-i+1) {
-                    System.out.print("_");
-                } else {
-                    System.out.print("*");
-                }
-            }
-            System.out.println();
-        }
+        }        
     }
     
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
         printWeirdPattern(4);
     }   
 }

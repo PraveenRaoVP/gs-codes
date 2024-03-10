@@ -36,10 +36,10 @@ public class AntiDiagonals {
         for(int i=0;i<n;i++) {
             int x = i;
             int y = 0;
-            int l = 0;
+            int z = 0;
             int[] temp = new int[i+1];
             while(x>=0) {
-                temp[l++] = arr[x][y];
+                temp[z++] = arr[x][y];
                 x--;
                 y++;
             }
@@ -49,10 +49,10 @@ public class AntiDiagonals {
         for(int i=1;i<n;i++) {
             int x = n-1;
             int y = i;
-            int l = 0;
+            int z = 0;
             int[] temp = new int[n-i];
             while(y<n) {
-                temp[l++] = arr[x][y];
+                temp[z++] = arr[x][y];
                 x--;
                 y++;
             }
@@ -60,8 +60,8 @@ public class AntiDiagonals {
         }
 
         for(int i=0;i<2*n-1;i++) {
-            for(int j: antiDiagonals[i]) {
-                System.out.print(j+" ");
+            for(int j = antiDiagonals[i].length-1;j>=0;j--) {
+                System.out.print(antiDiagonals[i][j]+" ");
             }
             System.out.println();
         }
