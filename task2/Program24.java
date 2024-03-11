@@ -17,6 +17,7 @@ Input: 10
  *  11
  */
 
+
 public class Program24 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -34,16 +35,16 @@ public class Program24 {
 
         System.out.println(noOfRows);  
 
-        for(int i=1;i<=noOfRows;i++) {
+        l1: for(int i=1;i<=noOfRows;i++) {
             for(int j=1;j<=noOfRows-i;j++) {
                 System.out.print(" ");
             }
             for(int j=1;j<=i;j++) {
                 System.out.print(num+" ");
                 num++;
-                if(num>n) break;
+                if(num>n) break l1;
             }
-            if(num>n) break;
+            // if(num>n) break;
             System.out.println();
         }    
         sc.close();

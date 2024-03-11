@@ -13,27 +13,15 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 
-
-public class LargestPrimeFactor {
-    public static void sieveOfEratosthenes(long n) {
-        boolean prime[] = new boolean[(int) (n + 1)];
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
-            }
-        }
-        for (int i = (int) n; i >= 2; i--) {
-            if (prime[i] && n % i == 0) {
-                System.out.println(i);
-                break;
-            }
-        }
+public class SumSquareDifference {
+    public static long calcSumOfNaturalNos(long n){
+        return (long) Math.pow((n*(n+1))/2, 2);
     }
 
+    public static long calcSumOfSquares(long n){
+        return (long) (n*(n+1)*(2*n+1))/6;
+    }
+    
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -41,8 +29,10 @@ public class LargestPrimeFactor {
 
         IntStream.range(0, t).forEach(tItr -> {
             try {
-                long n = Long.parseLong(bufferedReader.readLine().trim());
-                sieveOfEratosthenes(n);
+                int n = Integer.parseInt(bufferedReader.readLine().trim());
+                long x = calcSumOfNaturalNos(n);
+                long y = calcSumOfSquares(n);
+                System.out.println(Math.abs((x-y)));
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
