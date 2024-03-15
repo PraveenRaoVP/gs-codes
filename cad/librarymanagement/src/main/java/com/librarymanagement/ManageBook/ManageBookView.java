@@ -29,14 +29,7 @@ public class ManageBookView {
     public void getBookDetails(int i) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the data of book "+i+":-");
-//        System.out.print("Enter the book ID: ");
-//        int id = sc.nextInt();
-//        sc.nextLine();
-//        if(manageBookModel.checkIfIdOfBookExists(id)) {
-//            System.out.println("Book with this ID already exists. Please enter a different ID.");
-//            getBookDetails(i);
-//            return;
-//        }
+
         System.out.print("Enter the book name: ");
         String bookName = sc.nextLine();
         System.out.print("Enter the book author: ");
