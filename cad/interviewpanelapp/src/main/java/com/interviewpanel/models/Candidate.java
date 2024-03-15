@@ -77,4 +77,17 @@ public class Candidate {
     public void setInterviewStatus(InterviewStatus interviewStatus) {
         this.interviewStatus = interviewStatus;
     }
+
+    @Override
+    public String toString() {
+        return "Candidate{" +
+                "candidateId=" + candidateId +
+                ", candidateName='" + candidateName + '\'' +
+                ", candidateEmail='" + candidateEmail + '\'' +
+                ", candidatePhone='" + candidatePhone + '\'' +
+                ", skills='" + skills + '\'' +
+                ", qualification='" + qualification + '\'' +
+                ", interviewStatus=" + interviewStatus +
+                '}';
+    }
 }

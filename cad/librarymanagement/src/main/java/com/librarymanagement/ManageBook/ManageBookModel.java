@@ -1,6 +1,7 @@
 package com.librarymanagement.ManageBook;
 
 import com.librarymanagement.models.Book;
+import com.librarymanagement.repository.LibraryDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +30,6 @@ class ManageBookModel {
         book.setJournal(journal);
         book.setAvailableCount(availableCount);
         book.setVolume(volume);
-        books.add(book);
+        LibraryDatabase.getInstance().addBook(book);
     }
-
-    public void showBooks() {
-        for(Book book: books) {
-            manageBookView.showAlert(book.toString());
-        }
-    }
-
 }

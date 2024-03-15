@@ -46,4 +46,14 @@ public class InterviewPanel {
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
+
+    @Override
+    public String toString() {
+        return "InterviewPanel{" +
+                "panelId=" + panelId +
+                ", interviewer=" + interviewer +
+                ", candidates=" + candidates +
+                ", createdAt='" + createdAt + '\'' +
+                '}';
+    }
 }

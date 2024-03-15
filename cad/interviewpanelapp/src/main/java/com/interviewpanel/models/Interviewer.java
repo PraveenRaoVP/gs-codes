@@ -64,4 +64,16 @@ public class Interviewer {
     public void setInterviewerDepartment(String interviewerDepartment) {
         this.interviewerDepartment = interviewerDepartment;
     }
+
+    @Override
+    public String toString() {
+        return "Interviewer{" +
+                "interviewerId=" + interviewerId +
+                ", interviewerName='" + interviewerName + '\'' +
+                ", interviewerEmail='" + interviewerEmail + '\'' +
+                ", interviewerPhone='" + interviewerPhone + '\'' +
+                ", interviewerDesignation='" + interviewerDesignation + '\'' +
+                ", interviewerDepartment='" + interviewerDepartment + '\'' +
+                '}';
+    }
 }

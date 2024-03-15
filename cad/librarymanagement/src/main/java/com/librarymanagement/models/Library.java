@@ -9,6 +9,16 @@ public class Library {
     private String emailId;
     private String address;
 
+    public Library(int id, String libraryName, String phoneNo, String emailId, String address) {
+        this.libraryId = id;
+        this.libraryName = libraryName;
+        this.phoneNo = phoneNo;
+        this.emailId = emailId;
+        this.address = address;
+    }
+
+//    public Library(){}
+
     public String getLibraryName() {
         return libraryName;
     }
@@ -47,5 +57,16 @@ public class Library {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Library{" +
+                "libraryName='" + libraryName + '\'' +
+                ", libraryId=" + libraryId +
+                ", phoneNo='" + phoneNo + '\'' +
+                ", emailId='" + emailId + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 }

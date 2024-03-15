@@ -1,6 +1,7 @@
 package com.librarymanagement.setup;
 
 import com.librarymanagement.ManageBook.ManageBookView;
+import com.librarymanagement.models.Library;
 
 import java.util.Scanner;
 
@@ -27,11 +28,12 @@ public class LibrarySetupView {
         String emailId = sc.nextLine();
         System.out.println("Enter the library address: ");
         String address = sc.nextLine();
-        librarySetupModel.createLibrary(id, libraryName, phoneNo, emailId, address);
+        Library library = new Library(id, libraryName, phoneNo, emailId, address);
+        librarySetupModel.createLibrary(library);
     }
 
-    public void onSetupComplete() throws InterruptedException {
-        System.out.println("Library setup has been completed");
+    public void onSetupComplete(String libraryName) throws InterruptedException {
+        System.out.println("Library "+ libraryName +" setup has been completed");
         Thread.sleep(2000);
         new ManageBookView().init();
     }

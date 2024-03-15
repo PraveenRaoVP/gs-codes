@@ -1,15 +1,14 @@
 package com.librarymanagement.setup;
 
 import com.librarymanagement.models.Library;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.librarymanagement.repository.LibraryDatabase;
 
 class LibrarySetupModel {
     private final LibrarySetupView librarySetupView;
-    public Library library = new Library();
+    public Library library;
 
     public LibrarySetupModel(LibrarySetupView librarySetupView) {
+        this.library = LibraryDatabase.getInstance().getLibrary();
         this.librarySetupView = librarySetupView;
     }
 
@@ -17,16 +16,12 @@ class LibrarySetupModel {
         if (library == null || library.getLibraryId() == 0) {
             librarySetupView.initiateSetup();
         } else {
-            librarySetupView.onSetupComplete();
+            librarySetupView.onSetupComplete(library.getLibraryName());
         }
     }
 
-    public void createLibrary(int id, String libraryName, String phoneNo, String emailId, String address) throws InterruptedException {
-        library.setLibraryId(id);
-        library.setLibraryName(libraryName);
-        library.setPhoneNo(phoneNo);
-        library.setEmailId(emailId);
-        library.setAddress(address);
-        librarySetupView.onSetupComplete();
+    public void createLibrary(Library newLibrary) throws InterruptedException {
+        LibraryDatabase.getInstance().setLibrary(newLibrary);
+        librarySetupView.onSetupComplete(newLibrary.getLibraryName());
     }
 }

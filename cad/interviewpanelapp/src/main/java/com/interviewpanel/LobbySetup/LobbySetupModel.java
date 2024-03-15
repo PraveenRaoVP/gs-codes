@@ -1,5 +1,6 @@
 package com.interviewpanel.LobbySetup;
 
+import com.interviewpanel.PanelSetup.PanelOperationsView;
 import com.interviewpanel.auth.LoginView;
 import com.interviewpanel.models.InterviewPanel;
 
@@ -25,22 +26,17 @@ public class LobbySetupModel {
     }
 
     public void app(int n) {
+        PanelOperationsView panelOperationsView = new PanelOperationsView();
         switch(n){
-            case 7:
-                System.exit(0);
-                break;
-            case 8:
-                // logout
-                LoginView loginView = new LoginView();
-                loginView.init();
-                System.exit(0);
             case 1:
                 // add interview panel
-                System.out.println("Add Interview Panel");
+                panelOperationsView.createNewPanel();
+//                System.out.println("Add Interview Panel");
                 break;
             case 2:
                 // view interview panels
-                System.out.println("View Interview Panels");
+                panelOperationsView.showPanelDetails();
+//                System.out.println("View Interview Panels");
                 break;
             case 3:
                 // clear interview panel
@@ -58,10 +54,16 @@ public class LobbySetupModel {
                 // remove candidate from interview panel
                 System.out.println("Remove Candidate from Interview Panel");
                 break;
+            case 7:
+                System.exit(0);
+                break;
+            case 8:
+                // logout
+                LoginView loginView = new LoginView();
+                loginView.init();
+                System.exit(0);
             default:
                 System.out.println("Invalid choice");
         }
     }
-
-
 }

@@ -1,5 +1,8 @@
 package com.librarymanagement.ManageBook;
 
+import com.librarymanagement.models.Book;
+import com.librarymanagement.repository.LibraryDatabase;
+
 import java.util.Scanner;
 
 public class ManageBookView {
@@ -22,9 +25,15 @@ public class ManageBookView {
         for(int i=1;i<=noOfBooks;i++) {
             getBookDetails(i);
         }
-        System.out.println("The books available are: ");
-        manageBookModel.showBooks();
+        showBooks();
     }
+
+    private void showBooks() {
+        for(Book book: LibraryDatabase.getInstance().getBookList()) {
+            System.out.println(book.toString());
+        }
+    }
+
 
     public void getBookDetails(int i) {
         Scanner sc = new Scanner(System.in);
@@ -45,7 +54,6 @@ public class ManageBookView {
         System.out.print("Enter the volume: ");
         int volume = sc.nextInt();
 
-//        manageBookModel.addBook(id, bookName, author, publication, edition, journal, availableCount, volume);
         manageBookModel.addBook(bookName, author, publication, edition, journal, availableCount, volume);
         System.out.println();
         System.out.println();
