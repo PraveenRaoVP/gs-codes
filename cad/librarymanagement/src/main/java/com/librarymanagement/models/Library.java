@@ -3,36 +3,26 @@ package com.librarymanagement.models;
 import java.util.List;
 
 public class Library {
-    private int id;
-    private String name;
+    private String libraryName;
+    private int libraryId;
     private String phoneNo;
     private String emailId;
     private String address;
-    private List<Integer> adminUsers;
 
-    public Library(int id, String name, String phoneNo, String emailId, String address, List<Integer> adminUsers) {
-        this.id = id;
-        this.name = name;
-        this.phoneNo = phoneNo;
-        this.emailId = emailId;
-        this.address = address;
-        this.adminUsers = adminUsers;
+    public String getLibraryName() {
+        return libraryName;
     }
 
-    public int getId() {
-        return id;
+    public void setLibraryName(String libraryName) {
+        this.libraryName = libraryName;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getLibraryId() {
+        return libraryId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setLibraryId(int libraryId) {
+        this.libraryId = libraryId;
     }
 
     public String getPhoneNo() {
@@ -57,13 +47,5 @@ public class Library {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public List<Integer> getAdminUsers() {
-        return adminUsers;
-    }
-
-    public void setAdminUsers(List<Integer> adminUsers) {
-        this.adminUsers = adminUsers;
     }
 }

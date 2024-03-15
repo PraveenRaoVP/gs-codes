@@ -14,13 +14,25 @@ class LoginModel {
         users.put("zsgs", "123");
     }
 
-    public boolean authenticateUser(String username, String password) {
-        if(!users.containsKey(username)) {
-            loginView.showAlert("Invalid Username.");
+    public boolean authenticateUser(String username, String password) throws InterruptedException {
+        if(isValidUsername(username)) {
+            if(isValidPassword(username, password)) {
+                loginView.onSuccess();
+                return true;
+            } else {
+                loginView.showAlert("Invalid password. Please try again.");
+                return false;
+            }
+        } else {
+            loginView.showAlert("Invalid username. Please try again.");
             return false;
         }
-        return (users.get(username).equals(password));
     }
-
+    private boolean isValidUsername(String username) {
+        return users.containsKey(username);
+    }
+    private boolean isValidPassword(String username, String password) {
+        return users.get(username).equals(password);
+    }
 
 }

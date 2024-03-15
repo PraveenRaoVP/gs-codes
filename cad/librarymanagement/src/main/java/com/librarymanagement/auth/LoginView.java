@@ -1,5 +1,6 @@
 package com.librarymanagement.auth;
 
+import com.librarymanagement.Main;
 import com.librarymanagement.setup.LibrarySetupView;
 
 import java.util.HashMap;
@@ -12,24 +13,29 @@ public class LoginView {
         loginModel = new LoginModel(this);
     }
 
-    public void init() {
+    public void init() throws InterruptedException {
         int attempts = 3;
+        Scanner sc = new Scanner(System.in);
         do {
-            Scanner sc = new Scanner(System.in);
 
             System.out.print("Enter the username: ");
             String username = sc.nextLine();
             System.out.print("Enter the password: ");
             String password = sc.nextLine();
             if(loginModel.authenticateUser(username, password)) {
-                System.out.println("You have successfully logged in.");
-                LibrarySetupView librarySetupView = new LibrarySetupView();
-                librarySetupView.init(username);
                 return;
             }
-        } while(attempts -- > 0);
+        } while(attempts -- > 1);
         System.out.println("You have exceeded the number of attempts. Please try again later.");
     }
+        public void onSuccess() throws InterruptedException {
+            System.out.flush();
+            System.out.println("\n\nLogin successful...\n\n ---- welcome to " + Main.getInstance().getAppName()
+                    + " - v" + Main.getInstance().getAppVersion() + "----");
+            LibrarySetupView librarySetupView = new LibrarySetupView();
+            librarySetupView.init();
+        }
+
 
     public void showAlert(String message) {
         System.out.println(message);

@@ -1,34 +1,41 @@
 package com.librarymanagement.setup;
 
-import com.librarymanagement.models.Library;
+import com.librarymanagement.ManageBook.ManageBookView;
 
 import java.util.Scanner;
 
 public class LibrarySetupView {
-    private LibrarySetupModel librarySetupModel;
+    private final LibrarySetupModel librarySetupModel;
     public LibrarySetupView() {
         librarySetupModel = new LibrarySetupModel(this);
     }
-//    String username;
-    public void init(String username) {
-//        this.username = username;
-        System.out.println("Welcome " + username + " to the Library Management System.");
-
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Enter the details of the library:-");
-        System.out.print("Library Name: ");
-        String libraryName = sc.nextLine();
-        System.out.print("Phone Number: ");
-        String phoneNo = sc.nextLine();
-        System.out.print("Email Id: ");
-        String emailId = sc.nextLine();
-        System.out.print("Address: ");
-        String address = sc.nextLine();
-
-        librarySetupModel.createLibrary(libraryName, phoneNo, emailId, address);
-
+    public void init() throws InterruptedException {
+        librarySetupModel.startSetup();
     }
+
+    public void initiateSetup() throws InterruptedException {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the library details here: ");
+        System.out.println("Enter the library ID: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Enter the library name: ");
+        String libraryName = sc.nextLine();
+        System.out.println("Enter the library phone number: ");
+        String phoneNo = sc.nextLine();
+        System.out.println("Enter the library email ID: ");
+        String emailId = sc.nextLine();
+        System.out.println("Enter the library address: ");
+        String address = sc.nextLine();
+        librarySetupModel.createLibrary(id, libraryName, phoneNo, emailId, address);
+    }
+
+    public void onSetupComplete() throws InterruptedException {
+        System.out.println("Library setup has been completed");
+        Thread.sleep(2000);
+        new ManageBookView().init();
+    }
+
 
     public void showAlert(String message) {
         System.out.println(message);

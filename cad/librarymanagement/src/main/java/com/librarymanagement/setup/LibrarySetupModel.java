@@ -6,23 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 class LibrarySetupModel {
-    private LibrarySetupView librarySetupView;
+    private final LibrarySetupView librarySetupView;
+    public Library library = new Library();
 
     public LibrarySetupModel(LibrarySetupView librarySetupView) {
         this.librarySetupView = librarySetupView;
     }
 
-    public Library createLibrary(String libraryName, String phoneNo, String emailId, String address) {
-        List<Integer> adminUsers = new ArrayList<>();
-        // adminUsers.add();
-        Library newLibrary = new Library(1, libraryName, phoneNo, emailId, address, null);
-        librarySetupView.showAlert("Library created successfully.");
-        return newLibrary;
+    public void startSetup() throws InterruptedException {
+        if (library == null || library.getLibraryId() == 0) {
+            librarySetupView.initiateSetup();
+        } else {
+            librarySetupView.onSetupComplete();
+        }
     }
 
-    public void addAdminUser(int adminId) {
-        // adminUsers.add(adminId);
+    public void createLibrary(int id, String libraryName, String phoneNo, String emailId, String address) throws InterruptedException {
+        library.setLibraryId(id);
+        library.setLibraryName(libraryName);
+        library.setPhoneNo(phoneNo);
+        library.setEmailId(emailId);
+        library.setAddress(address);
+        librarySetupView.onSetupComplete();
     }
-
-
 }
