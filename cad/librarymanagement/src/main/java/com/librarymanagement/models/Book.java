@@ -10,6 +10,21 @@ public class Book {
     private int availableCount;
     private int volume;
 
+    public Book(String name, int id, String author, String publication, String edition, String journal, int availableCount, int volume) {
+        this.name = name;
+        this.id = id;
+        this.author = author;
+        this.publication = publication;
+        this.edition = edition;
+        this.journal = journal;
+        this.availableCount = availableCount;
+        this.volume = volume;
+    }
+
+    public Book() {
+
+    }
+
     public String getName() {
         return name;
     }
@@ -45,6 +60,8 @@ public class Book {
     public String getEdition() {
         return edition;
     }
+
+
 
     public void setEdition(String edition) {
         this.edition = edition;

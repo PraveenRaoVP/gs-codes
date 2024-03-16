@@ -8,9 +8,13 @@ import java.util.List;
 
 public class LibraryDatabase {
     private static LibraryDatabase libraryDatabase;
-    private Library library;
+    private List<Library> libraries = new ArrayList<>();
     List<Book> bookList = new ArrayList<>();
     private LibraryDatabase() {
+    }
+
+    public List<Library> getLibraries() {
+        return libraries;
     }
 
     public static LibraryDatabase getInstance() {
@@ -20,41 +24,46 @@ public class LibraryDatabase {
         return libraryDatabase;
     }
 
-
-    public Library getLibrary() {
-        return library;
-    }
-
-    public void setLibrary(Library library) {
-        this.library = library;
-    }
-
     public void insertLibrary(Library library) {
-        this.library = library;
+        libraries.add(library);
         System.out.println("Lib details added");
     }
 
-    public List<Book> getBookList() {
-        System.out.println(library.getLibraryName());
-        return bookList;
-    }
-
-    public Book getBook(int id) {
-        for (Book book : bookList) {
-            if (book.getId() == id) {
-                return book;
+    public boolean checkDuplicateLibrary(String libraryName) {
+        for(Library library: libraries) {
+            if(library.getLibraryName().equals(libraryName)) {
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
-    public List<Book> searchBook(String bookName) {
-        return LibraryDatabase.getInstance().getBookList().stream()
-                .filter(book -> book.getName().contains(bookName))
-                .toList();
+    public void removeLibrary(int libraryId) {
+        for(Library library: libraries) {
+            if(library.getLibraryId() == libraryId) {
+                libraries.remove(library);
+                System.out.println("Lib details removed");
+                return;
+            }
+        }
+        System.out.println("Library not found");
     }
 
-    public void addBook(Book book) {
-        bookList.add(book);
+    public boolean checkIfLibrariesExist() {
+        return !libraries.isEmpty();
+    }
+
+    public void updateLibrary(int libraryId, String libraryName, String phoneNo, String emailId, String address) {
+        for(Library library: libraries) {
+            if(library.getLibraryId() == libraryId) {
+                library.setLibraryName(libraryName);
+                library.setPhoneNo(phoneNo);
+                library.setEmailId(emailId);
+                library.setAddress(address);
+                System.out.println("Lib details updated");
+                return;
+            }
+        }
+        System.out.println("Library not found");
     }
 }
