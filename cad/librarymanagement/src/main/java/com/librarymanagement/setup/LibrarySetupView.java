@@ -1,6 +1,7 @@
 package com.librarymanagement.setup;
 
 import com.librarymanagement.models.Library;
+import com.librarymanagement.repository.LibraryDatabase;
 
 import java.util.List;
 import java.util.Scanner;
@@ -26,6 +27,11 @@ public class LibrarySetupView {
 
     public void removeLibrary() {
         Scanner sc = new Scanner(System.in);
+        if(!LibraryDatabase.getInstance().checkIfLibrariesExist()) {
+            System.out.println("No libraries to remove");
+            return;
+        }
+
         System.out.println("Do you wish to see library details (y/n): ");
         char ch = sc.next().charAt(0);
         if(ch == 'y') {
@@ -61,5 +67,26 @@ public class LibrarySetupView {
         System.out.print("Enter Address: ");
         String address = sc.next();
         librarySetupModel.updateLibrary(libraryId, libraryName, phoneNo, emailId, address);
+    }
+
+    public void viewLibraryBooks() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Do you wish to see library details (y/n): ");
+        char ch = sc.next().charAt(0);
+        if(ch == 'y') {
+            viewLibraries();
+        }
+        System.out.print("Enter Library Id: ");
+        int libraryId = sc.nextInt();
+        System.out.println("Book Id \t Book Name \t Author \t Publication \t Edition \t Journal \t Available Count \t Volume");
+        librarySetupModel.viewLibraryBooks(libraryId);
+    }
+    public void viewLibraryBooks(int libraryId) {
+        System.out.println("Book Id \t Book Name \t Author \t Publication \t Edition \t Journal \t Available Count \t Volume");
+        librarySetupModel.viewLibraryBooks(libraryId);
+    }
+
+    public void showAlert(String message) {
+        System.out.println(message);
     }
 }

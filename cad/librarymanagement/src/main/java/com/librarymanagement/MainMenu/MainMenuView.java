@@ -1,5 +1,6 @@
 package com.librarymanagement.MainMenu;
 
+import com.librarymanagement.ManageBooks.ManageBooksView;
 import com.librarymanagement.setup.LibrarySetupView;
 
 import java.util.Scanner;
@@ -22,7 +23,7 @@ public class MainMenuView {
                     handleLibraryOptions();
                     break;
                 case 2:
-                    System.out.println("Manage Books");
+                    handleManageBookOptions();
                     break;
                 case 3:
                     System.out.println("Customer Options");
@@ -57,7 +58,8 @@ public class MainMenuView {
         System.out.println("2. Remove Library");
         System.out.println("3. View Libraries");
         System.out.println("4. Update Library");
-        System.out.println("5. Back");
+        System.out.println("5. View all books of the library (Admin only)");
+        System.out.println("6. Back");
         System.out.println("Select an option: ");
     }
 
@@ -116,6 +118,40 @@ public class MainMenuView {
                 librarySetupView.updateLibrary();
                 break;
             case 5:
+                librarySetupView.viewLibraryBooks();
+                break;
+            case 6:
+                System.out.println("Going back...");
+                break;
+            default:
+                System.out.println("Invalid option. Please try again.");
+        }
+    }
+
+    public void handleManageBookOptions() {
+        displayBooksOptions();
+        Scanner sc = new Scanner(System.in);
+        int ch = sc.nextInt();
+        ManageBooksView manageBooksView = new ManageBooksView();
+        switch(ch) {
+            case 1:
+                manageBooksView.addBook();
+                break;
+            case 2:
+                manageBooksView.removeBook();
+                break;
+            case 3:
+                manageBooksView.viewBooks();
+                break;
+            case 4:
+                // TODO: Issue Book functionality after creating customer and admin
+                System.out.println("Issue Book");
+                break;
+            case 5:
+                // TODO: Return Book functionality after creating customer and admin
+                System.out.println("Return Book");
+                break;
+            case 6:
                 System.out.println("Going back...");
                 break;
             default:

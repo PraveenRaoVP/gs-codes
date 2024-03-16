@@ -1,6 +1,7 @@
 package com.librarymanagement.auth;
 
 import com.librarymanagement.Main;
+import com.librarymanagement.MainMenu.MainMenuView;
 import com.librarymanagement.setup.LibrarySetupView;
 
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class LoginView {
             System.out.print("Enter the password: ");
             String password = sc.nextLine();
             if(loginModel.authenticateUser(username, password)) {
+                onSuccess();
                 return;
             }
         } while(attempts -- > 1);
@@ -32,8 +34,8 @@ public class LoginView {
             System.out.flush();
             System.out.println("\n\nLogin successful...\n\n ---- welcome to " + Main.getInstance().getAppName()
                     + " - v" + Main.getInstance().getAppVersion() + "----");
-            LibrarySetupView librarySetupView = new LibrarySetupView();
-            librarySetupView.init();
+            MainMenuView mainMenuView = new MainMenuView();
+            mainMenuView.init();
         }
 
 

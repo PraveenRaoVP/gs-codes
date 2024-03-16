@@ -16,18 +16,6 @@ class LoginModel {
     }
 
     public boolean authenticateUser(String username, String password) throws InterruptedException {
-//        if(isValidUsername(username)) {
-//            if(isValidPassword(username, password)) {
-//                loginView.onSuccess();
-//                return true;
-//            } else {
-//                loginView.showAlert("Invalid password. Please try again.");
-//                return false;
-//            }
-//        } else {
-//            loginView.showAlert("Invalid username. Please try again.");
-//            return false;
-//        }
         return CredentialsDatabase.getInstance().validateCredentials(username, password);
     }
     private boolean isValidUsername(String username) {
