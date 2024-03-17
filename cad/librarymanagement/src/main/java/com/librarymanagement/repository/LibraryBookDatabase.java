@@ -1,5 +1,7 @@
 package com.librarymanagement.repository;
 
+import com.librarymanagement.models.Book;
+
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,5 +82,27 @@ public class LibraryBookDatabase {
             }
         }
         return bookIds;
+    }
+
+    public List<Book> getBooksForLibrary(int libraryId) {
+        List<Book> books = new ArrayList<>();
+        if(libraryIdToBookIdToCount.containsKey(libraryId)) {
+            Map<Integer, Integer> bookIdToCount = libraryIdToBookIdToCount.get(libraryId);
+            for(Map.Entry<Integer, Integer> entry: bookIdToCount.entrySet()) {
+                books.add(BooksDatabase.getInstance().getBookById(entry.getKey()));
+            }
+        }
+        return books;
+    }
+
+    public List<Book> getBooksForCustomer(int customerId) {
+        List<Book> books = new ArrayList<>();
+        if(CustomerBookDatabase.getInstance().getLibraryIdToBookId(customerId) != null) {
+            Map<Integer, Integer> libraryIdToBookId = CustomerBookDatabase.getInstance().getLibraryIdToBookId(customerId);
+            for(Map.Entry<Integer, Integer> entry: libraryIdToBookId.entrySet()) {
+                books.add(BooksDatabase.getInstance().getBookById(entry.getValue()));
+            }
+        }
+        return books;
     }
 }

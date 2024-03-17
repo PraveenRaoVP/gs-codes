@@ -1,5 +1,6 @@
 package com.librarymanagement.MainMenu;
 
+import com.librarymanagement.CustomerManagement.CustomerManagerView;
 import com.librarymanagement.ManageBooks.ManageBooksView;
 import com.librarymanagement.setup.LibrarySetupView;
 
@@ -26,7 +27,7 @@ public class MainMenuView {
                     handleManageBookOptions();
                     break;
                 case 3:
-                    System.out.println("Customer Options");
+                    handleCustomerManageOptions();
                     break;
                 case 4:
                     System.out.println("Admin Options");
@@ -59,7 +60,7 @@ public class MainMenuView {
         System.out.println("3. View Libraries");
         System.out.println("4. Update Library");
         System.out.println("5. View all books of the library (Admin only)");
-        System.out.println("6. Back");
+        System.out.println("6. Logout");
         System.out.println("Select an option: ");
     }
 
@@ -69,23 +70,19 @@ public class MainMenuView {
         System.out.println("1. Add Book");
         System.out.println("2. Remove Book");
         System.out.println("3. View Books");
-        System.out.println("4. Issue Book");
-        System.out.println("5. Return Book");
-
-        System.out.println("6. Back");
+        System.out.println("4. Back");
         System.out.println("Select an option: ");
     }
 
     public void displayCustomerOptions() {
         System.out.flush();
         System.out.println("Select one of the options below:-");
-        System.out.println("1. Add Customer");
-        System.out.println("2. Remove Customer");
-        System.out.println("3. View Customers");
-        System.out.println("4. Issue Book");
-        System.out.println("5. Return Book");
-        System.out.println("6. Check for fine");
-        System.out.println("4. Back");
+        System.out.println("1. Issue Book to Customer");
+        System.out.println("2. Return Book");
+        System.out.println("3. Check for fine");
+        System.out.println("4. Remove Customer");
+        System.out.println("5. View Customers (Admin only)");
+        System.out.println("6. Back");
         System.out.println("Select an option: ");
     }
 
@@ -144,12 +141,34 @@ public class MainMenuView {
                 manageBooksView.viewBooks();
                 break;
             case 4:
-                // TODO: Issue Book functionality after creating customer and admin
-                System.out.println("Issue Book");
+                System.out.println("Going back...");
+                break;
+            default:
+                System.out.println("Invalid option. Please try again.");
+        }
+    }
+
+    public void handleCustomerManageOptions() {
+        displayCustomerOptions();
+        Scanner sc = new Scanner(System.in);
+        int ch = sc.nextInt();
+        CustomerManagerView customerManagerView = new CustomerManagerView();
+        switch(ch) {
+            case 1:
+                customerManagerView.issueBook();
+                break;
+            case 2:
+                customerManagerView.returnBook();
+                break;
+            case 3:
+//                customerManagerView.checkForFine();
+                System.out.println("Check for fine not implemented yet.");
+                break;
+            case 4:
+                customerManagerView.removeCustomer();
                 break;
             case 5:
-                // TODO: Return Book functionality after creating customer and admin
-                System.out.println("Return Book");
+                customerManagerView.viewCustomer();
                 break;
             case 6:
                 System.out.println("Going back...");

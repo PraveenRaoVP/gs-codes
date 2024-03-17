@@ -2,14 +2,11 @@ package com.librarymanagement.auth;
 
 import com.librarymanagement.Main;
 import com.librarymanagement.MainMenu.MainMenuView;
-import com.librarymanagement.setup.LibrarySetupView;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class LoginView {
-    private LoginModel loginModel;
+    private final LoginModel loginModel;
     public LoginView() {
         loginModel = new LoginModel(this);
     }
@@ -27,7 +24,7 @@ public class LoginView {
                 onSuccess();
                 return;
             }
-        } while(attempts -- > 1);
+        } while(attempts --  > 1);
         System.out.println("You have exceeded the number of attempts. Please try again later.");
     }
         public void onSuccess() throws InterruptedException {
