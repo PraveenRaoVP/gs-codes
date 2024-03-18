@@ -1,6 +1,7 @@
 package com.interviewpanel.repository;
 
 import com.interviewpanel.models.InterviewPanel;
+import com.interviewpanel.models.Interviewer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,5 +38,9 @@ public class InterviewPanelRepository {
             }
         }
         return null;
+    }
+
+    public void removeInterviewPanel(int panelId) {
+        interviewPanelList.removeIf(panel -> panel.getPanelId() == panelId);
     }
 }

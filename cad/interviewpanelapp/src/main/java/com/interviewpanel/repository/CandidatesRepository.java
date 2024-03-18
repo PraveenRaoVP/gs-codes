@@ -18,4 +18,13 @@ public class CandidatesRepository {
         }
         return candidatesRepository;
     }
+
+    public static Candidate getCandidateById(int candidateId) {
+        for (Candidate candidate : candidatesRepository.candidateList) {
+            if (candidate.getCandidateId() == candidateId) {
+                return candidate;
+            }
+        }
+        return null;
+    }
 }

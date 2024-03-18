@@ -3,6 +3,7 @@ package com.interviewpanel.InterviewPanelManager;
 import com.interviewpanel.models.Interview;
 import com.interviewpanel.models.InterviewPanel;
 import com.interviewpanel.models.helpers.InterviewStatus;
+import com.interviewpanel.models.helpers.PrintersAndFormatters;
 import com.interviewpanel.repository.AdminToInterviewPanelRepository;
 import com.interviewpanel.repository.InterviewPanelRepository;
 import com.interviewpanel.repository.InterviewerRepository;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 class InterviewPanelModel {
-    private InterviewPanelView interviewPanelView;
+    private final InterviewPanelView interviewPanelView;
 
     public InterviewPanelModel(InterviewPanelView interviewPanelView) {
         this.interviewPanelView = interviewPanelView;
@@ -25,7 +26,7 @@ class InterviewPanelModel {
         InterviewerRepository.getInstance().addInterviewer(interviewerId, interviewerName, interviewerEmail, interviewerPhone, interviewerDesignation, interviewerDepartment, interviewerOrganization);
         InterviewPanelRepository.getInstance().addInterviewPanel(interviewerId);
         AdminToInterviewPanelRepository.getInstance().addAdminToInterviewPanel(1, InterviewPanelRepository.getInstance().getInterviewPanelList().size());
-        System.out.println("Interview Panel added successfully");
+        PrintersAndFormatters.showMessage("Interview Panel added successfully");
     }
 
     public List<InterviewPanel> viewInterviewPanels(int adminId) {
@@ -47,7 +48,7 @@ class InterviewPanelModel {
             if(interview != null)
                 interview.setStatus(InterviewStatus.UNDER_REVIEW);
         } else {
-            System.out.println("No candidates in the panel");
+            PrintersAndFormatters.showMessage("No candidates in the panel");
         }
     }
 
@@ -57,4 +58,15 @@ class InterviewPanelModel {
     }
 
 
+    public void clearAllInterviewPanels() {
+        List<InterviewPanel> interviewPanels = viewInterviewPanels(1);
+        for (InterviewPanel interviewPanel : interviewPanels) {
+            clearInterviewPanel(interviewPanel.getPanelId());
+        }
+    }
+
+    public void removeInterviewPanel(int panelId) {
+        InterviewPanelRepository.getInstance().removeInterviewPanel(panelId);
+        PrintersAndFormatters.showMessage("Interview Panel removed successfully");
+    }
 }

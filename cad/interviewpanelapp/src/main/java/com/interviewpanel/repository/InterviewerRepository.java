@@ -27,4 +27,13 @@ public class InterviewerRepository {
         Interviewer interviewer = new Interviewer(interviewerId, interviewerName, interviewerEmail, interviewerPhone, interviewerDesignation, interviewerDepartment, interviewerOrganization);
         interviewers.add(interviewer);
     }
+
+    public Interviewer getInterviewerById(int interviewerId) {
+        for (Interviewer interviewer : interviewers) {
+            if (interviewer.getInterviewerId() == interviewerId) {
+                return interviewer;
+            }
+        }
+        return null;
+    }
 }

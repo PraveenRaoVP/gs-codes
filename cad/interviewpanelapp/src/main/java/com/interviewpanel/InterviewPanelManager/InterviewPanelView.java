@@ -1,6 +1,12 @@
 package com.interviewpanel.InterviewPanelManager;
 
+import com.interviewpanel.models.Candidate;
+import com.interviewpanel.models.Interview;
 import com.interviewpanel.models.InterviewPanel;
+import com.interviewpanel.models.Interviewer;
+import com.interviewpanel.repository.CandidatesRepository;
+import com.interviewpanel.repository.InterviewPanelRepository;
+import com.interviewpanel.repository.InterviewerRepository;
 
 import java.util.List;
 import java.util.Scanner;
@@ -35,35 +41,54 @@ public class InterviewPanelView {
     }
 
     public void clearInterviewPanel() {
-        System.out.println("Do you want to view the panels created by you? (Y/N)");
-        Scanner scanner = new Scanner(System.in);
-        String choice = scanner.nextLine();
-        if(choice.equalsIgnoreCase("Y")) {
-            viewInterviewPanels(1);
-        }
-        System.out.println("Enter the panel ID: ");
-        int panelId = scanner.nextInt();
+        int panelId = getPanelIdFromUser();
         interviewPanelModel.clearInterviewPanel(panelId);
     }
 
     public void clearAllInterviewPanels() {
-
+        interviewPanelModel.clearAllInterviewPanels();
     }
 
     public void removeInterviewPanel() {
-
+        int panelId = getPanelIdFromUser();
+        interviewPanelModel.removeInterviewPanel(panelId);
     }
 
     public void viewInterviewPanels(int adminId) {
 //        3. View Interview Panels by that admin
 //	        -> Display the panels created by that admin
+
         List<InterviewPanel> interviewPanels = interviewPanelModel.viewInterviewPanels(adminId);
+        if(interviewPanels.isEmpty()) {
+            System.out.println("No panels created by you");
+            return;
+        }
+        System.out.println("Panel ID \t Interviewer Name \t Interviewer Email \t Candidates");
+        for(InterviewPanel interviewPanel : interviewPanels) {
+            Interviewer interviewer = InterviewerRepository.getInstance().getInterviewerById(interviewPanel.getInterviewerId());
+            System.out.print(interviewPanel.getPanelId() + "\t" + interviewer.getInterviewerName() + "\t" + interviewer.getInterviewerEmail() + "\t");
+            if(interviewPanel.getCandidates().isEmpty()) {
+                System.out.println("N/A");
+                continue;
+            }
+            for(Interview interview: interviewPanel.getCandidates()) {
+                Candidate candidate = CandidatesRepository.getCandidateById(interview.getCandidateId());
+                assert candidate != null;
+                System.out.print(candidate.getName()+", ");
+            }
+            System.out.println();
+        }
     }
 
     public void terminateCurrentInterviewInPanel() {
 //        2. Terminate Current Interview In a panel:
 //	        -> Display the panels created by that admin by referring to admintointerviewpanel database with the candidates' and Interviewer name present in it
 //	        -> Dequeue the candidate and change his interview status to UNDER_REVIEW
+        int panelId = getPanelIdFromUser();
+        interviewPanelModel.terminateCurrentInterviewInPanel(panelId);
+    }
+
+    private int getPanelIdFromUser() {
         System.out.println("Do you want to view the panels created by you? (Y/N)");
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.nextLine();
@@ -71,7 +96,6 @@ public class InterviewPanelView {
             viewInterviewPanels(1);
         }
         System.out.println("Enter the panel ID: ");
-        int panelId = scanner.nextInt();
-        interviewPanelModel.terminateCurrentInterviewInPanel(panelId);
+        return scanner.nextInt();
     }
 }
