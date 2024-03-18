@@ -65,4 +65,13 @@ public class LibraryDatabase {
         }
         System.out.println("Library not found");
     }
+
+    public boolean getLibraryById(int libraryId) {
+        for(Library library: libraries) {
+            if(library.getLibraryId() == libraryId) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

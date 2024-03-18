@@ -37,7 +37,7 @@ public class ManageBooksModel {
 
             int count = LibraryBookDatabase.getInstance().getBookCount(libraryId, book.getId());
             if(count != -1) {
-                System.out.println(book.getId() + "\t" + book.getName() + "\t" + book.getAuthor() + "\t" + book.getPublication() + "\t" + book.getEdition() + "\t" + book.getJournal() + "\t" + count + "\t" + book.getVolume());
+                manageBooksView.showAlert(book.getId() + "\t" + book.getName() + "\t" + book.getAuthor() + "\t" + book.getPublication() + "\t" + book.getEdition() + "\t" + book.getJournal() + "\t" + count + "\t" + book.getVolume());
             }
         }
 
@@ -47,7 +47,7 @@ public class ManageBooksModel {
         // View all books
         System.out.println("Book Id \t Book Name \t Author \t Publication \t Edition \t Journal \t Available Count \t Volume");
         for(Book book: BooksDatabase.getInstance().getBooks()) {
-            System.out.println(book.getId() + "\t" + book.getName() + "\t" + book.getAuthor() + "\t" + book.getPublication() + "\t" + book.getEdition() + "\t" + book.getJournal() + "\t" + book.getAvailableCount() + "\t" + book.getVolume());
+            manageBooksView.showAlert(book.getId() + "\t" + book.getName() + "\t" + book.getAuthor() + "\t" + book.getPublication() + "\t" + book.getEdition() + "\t" + book.getJournal() + "\t" + book.getAvailableCount() + "\t" + book.getVolume());
         }
     }
 

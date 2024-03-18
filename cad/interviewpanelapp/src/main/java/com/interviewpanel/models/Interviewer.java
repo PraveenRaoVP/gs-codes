@@ -7,14 +7,16 @@ public class Interviewer {
     private String interviewerPhone;
     private String interviewerDesignation;
     private String interviewerDepartment;
+    private String interviewerOrganization;
 
-    public Interviewer(int interviewerId, String interviewerName, String interviewerEmail, String interviewerPhone, String interviewerDesignation, String interviewerDepartment) {
+    public Interviewer(int interviewerId, String interviewerName, String interviewerEmail, String interviewerPhone, String interviewerDesignation, String interviewerDepartment, String interviewerOrganization) {
         this.interviewerId = interviewerId;
         this.interviewerName = interviewerName;
         this.interviewerEmail = interviewerEmail;
         this.interviewerPhone = interviewerPhone;
         this.interviewerDesignation = interviewerDesignation;
         this.interviewerDepartment = interviewerDepartment;
+        this.interviewerOrganization = interviewerOrganization;
     }
 
     public int getInterviewerId() {
@@ -65,15 +67,11 @@ public class Interviewer {
         this.interviewerDepartment = interviewerDepartment;
     }
 
-    @Override
-    public String toString() {
-        return "Interviewer{" +
-                "interviewerId=" + interviewerId +
-                ", interviewerName='" + interviewerName + '\'' +
-                ", interviewerEmail='" + interviewerEmail + '\'' +
-                ", interviewerPhone='" + interviewerPhone + '\'' +
-                ", interviewerDesignation='" + interviewerDesignation + '\'' +
-                ", interviewerDepartment='" + interviewerDepartment + '\'' +
-                '}';
+    public String getInterviewerOrganization() {
+        return interviewerOrganization;
+    }
+
+    public void setInterviewerOrganization(String interviewerOrganization) {
+        this.interviewerOrganization = interviewerOrganization;
     }
 }

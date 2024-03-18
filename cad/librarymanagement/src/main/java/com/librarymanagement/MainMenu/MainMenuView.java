@@ -59,45 +59,45 @@ public class MainMenuView {
     public void displayLibraryOptions() {
         System.out.flush();
         System.out.println("Select one of the options below:-");
-        System.out.println("1. Add Library");
-        System.out.println("2. Remove Library");
-        System.out.println("3. View Libraries");
-        System.out.println("4. Update Library");
-        System.out.println("5. View all books of the library (Admin only)");
-        System.out.println("6. Logout");
+        System.out.println("1. Add Library"); //done
+        System.out.println("2. Remove Library"); // done
+        System.out.println("3. View Libraries"); // done
+        System.out.println("4. Update Library"); // done
+        System.out.println("5. View all books of the library (Admin only)"); //done
+        System.out.println("6. Logout"); //done
         System.out.println("Select an option: ");
     }
 
     public void displayBooksOptions() {
         System.out.flush();
         System.out.println("Select one of the options below:-");
-        System.out.println("1. Add Book");
-        System.out.println("2. Remove Book");
-        System.out.println("3. View Books");
-        System.out.println("4. Back");
+        System.out.println("1. Add Book"); //done
+        System.out.println("2. Remove Book"); // done
+        System.out.println("3. View Books"); // done
+        System.out.println("4. Back"); // done
         System.out.println("Select an option: ");
     }
 
     public void displayCustomerOptions() {
         System.out.flush();
         System.out.println("Select one of the options below:-");
-        System.out.println("1. Issue Book to Customer");
-        System.out.println("2. Return Book");
-        System.out.println("3. Check for fine");
-        System.out.println("4. Remove Customer");
-        System.out.println("5. View Customers (Admin only)");
-        System.out.println("6. Back");
+        System.out.println("1. Issue Book to Customer"); //done
+        System.out.println("2. Return Book");// done
+        System.out.println("3. Check for fine"); // phase 2
+        System.out.println("4. Remove Customer"); // done
+        System.out.println("5. View Customers (Admin only)"); // done
+        System.out.println("6. Back"); // done
         System.out.println("Select an option: ");
     }
 
     public void displayAdminOptions() {
         System.out.flush();
         System.out.println("Select one of the options below:-");
-        System.out.println("1. Add Admin");
-        System.out.println("2. Remove Admin");
-        System.out.println("3. View Admins");
-        System.out.println("4. Update Admins");
-        System.out.println("5. Back");
+        System.out.println("1. Add Admin"); //done
+        System.out.println("2. Remove Admin"); // done
+        System.out.println("3. View Admins"); // phase 2
+        System.out.println("4. Update Admins"); // done
+        System.out.println("5. Back"); //done
         System.out.println("Select an option: ");
     }
 

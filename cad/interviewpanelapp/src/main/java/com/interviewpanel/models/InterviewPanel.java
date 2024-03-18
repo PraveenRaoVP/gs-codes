@@ -4,15 +4,13 @@ import java.util.Queue;
 
 public class InterviewPanel {
     private int panelId;
-    private Interviewer interviewer;
-    private Queue<Candidate> candidates;
-    private String createdAt;
+    private int interviewerId;
+    private Queue<Interview> candidates;
 
-    public InterviewPanel(int panelId, Interviewer interviewer, Queue<Candidate> candidates, String createdAt) {
+    public InterviewPanel(int panelId, int interviewerId, Queue<Interview> candidates) {
         this.panelId = panelId;
-        this.interviewer = interviewer;
+        this.interviewerId = interviewerId;
         this.candidates = candidates;
-        this.createdAt = createdAt;
     }
 
     public int getPanelId() {
@@ -23,37 +21,19 @@ public class InterviewPanel {
         this.panelId = panelId;
     }
 
-    public Interviewer getInterviewer() {
-        return interviewer;
+    public int getInterviewerId() {
+        return interviewerId;
     }
 
-    public void setInterviewer(Interviewer interviewer) {
-        this.interviewer = interviewer;
+    public void setInterviewerId(int interviewerId) {
+        this.interviewerId = interviewerId;
     }
 
-    public Queue<Candidate> getCandidates() {
+    public Queue<Interview> getCandidates() {
         return candidates;
     }
 
-    public void setCandidates(Queue<Candidate> candidates) {
+    public void setCandidates(Queue<Interview> candidates) {
         this.candidates = candidates;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    @Override
-    public String toString() {
-        return "InterviewPanel{" +
-                "panelId=" + panelId +
-                ", interviewer=" + interviewer +
-                ", candidates=" + candidates +
-                ", createdAt='" + createdAt + '\'' +
-                '}';
     }
 }

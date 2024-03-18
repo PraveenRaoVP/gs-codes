@@ -35,18 +35,6 @@ public class AdminManagerModel {
         return AdminDatabase.getInstance().getAdminList();
     }
 
-//    public List<Admin> getAdminsForLibrary(int libraryId) {
-//        List<Integer> adminIds = AdminToLibraryDatabase.getInstance().getAdminsForLibrary(libraryId);
-//        List<Admin> adminList = AdminDatabase.getInstance().getAdminList();
-//        for(int i=0; i<adminList.size(); i++) {
-//            if(!adminIds.contains(adminList.get(i).getAdminId())) {
-//                adminList.remove(i);
-//                i--;
-//            }
-//        }
-//        return adminList;
-//    }
-
     public Admin getAdminForLibrary(int libraryId) {
         int adminId = AdminToLibraryDatabase.getInstance().getAdminByLibraryId(libraryId);
         return AdminDatabase.getInstance().getAdmin(adminId);

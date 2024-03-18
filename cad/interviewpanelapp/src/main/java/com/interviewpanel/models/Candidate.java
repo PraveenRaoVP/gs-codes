@@ -1,25 +1,23 @@
 package com.interviewpanel.models;
 
-import com.interviewpanel.models.helpers.InterviewStatus;
-
 public class Candidate {
+    // candidateID, name, email, phone, positionInterviewing, skills, address
     private int candidateId;
-    private String candidateName;
-    private String candidateEmail;
-    private String candidatePhone;
+    private String name;
+    private String email;
+    private String phone;
+    private String positionInterviewing;
     private String skills;
-    private String qualification;
+    private String address;
 
-    private InterviewStatus interviewStatus;
-
-    public Candidate(int candidateId, String candidateName, String candidateEmail, String candidatePhone, String skills, String qualification, InterviewStatus interviewStatus) {
+    public Candidate(int candidateId, String name, String email, String phone, String positionInterviewing, String skills, String address) {
         this.candidateId = candidateId;
-        this.candidateName = candidateName;
-        this.candidateEmail = candidateEmail;
-        this.candidatePhone = candidatePhone;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.positionInterviewing = positionInterviewing;
         this.skills = skills;
-        this.qualification = qualification;
-        this.interviewStatus = interviewStatus;
+        this.address = address;
     }
 
     public int getCandidateId() {
@@ -30,28 +28,36 @@ public class Candidate {
         this.candidateId = candidateId;
     }
 
-    public String getCandidateName() {
-        return candidateName;
+    public String getName() {
+        return name;
     }
 
-    public void setCandidateName(String candidateName) {
-        this.candidateName = candidateName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCandidateEmail() {
-        return candidateEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCandidateEmail(String candidateEmail) {
-        this.candidateEmail = candidateEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getCandidatePhone() {
-        return candidatePhone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setCandidatePhone(String candidatePhone) {
-        this.candidatePhone = candidatePhone;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPositionInterviewing() {
+        return positionInterviewing;
+    }
+
+    public void setPositionInterviewing(String positionInterviewing) {
+        this.positionInterviewing = positionInterviewing;
     }
 
     public String getSkills() {
@@ -62,32 +68,11 @@ public class Candidate {
         this.skills = skills;
     }
 
-    public String getQualification() {
-        return qualification;
+    public String getAddress() {
+        return address;
     }
 
-    public void setQualification(String qualification) {
-        this.qualification = qualification;
-    }
-
-    public InterviewStatus getInterviewStatus() {
-        return interviewStatus;
-    }
-
-    public void setInterviewStatus(InterviewStatus interviewStatus) {
-        this.interviewStatus = interviewStatus;
-    }
-
-    @Override
-    public String toString() {
-        return "Candidate{" +
-                "candidateId=" + candidateId +
-                ", candidateName='" + candidateName + '\'' +
-                ", candidateEmail='" + candidateEmail + '\'' +
-                ", candidatePhone='" + candidatePhone + '\'' +
-                ", skills='" + skills + '\'' +
-                ", qualification='" + qualification + '\'' +
-                ", interviewStatus=" + interviewStatus +
-                '}';
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

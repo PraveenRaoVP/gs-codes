@@ -58,7 +58,7 @@ public class CustomerManagerView {
         Scanner sc = new Scanner(System.in);
         int customerId = sc.nextInt();
         int libraryId = CustomerBookDatabase.getInstance().returnLibraryId(customerId);
-        if(LibraryBookDatabase.getInstance().getBooksForCustomer(customerId).size() == 0) {
+        if(LibraryBookDatabase.getInstance().getBooksForCustomer(customerId).isEmpty()) {
             System.out.println("The customer has not borrowed any books!");
             return;
         }

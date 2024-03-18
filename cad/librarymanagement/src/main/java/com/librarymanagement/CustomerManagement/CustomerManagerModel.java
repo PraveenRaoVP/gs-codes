@@ -6,6 +6,7 @@ import com.librarymanagement.models.Customer;
 import com.librarymanagement.repository.BooksDatabase;
 import com.librarymanagement.repository.CustomerBookDatabase;
 import com.librarymanagement.repository.CustomerDatabase;
+import com.librarymanagement.repository.LibraryBookDatabase;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ class CustomerManagerModel {
         Customer customer = new Customer(customerId, customerName, customerAddress, customerEmailId, customerPhoneNo);
         CustomerDatabase.getInstance().addCustomer(customer);
         CustomerBookDatabase.getInstance().addCustomerBook(customerId, libraryId, bookId);
+        BooksDatabase.getInstance().getBookById(bookId).setAvailableCount(BooksDatabase.getInstance().getBookById(bookId).getAvailableCount() - 1);
+        LibraryBookDatabase.getInstance().updateBookCount(libraryId, bookId, LibraryBookDatabase.getInstance().getBookCount(libraryId, bookId) - 1);
         System.out.println("Book issued successfully!");
     }
 
@@ -32,7 +35,9 @@ class CustomerManagerModel {
 //        }
 
         CustomerBookDatabase.getInstance().removeCustomerBook(customerId, libraryId, bookId);
-        System.out.println("Book returned successfully!");
+        BooksDatabase.getInstance().getBookById(bookId).setAvailableCount(BooksDatabase.getInstance().getBookById(bookId).getAvailableCount() + 1);
+        LibraryBookDatabase.getInstance().updateBookCount(libraryId, bookId, LibraryBookDatabase.getInstance().getBookCount(libraryId, bookId) + 1);
+        customerManagerView.showAlert("Book returned successfully!");
     }
 
     public double calculateFine(int customerId) {

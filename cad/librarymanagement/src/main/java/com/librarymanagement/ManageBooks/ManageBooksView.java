@@ -106,4 +106,8 @@ public class ManageBooksView {
         int libraryId = sc.nextInt();
         manageBooksModel.viewBooks(libraryId);
     }
+
+    public void showAlert(String s) {
+        System.out.println(s);
+    }
 }

@@ -2,13 +2,14 @@ package com.librarymanagement.repository;
 
 import com.librarymanagement.models.Admin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdminDatabase {
     private AdminDatabase() {}
 
     public static AdminDatabase adminDatabase;
-    private List<Admin> adminList;
+    private final List<Admin> adminList = new ArrayList<>();
 
     public static AdminDatabase getInstance() {
         if(adminDatabase == null) {

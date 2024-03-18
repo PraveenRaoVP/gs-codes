@@ -1,35 +1,33 @@
 package com.interviewpanel.auth;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.interviewpanel.models.helpers.PrintersAndFormatters;
+import com.interviewpanel.repository.CredentialsRepository;
 
 class LoginModel {
-    private LoginView loginView;
-    private Map<String, String> users = new HashMap<>();
+    private final LoginView loginView;
+
     public LoginModel(LoginView loginView) {
         this.loginView = loginView;
     }
 
-    public boolean authenticateUser(String username, String password) {
-        users.put("admin", "admin");
-        if(isValidUserName(username)) {
-            if(isValidUser(username, password)) {
-                loginView.onSuccess();
-                return true;
-            } else {
-                loginView.showAlert("Invalid password");
-                return false;
-            }
-        } else {
-            loginView.showAlert("Invalid username");
-            return false;
-        }
+    public void initLogin() {
+        int attempts = 0;
+        do {
+            loginView.loginDetails();
+        } while(++attempts < 3);
+        PrintersAndFormatters.showMessage("Too many attempts. Exiting...");
     }
 
-    private boolean isValidUserName(String username) {
-        return users.containsKey(username);
-    }
-    private boolean isValidUser(String username, String password) {
-        return users.get(username).equals(password);
+    public boolean authenticateUser(String username, String password) {
+        if(CredentialsRepository.getInstance().checkIfUsernamePresent(username)) {
+            if(CredentialsRepository.getInstance().getPassword(username).equals(password)) {
+                return true;
+            } else {
+                PrintersAndFormatters.showMessage("Incorrect password");
+            }
+        } else {
+            PrintersAndFormatters.showMessage("Username not found");
+        }
+        return false;
     }
 }

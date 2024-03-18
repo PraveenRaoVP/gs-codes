@@ -7,7 +7,6 @@ import com.librarymanagement.repository.LibraryBookDatabase;
 import com.librarymanagement.repository.LibraryDatabase;
 
 import java.util.List;
-import java.util.Scanner;
 
 class LibrarySetupModel {
     private final LibrarySetupView librarySetupView;
@@ -32,6 +31,10 @@ class LibrarySetupModel {
     }
 
     public void updateLibrary(int libraryId, String libraryName, String phoneNo, String emailId, String address) {
+        if(!LibraryDatabase.getInstance().getLibraryById(libraryId)) {
+            librarySetupView.showAlert("Library does not exist");
+            return;
+        }
         LibraryDatabase.getInstance().updateLibrary(libraryId, libraryName, phoneNo, emailId, address);
     }
 
