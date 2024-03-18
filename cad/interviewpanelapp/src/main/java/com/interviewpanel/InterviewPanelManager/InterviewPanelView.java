@@ -43,10 +43,12 @@ public class InterviewPanelView {
     public void clearInterviewPanel() {
         int panelId = getPanelIdFromUser();
         interviewPanelModel.clearInterviewPanel(panelId);
+        System.out.println("Panel cleared successfully");
     }
 
     public void clearAllInterviewPanels() {
         interviewPanelModel.clearAllInterviewPanels();
+        System.out.println("Cleared all interview panels successfully.");
     }
 
     public void removeInterviewPanel() {
@@ -72,7 +74,7 @@ public class InterviewPanelView {
                 continue;
             }
             for(Interview interview: interviewPanel.getCandidates()) {
-                Candidate candidate = CandidatesRepository.getCandidateById(interview.getCandidateId());
+                Candidate candidate = CandidatesRepository.getInstance().getCandidateById(interview.getCandidateId());
                 assert candidate != null;
                 System.out.print(candidate.getName()+", ");
             }
