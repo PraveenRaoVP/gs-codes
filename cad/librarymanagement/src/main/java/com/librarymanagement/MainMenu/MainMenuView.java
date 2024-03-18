@@ -1,7 +1,9 @@
 package com.librarymanagement.MainMenu;
 
+import com.librarymanagement.AdminManagement.AdminManagerView;
 import com.librarymanagement.CustomerManagement.CustomerManagerView;
 import com.librarymanagement.ManageBooks.ManageBooksView;
+import com.librarymanagement.repository.LibraryDatabase;
 import com.librarymanagement.setup.LibrarySetupView;
 
 import java.util.Scanner;
@@ -30,7 +32,7 @@ public class MainMenuView {
                     handleCustomerManageOptions();
                     break;
                 case 4:
-                    System.out.println("Admin Options");
+                    handleAdminOptions();
                     break;
                 case 5:
                     System.out.println("Exiting...");
@@ -40,6 +42,8 @@ public class MainMenuView {
             }
         } while(ch!=5);
     }
+
+
 
     public void displayMainMenu() {
         System.out.flush();
@@ -92,7 +96,8 @@ public class MainMenuView {
         System.out.println("1. Add Admin");
         System.out.println("2. Remove Admin");
         System.out.println("3. View Admins");
-        System.out.println("4. Back");
+        System.out.println("4. Update Admins");
+        System.out.println("5. Back");
         System.out.println("Select an option: ");
     }
 
@@ -126,6 +131,10 @@ public class MainMenuView {
     }
 
     public void handleManageBookOptions() {
+        if(!LibraryDatabase.getInstance().checkIfLibrariesExist()) {
+            System.out.println("No libraries exist. Please add a library first.");
+            return;
+        }
         displayBooksOptions();
         Scanner sc = new Scanner(System.in);
         int ch = sc.nextInt();
@@ -149,6 +158,10 @@ public class MainMenuView {
     }
 
     public void handleCustomerManageOptions() {
+        if(!LibraryDatabase.getInstance().checkIfLibrariesExist()) {
+            System.out.println("No libraries exist. Please add a library first.");
+            return;
+        }
         displayCustomerOptions();
         Scanner sc = new Scanner(System.in);
         int ch = sc.nextInt();
@@ -171,6 +184,37 @@ public class MainMenuView {
                 customerManagerView.viewCustomer();
                 break;
             case 6:
+                System.out.println("Going back...");
+                break;
+            default:
+                System.out.println("Invalid option. Please try again.");
+        }
+    }
+
+    public void handleAdminOptions() {
+        if(!LibraryDatabase.getInstance().checkIfLibrariesExist()) {
+            System.out.println("No libraries exist. Please add a library first.");
+            return;
+        }
+
+        displayAdminOptions();
+        Scanner sc = new Scanner(System.in);
+        int ch = sc.nextInt();
+        AdminManagerView adminManagerView = new AdminManagerView();
+        switch(ch) {
+            case 1:
+                adminManagerView.addAdminView();
+                break;
+            case 2:
+                adminManagerView.removeAdminView();
+                break;
+            case 3:
+                adminManagerView.viewAdmins();
+                break;
+            case 4:
+                adminManagerView.updateAdminView();
+                break;
+            case 5:
                 System.out.println("Going back...");
                 break;
             default:

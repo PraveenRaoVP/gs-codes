@@ -43,4 +43,8 @@ class LibrarySetupModel {
         }
     }
 
+    public boolean checkIfLibrariesExists() {
+        return LibraryDatabase.getInstance().checkIfLibrariesExist();
+    }
+
 }

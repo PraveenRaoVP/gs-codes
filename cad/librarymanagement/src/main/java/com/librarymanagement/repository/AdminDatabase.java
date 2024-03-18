@@ -17,19 +17,9 @@ public class AdminDatabase {
         return adminDatabase;
     }
 
-    private Admin admin;
-
-    public Admin getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
-    }
 
     public void insertAdmin(Admin admin) {
-        this.admin = admin;
-        System.out.println("Admin details added");
+        adminList.add(admin);
     }
 
     public List<Admin> getAdminList() {
@@ -43,5 +33,25 @@ public class AdminDatabase {
             }
         }
         return null;
+    }
+
+    public void deleteAdmin(int adminId) {
+        for(Admin admin: adminList) {
+            if(admin.getAdminId() == adminId) {
+                adminList.remove(admin);
+                break;
+            }
+        }
+    }
+
+    public void updateAdmin(int adminId, String name, String email, String address) {
+        for(Admin admin: adminList) {
+            if(admin.getAdminId() == adminId) {
+                admin.setName(name);
+                admin.setEmailId(email);
+                admin.setAddress(address);
+                break;
+            }
+        }
     }
 }

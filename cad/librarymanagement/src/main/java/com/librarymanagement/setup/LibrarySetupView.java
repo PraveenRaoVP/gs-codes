@@ -1,7 +1,6 @@
 package com.librarymanagement.setup;
 
 import com.librarymanagement.models.Library;
-import com.librarymanagement.repository.LibraryDatabase;
 
 import java.util.List;
 import java.util.Scanner;
@@ -27,7 +26,7 @@ public class LibrarySetupView {
 
     public void removeLibrary() {
         Scanner sc = new Scanner(System.in);
-        if(!LibraryDatabase.getInstance().checkIfLibrariesExist()) {
+        if(!librarySetupModel.checkIfLibrariesExists()) {
             System.out.println("No libraries to remove");
             return;
         }
