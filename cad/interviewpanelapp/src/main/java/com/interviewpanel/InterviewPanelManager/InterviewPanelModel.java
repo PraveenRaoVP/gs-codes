@@ -51,7 +51,7 @@ class InterviewPanelModel {
             assert interviewPanel.getInterviews().peek() != null;
             if (interviewPanel.getInterviews().peek() != null) {
                 interviewPanel.getInterviews().peek().setStatus(InterviewStatus.IN_PROGRESS);
-            }
+            } 
 
             if (interview != null) {
                 System.out.println(interview.getCandidateId() + " is under review");
