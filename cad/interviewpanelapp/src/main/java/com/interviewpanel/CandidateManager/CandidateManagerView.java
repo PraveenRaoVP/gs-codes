@@ -88,5 +88,6 @@ public class CandidateManagerView {
             return;
         }
         candidateManagerModel.changeResultOfCandidate(candidateId, realResult);
+        System.out.println("The candidate " + candidateId + " has been " + realResult);
     }
 }

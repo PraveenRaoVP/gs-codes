@@ -57,14 +57,16 @@ public class LibrarySetupView {
         }
         System.out.print("Enter Library Id: ");
         int libraryId = sc.nextInt();
+        sc.nextLine();
+
         System.out.print("Enter Library Name: ");
-        String libraryName = sc.next();
+        String libraryName = sc.nextLine();
         System.out.print("Enter Phone Number: ");
-        String phoneNo = sc.next();
+        String phoneNo = sc.nextLine();
         System.out.print("Enter Email Id: ");
-        String emailId = sc.next();
+        String emailId = sc.nextLine();
         System.out.print("Enter Address: ");
-        String address = sc.next();
+        String address = sc.nextLine();
         librarySetupModel.updateLibrary(libraryId, libraryName, phoneNo, emailId, address);
     }
 
