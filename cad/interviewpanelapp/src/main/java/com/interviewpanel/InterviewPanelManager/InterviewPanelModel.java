@@ -49,7 +49,8 @@ class InterviewPanelModel {
                 interview.setStatus(InterviewStatus.UNDER_REVIEW);
             assert interviewPanel.getInterviews().peek() != null;
             interviewPanel.getInterviews().peek().setStatus(InterviewStatus.IN_PROGRESS);
-
+            assert interview != null;
+            System.out.println(interview.getCandidateId() + " is under review");
         } else {
             PrintersAndFormatters.showMessage("No candidates in the panel");
         }

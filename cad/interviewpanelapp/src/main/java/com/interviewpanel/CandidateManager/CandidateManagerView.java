@@ -53,13 +53,17 @@ public class CandidateManagerView {
         System.out.println("Enter the candidate id: ");
         int candidateId = scanner.nextInt();
         Candidate candidate = candidateManagerModel.viewCandidate(candidateId);
-        System.out.println("Candidate Id: " + candidate.getCandidateId());
-        System.out.println("Candidate Name: " + candidate.getName());
-        System.out.println("Candidate Email: " + candidate.getEmail());
-        System.out.println("Candidate Phone: " + candidate.getPhone());
-        System.out.println("Candidate Position: " + candidate.getPositionInterviewing());
-        System.out.println("Candidate Skills: " + candidate.getSkills());
-        System.out.println("Candidate Address: " + candidate.getAddress());
+        if(candidate!=null) {
+            System.out.println("Candidate Id: " + candidate.getCandidateId());
+            System.out.println("Candidate Name: " + candidate.getName());
+            System.out.println("Candidate Email: " + candidate.getEmail());
+            System.out.println("Candidate Phone: " + candidate.getPhone());
+            System.out.println("Candidate Position: " + candidate.getPositionInterviewing());
+            System.out.println("Candidate Skills: " + candidate.getSkills());
+            System.out.println("Candidate Address: " + candidate.getAddress());
+        } else {
+            System.out.println("No candidate found with the given id");
+        }
     }
 
     public void changeResultOfCandidate() {
