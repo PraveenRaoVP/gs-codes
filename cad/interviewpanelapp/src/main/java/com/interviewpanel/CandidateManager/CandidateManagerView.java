@@ -1,5 +1,10 @@
 package com.interviewpanel.CandidateManager;
 
+import com.interviewpanel.InterviewPanelManager.InterviewPanelView;
+import com.interviewpanel.models.Candidate;
+import com.interviewpanel.models.helpers.InterviewStatus;
+import com.interviewpanel.repository.CacheMemory;
+
 import java.util.Scanner;
 
 public class CandidateManagerView {
@@ -26,18 +31,52 @@ public class CandidateManagerView {
         System.out.println("Enter the address of the employee: ");
         String address = scanner.nextLine();
 
-        candidateManagerModel.addCandidate(name, email, phone, position, skills, address);
+        InterviewPanelView interviewPanelView = new InterviewPanelView();
+        interviewPanelView.viewInterviewPanels(CacheMemory.getInstance().getCurrentAdmin());
+
+        System.out.println("Enter the interviewer id: ");
+        int interviewerId = scanner.nextInt();
+        candidateManagerModel.addCandidate(name, email, phone, position, skills, address, interviewerId);
+        System.out.println("Candidate added successfully");
     }
 
     public void removeCandidate() {
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the candidate id: ");
+        int candidateId = scanner.nextInt();
+        candidateManagerModel.removeCandidate(candidateId);
+        System.out.println("Candidate removed successfully");
     }
 
     public void viewCandidates() {
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the candidate id: ");
+        int candidateId = scanner.nextInt();
+        Candidate candidate = candidateManagerModel.viewCandidate(candidateId);
+        System.out.println("Candidate Id: " + candidate.getCandidateId());
+        System.out.println("Candidate Name: " + candidate.getName());
+        System.out.println("Candidate Email: " + candidate.getEmail());
+        System.out.println("Candidate Phone: " + candidate.getPhone());
+        System.out.println("Candidate Position: " + candidate.getPositionInterviewing());
+        System.out.println("Candidate Skills: " + candidate.getSkills());
+        System.out.println("Candidate Address: " + candidate.getAddress());
     }
 
     public void changeResultOfCandidate() {
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the candidate id: ");
+        int candidateId = scanner.nextInt();
+        System.out.println("Enter the result of the candidate: ");
+        System.out.println("1. SELECTED");
+        System.out.println("2. REJECTED");
+        int result = scanner.nextInt();
+        InterviewStatus realResult;
+        if(result==1) realResult = InterviewStatus.SELECTED;
+        else if(result==2) realResult = InterviewStatus.REJECTED;
+        else {
+            System.out.println("Invalid choice");
+            return;
+        }
+        candidateManagerModel.changeResultOfCandidate(candidateId, realResult);
     }
 }

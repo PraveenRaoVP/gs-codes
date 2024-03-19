@@ -43,10 +43,13 @@ class InterviewPanelModel {
 
     public void terminateCurrentInterviewInPanel(int panelId) {
         InterviewPanel interviewPanel = InterviewPanelRepository.getInstance().getInterviewPanelById(panelId);
-        if(!interviewPanel.getCandidates().isEmpty()) {
-            Interview interview = interviewPanel.getCandidates().poll();
+        if(!interviewPanel.getInterviews().isEmpty()) {
+            Interview interview = interviewPanel.getInterviews().poll();
             if(interview != null)
                 interview.setStatus(InterviewStatus.UNDER_REVIEW);
+            assert interviewPanel.getInterviews().peek() != null;
+            interviewPanel.getInterviews().peek().setStatus(InterviewStatus.IN_PROGRESS);
+
         } else {
             PrintersAndFormatters.showMessage("No candidates in the panel");
         }
@@ -54,7 +57,7 @@ class InterviewPanelModel {
 
     public void clearInterviewPanel(int panelId) {
         InterviewPanel interviewPanel = InterviewPanelRepository.getInstance().getInterviewPanelById(panelId);
-        interviewPanel.getCandidates().clear();
+        interviewPanel.getInterviews().clear();
     }
 
 

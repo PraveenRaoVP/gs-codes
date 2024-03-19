@@ -43,4 +43,19 @@ public class InterviewPanelRepository {
     public void removeInterviewPanel(int panelId) {
         interviewPanelList.removeIf(panel -> panel.getPanelId() == panelId);
     }
+
+    public List<InterviewPanel> getInterviewPanelsByListOfInterviewPanelIds(int adminId) {
+        List<InterviewPanel> interviewPanels = new ArrayList<>();
+        List<Integer> interviewPanelIds = AdminToInterviewPanelRepository.getInstance().getInterviewPanelsByAdminId(adminId);
+        for (int panelId : interviewPanelIds) {
+            interviewPanels.add(getInterviewPanelById(panelId));
+        }
+        return interviewPanels;
+    }
+
+    public void removeCandidateFromInterviewPanel(int candidateId) {
+        for (InterviewPanel panel : interviewPanelList) {
+            panel.getInterviews().removeIf(interview -> interview.getCandidateId() == candidateId);
+        }
+    }
 }

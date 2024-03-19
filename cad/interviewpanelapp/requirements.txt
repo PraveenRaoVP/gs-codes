@@ -41,6 +41,8 @@ Candidate Options:
 
 
 
+
+
 4. Change result of candidate
 	-> Prompt the candidate ID from the admin
 	-> Change the interview status to REJECTED or SELECTED
@@ -57,3 +59,6 @@ Admin Options:
 3. Update Admin
 	-> Get admin details
 	-> Update them in the database
+
+TODOS:-
+wherever admin id is used, use CacheMemory.getAdminId(); // done

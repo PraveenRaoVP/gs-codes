@@ -5,12 +5,12 @@ import java.util.Queue;
 public class InterviewPanel {
     private int panelId;
     private int interviewerId;
-    private Queue<Interview> candidates;
+    private Queue<Interview> interviews;
 
     public InterviewPanel(int panelId, int interviewerId, Queue<Interview> candidates) {
         this.panelId = panelId;
         this.interviewerId = interviewerId;
-        this.candidates = candidates;
+        this.interviews = candidates;
     }
 
     public int getPanelId() {
@@ -29,11 +29,11 @@ public class InterviewPanel {
         this.interviewerId = interviewerId;
     }
 
-    public Queue<Interview> getCandidates() {
-        return candidates;
+    public Queue<Interview> getInterviews() {
+        return interviews;
     }
 
-    public void setCandidates(Queue<Interview> candidates) {
-        this.candidates = candidates;
+    public void setInterviews(Queue<Interview> interviews) {
+        this.interviews = interviews;
     }
 }

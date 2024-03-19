@@ -4,8 +4,8 @@ import com.interviewpanel.models.Candidate;
 import com.interviewpanel.models.Interview;
 import com.interviewpanel.models.InterviewPanel;
 import com.interviewpanel.models.Interviewer;
+import com.interviewpanel.repository.CacheMemory;
 import com.interviewpanel.repository.CandidatesRepository;
-import com.interviewpanel.repository.InterviewPanelRepository;
 import com.interviewpanel.repository.InterviewerRepository;
 
 import java.util.List;
@@ -69,14 +69,18 @@ public class InterviewPanelView {
         for(InterviewPanel interviewPanel : interviewPanels) {
             Interviewer interviewer = InterviewerRepository.getInstance().getInterviewerById(interviewPanel.getInterviewerId());
             System.out.print(interviewPanel.getPanelId() + "\t" + interviewer.getInterviewerName() + "\t" + interviewer.getInterviewerEmail() + "\t");
-            if(interviewPanel.getCandidates().isEmpty()) {
+            if(interviewPanel.getInterviews().isEmpty()) {
                 System.out.println("N/A");
                 continue;
             }
-            for(Interview interview: interviewPanel.getCandidates()) {
+            for(Interview interview: interviewPanel.getInterviews()) {
                 Candidate candidate = CandidatesRepository.getInstance().getCandidateById(interview.getCandidateId());
                 assert candidate != null;
-                System.out.print(candidate.getName()+", ");
+                if(interviewPanel.getInterviews().peek() == interview) {
+                    System.out.print(candidate.getName()+"(In Progress), ");
+                } else {
+                    System.out.print(candidate.getName() + ", ");
+                }
             }
             System.out.println();
         }
@@ -95,7 +99,7 @@ public class InterviewPanelView {
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.nextLine();
         if(choice.equalsIgnoreCase("Y")) {
-            viewInterviewPanels(1);
+            viewInterviewPanels(CacheMemory.getInstance().getCurrentAdmin());
         }
         System.out.println("Enter the panel ID: ");
         return scanner.nextInt();

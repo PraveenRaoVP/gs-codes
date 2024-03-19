@@ -31,4 +31,8 @@ public class CredentialsRepository {
     public boolean checkDuplicateUsername(String username) {
         return credentialsList.stream().anyMatch(cred -> cred.getUsername().equals(username));
     }
+
+    public int getCredentialsId(String username) {
+        return credentialsList.stream().filter(cred -> cred.getUsername().equals(username)).findFirst().get().getCredId();
+    }
 }

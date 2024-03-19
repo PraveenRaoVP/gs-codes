@@ -17,4 +17,17 @@ public class InterviewRepository {
         }
         return interviewRepository;
     }
+
+    public List<Interview> getInterviews() {
+        return interviewList;
+    }
+
+    public Interview getInterviewByCandidateId(int candidateId) {
+        for (Interview interview : interviewList) {
+            if (interview.getCandidateId() == candidateId) {
+                return interview;
+            }
+        }
+        return null;
+    }
 }

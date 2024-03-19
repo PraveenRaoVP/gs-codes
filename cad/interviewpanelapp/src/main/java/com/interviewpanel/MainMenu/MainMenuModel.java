@@ -2,6 +2,7 @@ package com.interviewpanel.MainMenu;
 
 import com.interviewpanel.CandidateManager.CandidateManagerView;
 import com.interviewpanel.InterviewPanelManager.InterviewPanelView;
+import com.interviewpanel.repository.CacheMemory;
 
 class MainMenuModel {
     private final MainMenuView mainMenuView;
@@ -36,7 +37,7 @@ class MainMenuModel {
                 break;
             case 6:
                 // View Interview Panels
-                interviewPanelView.viewInterviewPanels(1);
+                interviewPanelView.viewInterviewPanels(CacheMemory.getInstance().getCurrentAdmin());
                 break;
             case 7:
                 // Back to Main Menu
@@ -64,6 +65,8 @@ class MainMenuModel {
                 candidateManagerView.changeResultOfCandidate();
                 break;
             case 4:
+                candidateManagerView.viewCandidates();
+            case 5:
                 // Back to Main Menu
                 break;
             default:

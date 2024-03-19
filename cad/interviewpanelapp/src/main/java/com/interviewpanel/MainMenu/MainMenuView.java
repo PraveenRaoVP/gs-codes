@@ -43,6 +43,7 @@ public class MainMenuView {
         System.out.println("2. Candidate Options");
         System.out.println("3. Admin Options");
         System.out.println("4. Exit");
+        System.out.println("Enter your choice: ");
     }
 
     public void handleInterviewPanelOptions() {
@@ -69,8 +70,10 @@ public class MainMenuView {
         System.out.println("Candidate Options:-");
         System.out.println("1. Add Candidate to Panel");
         System.out.println("2. Remove Candidate from Panel");
+        System.out.println("5. Back to Main Menu");
         System.out.println("3. Change Result of Candidate");
-        System.out.println("6. Back to Main Menu");
+        System.out.println("4. View Candidate Details");
+        System.out.println("5. Back to Main Menu");
 
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
