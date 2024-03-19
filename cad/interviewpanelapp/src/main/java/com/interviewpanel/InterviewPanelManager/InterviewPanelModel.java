@@ -5,6 +5,7 @@ import com.interviewpanel.models.InterviewPanel;
 import com.interviewpanel.models.helpers.InterviewStatus;
 import com.interviewpanel.models.helpers.PrintersAndFormatters;
 import com.interviewpanel.repository.AdminToInterviewPanelRepository;
+import com.interviewpanel.repository.CacheMemory;
 import com.interviewpanel.repository.InterviewPanelRepository;
 import com.interviewpanel.repository.InterviewerRepository;
 
@@ -25,7 +26,7 @@ class InterviewPanelModel {
         int interviewerId = InterviewerRepository.getInstance().getInterviewers().size() + 1;
         InterviewerRepository.getInstance().addInterviewer(interviewerId, interviewerName, interviewerEmail, interviewerPhone, interviewerDesignation, interviewerDepartment, interviewerOrganization);
         InterviewPanelRepository.getInstance().addInterviewPanel(interviewerId);
-        AdminToInterviewPanelRepository.getInstance().addAdminToInterviewPanel(1, InterviewPanelRepository.getInstance().getInterviewPanelList().size());
+        AdminToInterviewPanelRepository.getInstance().addAdminToInterviewPanel(CacheMemory.getInstance().getCurrentAdmin(), InterviewPanelRepository.getInstance().getInterviewPanelList().size());
         PrintersAndFormatters.showMessage("Interview Panel added successfully");
     }
 
@@ -48,9 +49,13 @@ class InterviewPanelModel {
             if(interview != null)
                 interview.setStatus(InterviewStatus.UNDER_REVIEW);
             assert interviewPanel.getInterviews().peek() != null;
-            interviewPanel.getInterviews().peek().setStatus(InterviewStatus.IN_PROGRESS);
-            assert interview != null;
-            System.out.println(interview.getCandidateId() + " is under review");
+            if (interviewPanel.getInterviews().peek() != null) {
+                interviewPanel.getInterviews().peek().setStatus(InterviewStatus.IN_PROGRESS);
+            }
+
+            if (interview != null) {
+                System.out.println(interview.getCandidateId() + " is under review");
+            }
         } else {
             PrintersAndFormatters.showMessage("No candidates in the panel");
         }
@@ -63,7 +68,7 @@ class InterviewPanelModel {
 
 
     public void clearAllInterviewPanels() {
-        List<InterviewPanel> interviewPanels = viewInterviewPanels(1);
+        List<InterviewPanel> interviewPanels = viewInterviewPanels(CacheMemory.getInstance().getCurrentAdmin());
         for (InterviewPanel interviewPanel : interviewPanels) {
             clearInterviewPanel(interviewPanel.getPanelId());
         }

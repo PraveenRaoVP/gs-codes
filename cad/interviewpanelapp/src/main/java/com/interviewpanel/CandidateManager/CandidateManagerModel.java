@@ -24,16 +24,23 @@ class CandidateManagerModel {
 
         // Add candidate to queue with less number of candidates
         List<InterviewPanel> interviewPanels = InterviewPanelRepository.getInstance().getInterviewPanelsByListOfInterviewPanelIds(1);
-
-        InterviewPanel interviewPanel = interviewPanels.get(0);
-        for(InterviewPanel panel: interviewPanels) {
-            if(panel.getInterviews().size() < interviewPanel.getInterviews().size()) {
-                interviewPanel = panel;
+        if(interviewerId == -1) { // Add candidate to the queue with less number of candidates
+            InterviewPanel interviewPanel = interviewPanels.get(0);
+            for(InterviewPanel panel: interviewPanels) {
+                if(panel.getInterviews().size() < interviewPanel.getInterviews().size()) {
+                    interviewPanel = panel;
+                }
             }
+            interviewerId = interviewPanel.getInterviewerId();
+            int interviewId = InterviewRepository.getInstance().getInterviews().size() + 1;
+            Interview interview = new Interview(interviewId, interviewerId, candidateId, null, null, InterviewStatus.WAITING);
+            interviewPanel.getInterviews().add(interview);
+        } else { // Add candidate to the interviewer's queue
+            InterviewPanel interviewPanel = InterviewPanelRepository.getInstance().getInterviewPanelById(interviewerId);
+            int interviewId = InterviewRepository.getInstance().getInterviews().size() + 1;
+            Interview interview = new Interview(interviewId, interviewerId, candidateId, null, null, InterviewStatus.WAITING);
+            interviewPanel.getInterviews().add(interview);
         }
-        int interviewId = InterviewRepository.getInstance().getInterviews().size() + 1;
-        Interview interview = new Interview(interviewId, interviewerId, candidateId, null, null, InterviewStatus.WAITING);
-        interviewPanel.getInterviews().add(interview);
     }
 
     public Candidate viewCandidate(int candidateId) {

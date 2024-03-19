@@ -31,12 +31,18 @@ public class CandidateManagerView {
         System.out.println("Enter the address of the employee: ");
         String address = scanner.nextLine();
 
-        InterviewPanelView interviewPanelView = new InterviewPanelView();
-        interviewPanelView.viewInterviewPanels(CacheMemory.getInstance().getCurrentAdmin());
+        System.out.println("Do you want to assign the candidate yourself or assign automatically to an interviewer? (y/n)");
+        String choice = scanner.nextLine();
+        if(choice.equals("y")) {
+            InterviewPanelView interviewPanelView = new InterviewPanelView();
+            interviewPanelView.viewInterviewPanels(CacheMemory.getInstance().getCurrentAdmin());
 
-        System.out.println("Enter the interviewer id: ");
-        int interviewerId = scanner.nextInt();
-        candidateManagerModel.addCandidate(name, email, phone, position, skills, address, interviewerId);
+            System.out.println("Enter the interviewer id: ");
+            int interviewerId = scanner.nextInt();
+            candidateManagerModel.addCandidate(name, email, phone, position, skills, address, interviewerId);
+        } else {
+            candidateManagerModel.addCandidate(name, email, phone, position, skills, address, -1);
+        }
         System.out.println("Candidate added successfully");
     }
 
