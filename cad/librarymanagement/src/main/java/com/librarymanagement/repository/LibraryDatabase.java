@@ -1,5 +1,6 @@
 package com.librarymanagement.repository;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.librarymanagement.models.Book;
 import com.librarymanagement.models.Library;
 
@@ -8,8 +9,22 @@ import java.util.List;
 
 public class LibraryDatabase {
     private static LibraryDatabase libraryDatabase;
-    private final List<Library> libraries = new ArrayList<>();
+    private List<Library> libraries = new ArrayList<>();
+    private String fileNamePath = "./src/main/resources/libraries.json";
     private LibraryDatabase() {
+    }
+
+    // TODO: Implement the method to get the libraries from the JSON file
+    public List<Library> getLibrariesFromJSON() {
+        ObjectMapper om = new ObjectMapper();
+        List<Library> libraries = new ArrayList<>();
+        return libraries;
+    }
+
+    //TODO: Implement the method to write the libraries to the JSON file
+    public void writeLibrariesToJSON(List<Library> libraries) {
+        ObjectMapper om = new ObjectMapper();
+
     }
 
     public List<Library> getLibraries() {

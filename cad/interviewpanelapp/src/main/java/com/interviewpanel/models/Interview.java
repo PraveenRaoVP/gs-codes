@@ -20,6 +20,8 @@ public class Interview {
         this.status = status;
     }
 
+    public Interview() {}
+
     public int getInterviewId() {
         return interviewId;
     }

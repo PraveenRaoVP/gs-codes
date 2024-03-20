@@ -1,17 +1,21 @@
 package com.interviewpanel.repository;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.interviewpanel.models.Candidate;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.io.File;
+import java.lang.reflect.Type;
+import java.util.*;
 
 public class CandidatesRepository {
-    private final List<Candidate> candidateList = new ArrayList<>();
-
+    private final HashMap<Integer, Candidate> candidateMap = new HashMap<>();
+    private String fileNamePath = "./src/main/resources/candidates.json"; // "candidates.json
     private static CandidatesRepository candidatesRepository;
 
-    private CandidatesRepository() {}
+    private CandidatesRepository() {
+        pullCandidatesFromJSON();
+    }
 
     public static CandidatesRepository getInstance() {
         if (candidatesRepository == null) {
@@ -20,20 +24,37 @@ public class CandidatesRepository {
         return candidatesRepository;
     }
 
+    public void pushCandidatesToJSON() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writeValue(new File(fileNamePath), candidateMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void pullCandidatesFromJSON() {
+        ObjectMapper mapper = new ObjectMapper();
+        File file = new File(fileNamePath);
+        if(file.exists()) {
+            try {
+                candidateMap.putAll(mapper.readValue(file, new TypeReference<Map<Integer, Candidate>>() {}));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     public void pushCandidates(Candidate candidate) {
-        candidateList.add(candidate);
+        candidateMap.put(candidate.getCandidateId(), candidate);
     }
 
     public Candidate getCandidateById(int candidateId) {
-        for (Candidate candidate : candidatesRepository.candidateList) {
-            if (candidate.getCandidateId() == candidateId) {
-                return candidate;
-            }
-        }
-        return null;
+        return candidateMap.get(candidateId);
     }
 
     public List<Candidate> getCandidates() {
-        return candidateList;
+        return new ArrayList<>(candidateMap.values());
     }
 }

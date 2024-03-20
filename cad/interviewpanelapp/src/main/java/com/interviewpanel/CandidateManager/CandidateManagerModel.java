@@ -4,6 +4,7 @@ import com.interviewpanel.models.Candidate;
 import com.interviewpanel.models.Interview;
 import com.interviewpanel.models.InterviewPanel;
 import com.interviewpanel.models.helpers.InterviewStatus;
+import com.interviewpanel.models.helpers.PrintersAndFormatters;
 import com.interviewpanel.repository.CandidatesRepository;
 import com.interviewpanel.repository.InterviewPanelRepository;
 import com.interviewpanel.repository.InterviewRepository;
@@ -35,11 +36,19 @@ class CandidateManagerModel {
             int interviewId = InterviewRepository.getInstance().getInterviews().size() + 1;
             Interview interview = new Interview(interviewId, interviewerId, candidateId, null, null, InterviewStatus.WAITING);
             interviewPanel.getInterviews().add(interview);
+            PrintersAndFormatters.showMessage("Adding Candidate...");
+            InterviewPanelRepository.getInstance().pushInterviewPanelToJSON();
+            InterviewRepository.getInstance().pushInterviewsToJSON();
+            PrintersAndFormatters.showMessage("Candidate added successfully");
         } else { // Add candidate to the interviewer's queue
             InterviewPanel interviewPanel = InterviewPanelRepository.getInstance().getInterviewPanelById(interviewerId);
             int interviewId = InterviewRepository.getInstance().getInterviews().size() + 1;
             Interview interview = new Interview(interviewId, interviewerId, candidateId, null, null, InterviewStatus.WAITING);
             interviewPanel.getInterviews().add(interview);
+            PrintersAndFormatters.showMessage("Adding Candidate...");
+            InterviewPanelRepository.getInstance().pushInterviewPanelToJSON();
+            InterviewRepository.getInstance().pushInterviewsToJSON();
+            PrintersAndFormatters.showMessage("Candidate added successfully");
         }
     }
 
@@ -52,9 +61,11 @@ class CandidateManagerModel {
         Interview interview = InterviewRepository.getInstance().getInterviewByCandidateId(candidateId);
         if(interview!=null) {
             interview.setStatus(result);
+            InterviewRepository.getInstance().pushInterviewsToJSON();
         } else {
             System.out.println("No interview found for the candidate");
         }
+        InterviewRepository.getInstance().pushInterviewsToJSON();
     }
 
     public void removeCandidate(int candidateId) {
@@ -65,5 +76,10 @@ class CandidateManagerModel {
         } else {
             System.out.println("No candidate found with the given id");
         }
+        PrintersAndFormatters.showMessage("Removing Candidate...");
+        CandidatesRepository.getInstance().pushCandidatesToJSON();
+        InterviewPanelRepository.getInstance().pushInterviewPanelToJSON();
+        InterviewRepository.getInstance().pushInterviewsToJSON();
+        PrintersAndFormatters.showMessage("Candidate removed successfully");
     }
 }

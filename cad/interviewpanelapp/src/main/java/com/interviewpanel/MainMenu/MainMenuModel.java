@@ -2,7 +2,9 @@ package com.interviewpanel.MainMenu;
 
 import com.interviewpanel.CandidateManager.CandidateManagerView;
 import com.interviewpanel.InterviewPanelManager.InterviewPanelView;
+import com.interviewpanel.models.helpers.PrintersAndFormatters;
 import com.interviewpanel.repository.CacheMemory;
+import com.interviewpanel.repository.InterviewPanelRepository;
 
 class MainMenuModel {
     private final MainMenuView mainMenuView;
@@ -41,6 +43,8 @@ class MainMenuModel {
                 break;
             case 7:
                 // Back to Main Menu
+                PrintersAndFormatters.showMessage("Going back to main menu...");
+                InterviewPanelRepository.getInstance().pushInterviewPanelToJSON();
                 break;
             default:
                 System.out.println("Invalid choice");
@@ -73,5 +77,14 @@ class MainMenuModel {
                 System.out.println("Invalid choice");
                 break;
         }
+    }
+
+    public void handleLogout() {
+        CacheMemory.getInstance().pushAllDataToTheirJSON();
+        CacheMemory.getInstance().setCurrentAdmin(-1);
+    }
+
+    public void handleExit() {
+        CacheMemory.getInstance().pushAllDataToTheirJSON();
     }
 }

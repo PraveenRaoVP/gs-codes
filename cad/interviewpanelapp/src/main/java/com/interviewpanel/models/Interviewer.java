@@ -19,6 +19,9 @@ public class Interviewer {
         this.interviewerOrganization = interviewerOrganization;
     }
 
+    public Interviewer() {
+    }
+
     public int getInterviewerId() {
         return interviewerId;
     }

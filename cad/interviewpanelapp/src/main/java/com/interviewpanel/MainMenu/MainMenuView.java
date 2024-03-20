@@ -1,5 +1,8 @@
 package com.interviewpanel.MainMenu;
 
+import com.interviewpanel.auth.LoginView;
+import com.interviewpanel.repository.CacheMemory;
+
 import java.util.Scanner;
 
 public class MainMenuView {
@@ -29,12 +32,21 @@ public class MainMenuView {
                     handleAdminOptions();
                     break;
                 case 4: // Exit
+                    System.out.println("Logging out...");
+                    mainMenuModel.handleLogout();
+                    LoginView loginView = new LoginView();
+                    loginView.init();
                     break;
+
+                case 5: // Exit
+                    System.out.println("Exiting...");
+                    mainMenuModel.handleExit();
+                    System.exit(0);
                 default:
                     System.out.println("Invalid choice");
                     break;
             }
-        } while (choice != 4) ;
+        } while (choice != 5) ;
     }
 
     public void displayMainMenu() {
@@ -42,7 +54,8 @@ public class MainMenuView {
         System.out.println("1. Interview Panel Options");
         System.out.println("2. Candidate Options");
         System.out.println("3. Admin Options");
-        System.out.println("4. Exit");
+        System.out.println("4. Logout");
+        System.out.println("5. Exit");
         System.out.println("Enter your choice: ");
     }
 
@@ -70,7 +83,6 @@ public class MainMenuView {
         System.out.println("Candidate Options:-");
         System.out.println("1. Add Candidate to Panel");
         System.out.println("2. Remove Candidate from Panel");
-        System.out.println("5. Back to Main Menu");
         System.out.println("3. Change Result of Candidate");
         System.out.println("4. View Candidate Details");
         System.out.println("5. Back to Main Menu");
@@ -83,6 +95,10 @@ public class MainMenuView {
     public void handleAdminOptions() {
         // Admin Options
         System.out.println("Admin Options:-");
+    }
+
+    public void showAlert(String s) {
+        System.out.println(s);
     }
 }
 

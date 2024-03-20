@@ -20,6 +20,9 @@ public class Candidate {
         this.address = address;
     }
 
+    public Candidate() {
+    }
+
     public int getCandidateId() {
         return candidateId;
     }

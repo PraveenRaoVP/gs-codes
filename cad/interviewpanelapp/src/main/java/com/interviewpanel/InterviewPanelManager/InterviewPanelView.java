@@ -91,6 +91,10 @@ public class InterviewPanelView {
 //	        -> Display the panels created by that admin by referring to admintointerviewpanel database with the candidates' and Interviewer name present in it
 //	        -> Dequeue the candidate and change his interview status to UNDER_REVIEW
         int panelId = getPanelIdFromUser();
+        if(!interviewPanelModel.checkIfValidPanelId(panelId)) {
+            System.out.println("Invalid panel id");
+            return;
+        }
         interviewPanelModel.terminateCurrentInterviewInPanel(panelId);
     }
 

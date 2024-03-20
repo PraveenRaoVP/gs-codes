@@ -13,6 +13,9 @@ public class InterviewPanel {
         this.interviews = candidates;
     }
 
+    public InterviewPanel() {
+    }
+
     public int getPanelId() {
         return panelId;
     }

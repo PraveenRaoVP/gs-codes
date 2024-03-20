@@ -26,9 +26,7 @@ public class CredentialsDatabase {
     }
 
     public void insertCredentials(Credentials credentials) {
-        if(credentialsList.contains(credentials.getUserName()))
-            this.credentialsList.add(credentials);
-        System.out.println("Credentials added");
+        credentialsList.add(credentials);
     }
 
     public boolean validateCredentials(String emailId, String password) {

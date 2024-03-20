@@ -20,4 +20,15 @@ public class CacheMemory {
     public void setCurrentAdmin(int currentAdminId) {
         this.currentAdminId = currentAdminId;
     }
+
+    public void pushAllDataToTheirJSON() {
+        AdminRepository.getInstance().pushAdminsToJSON();
+        AdminToCredentialsRepository.getInstance().pushAdminToCredentialsToJSON();
+        AdminToInterviewPanelRepository.getInstance().pushAdminToInterviewPanelToJSON();
+        CandidatesRepository.getInstance().pushCandidatesToJSON();
+        CredentialsRepository.getInstance().pushCredentialsToJSON();
+        InterviewerRepository.getInstance().pushInterviewersToJSON();
+        InterviewPanelRepository.getInstance().pushInterviewPanelToJSON();
+        InterviewRepository.getInstance().pushInterviewsToJSON();
+    }
 }

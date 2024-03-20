@@ -1,14 +1,19 @@
 package com.interviewpanel.repository;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AdminToCredentialsRepository {
     private Map<Integer, Integer> adminToCredentials = new HashMap<>();
     private static AdminToCredentialsRepository instance;
+    private String fileNamePath = "./src/main/resources/adminToCredentials.json";
 
     private AdminToCredentialsRepository() {
-        adminToCredentials.put(1,1);
+        pullAdminToCredentialsFromJSON();
     }
 
     public static AdminToCredentialsRepository getInstance() {
@@ -16,6 +21,27 @@ public class AdminToCredentialsRepository {
             instance = new AdminToCredentialsRepository();
         }
         return instance;
+    }
+
+    public void pushAdminToCredentialsToJSON() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writeValue(new File(fileNamePath), adminToCredentials);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void pullAdminToCredentialsFromJSON() {
+        ObjectMapper mapper = new ObjectMapper();
+        File file = new File(fileNamePath);
+        if(file.exists()) {
+            try {
+                adminToCredentials.putAll(mapper.readValue(file, new TypeReference<Map<Integer, Integer>>() {}));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void addAdminToCredentials(int adminId, int credentialsId) {
