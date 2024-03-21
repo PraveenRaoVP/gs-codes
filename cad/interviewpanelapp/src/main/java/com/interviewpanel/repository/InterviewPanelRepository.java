@@ -67,12 +67,13 @@ public class InterviewPanelRepository {
     }
 
     public List<InterviewPanel> getInterviewPanelsByListOfInterviewPanelIds(int adminId) {
-        List<InterviewPanel> interviewPanels = new ArrayList<>();
         List<Integer> interviewPanelIds = AdminToInterviewPanelRepository.getInstance().getInterviewPanelsByAdminId(adminId);
-        for (int panelId : interviewPanelIds) {
-            interviewPanels.add(getInterviewPanelById(panelId));
+        if(interviewPanelIds == null) {
+            return null;
         }
-        return interviewPanels;
+        return interviewPanelMap.values().stream()
+                .filter(interviewPanel -> interviewPanelIds.contains(interviewPanel.getPanelId()))
+                .toList();
 
     }
 

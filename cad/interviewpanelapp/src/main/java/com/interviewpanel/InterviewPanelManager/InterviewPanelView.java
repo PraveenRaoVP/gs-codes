@@ -6,6 +6,7 @@ import com.interviewpanel.models.InterviewPanel;
 import com.interviewpanel.models.Interviewer;
 import com.interviewpanel.repository.CacheMemory;
 import com.interviewpanel.repository.CandidatesRepository;
+import com.interviewpanel.repository.InterviewRepository;
 import com.interviewpanel.repository.InterviewerRepository;
 
 import java.util.List;
@@ -59,7 +60,8 @@ public class InterviewPanelView {
     public void viewInterviewPanels(int adminId) {
 //        3. View Interview Panels by that admin
 //	        -> Display the panels created by that admin
-
+        InterviewRepository.getInstance().pullInterviewsFromJSON();
+        CandidatesRepository.getInstance().pullCandidatesFromJSON();
         List<InterviewPanel> interviewPanels = interviewPanelModel.viewInterviewPanels(adminId);
         if(interviewPanels.isEmpty()) {
             System.out.println("No panels created by you");

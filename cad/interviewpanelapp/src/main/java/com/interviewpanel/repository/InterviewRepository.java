@@ -14,7 +14,7 @@ public class InterviewRepository {
 
     private final Map<Integer, Interview> interviewMap = new HashMap<>();
 
-    private String fileNamePath = "./src/main/resources/interviews.json";
+    private final String fileNamePath = "./src/main/resources/interviews.json";
     private InterviewRepository() {
         pullInterviewsFromJSON();
     }
@@ -29,7 +29,7 @@ public class InterviewRepository {
     public void pushInterviewsToJSON() {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            mapper.writeValue(new java.io.File(fileNamePath), interviewMap);
+            mapper.writeValue(new File(fileNamePath), interviewMap);
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -50,6 +50,11 @@ public class InterviewRepository {
     }
 
     public Interview getInterviewByCandidateId(int candidateId) {
-        return interviewMap.values().stream().filter(interview -> interview.getCandidateId() == candidateId).findFirst().get();
+        for(Interview interview: interviewMap.values()) {
+            if(interview.getCandidateId() == candidateId) {
+                return interview;
+            }
+        }
+        return null;
     }
 }

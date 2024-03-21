@@ -27,6 +27,7 @@ class InterviewPanelModel {
         InterviewPanelRepository.getInstance().addInterviewPanel(interviewerId);
         AdminToInterviewPanelRepository.getInstance().addAdminToInterviewPanel(CacheMemory.getInstance().getCurrentAdmin(), InterviewPanelRepository.getInstance().getInterviewPanelList().size());
         PrintersAndFormatters.showMessage("Adding new Interview Panel...");
+        InterviewRepository.getInstance().pushInterviewsToJSON();
         InterviewPanelRepository.getInstance().pushInterviewPanelToJSON();
         AdminToInterviewPanelRepository.getInstance().pushAdminToInterviewPanelToJSON();
         PrintersAndFormatters.showMessage("Interview Panel added successfully");
@@ -36,6 +37,8 @@ class InterviewPanelModel {
         // View Interview Panels by that admin
         // -> Display the panels created by that admin by referring to admintointerviewpanel database with the candidates' and Interviewer name present in it
         // -> Dequeue the candidate and change his interview status to UNDER_REVIEW
+        InterviewRepository.getInstance().pullInterviewsFromJSON();
+        InterviewPanelRepository.getInstance().pullInterviewPanelFromJSON();
         List<InterviewPanel> interviewPanels = InterviewPanelRepository.getInstance().getInterviewPanelList();
         List<Integer> interviewPanelIds = AdminToInterviewPanelRepository.getInstance().getInterviewPanelsByAdminId(adminId);
         if(interviewPanelIds == null) {

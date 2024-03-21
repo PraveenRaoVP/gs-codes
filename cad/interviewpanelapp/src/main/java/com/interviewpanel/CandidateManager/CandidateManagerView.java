@@ -4,6 +4,7 @@ import com.interviewpanel.InterviewPanelManager.InterviewPanelView;
 import com.interviewpanel.models.Candidate;
 import com.interviewpanel.models.helpers.InterviewStatus;
 import com.interviewpanel.repository.CacheMemory;
+import com.interviewpanel.repository.CandidatesRepository;
 
 import java.util.Scanner;
 
@@ -67,6 +68,8 @@ public class CandidateManagerView {
             System.out.println("Candidate Position: " + candidate.getPositionInterviewing());
             System.out.println("Candidate Skills: " + candidate.getSkills());
             System.out.println("Candidate Address: " + candidate.getAddress());
+            InterviewStatus interviewStatus = CandidatesRepository.getInstance().getInterviewStatusByCandidateId(candidateId);
+            System.out.println("Candidate Status: " + interviewStatus);
         } else {
             System.out.println("No candidate found with the given id");
         }

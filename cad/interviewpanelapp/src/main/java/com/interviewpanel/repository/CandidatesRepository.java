@@ -3,6 +3,7 @@ package com.interviewpanel.repository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.interviewpanel.models.Candidate;
+import com.interviewpanel.models.helpers.InterviewStatus;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -56,5 +57,10 @@ public class CandidatesRepository {
 
     public List<Candidate> getCandidates() {
         return new ArrayList<>(candidateMap.values());
+    }
+
+    public InterviewStatus getInterviewStatusByCandidateId(int candidateId) {
+        InterviewRepository.getInstance().pullInterviewsFromJSON();
+        return InterviewRepository.getInstance().getInterviewByCandidateId(candidateId).getStatus();
     }
 }

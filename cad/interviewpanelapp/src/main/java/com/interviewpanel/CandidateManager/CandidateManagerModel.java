@@ -22,7 +22,7 @@ class CandidateManagerModel {
         int candidateId = CandidatesRepository.getInstance().getCandidates().size() + 1;
         Candidate candidate = new Candidate(candidateId, name, email, phone, position, skills, address);
         CandidatesRepository.getInstance().pushCandidates(candidate);
-
+        InterviewPanelRepository.getInstance().pullInterviewPanelFromJSON();
         // Add candidate to queue with less number of candidates
         List<InterviewPanel> interviewPanels = InterviewPanelRepository.getInstance().getInterviewPanelsByListOfInterviewPanelIds(1);
         if(interviewerId == -1) { // Add candidate to the queue with less number of candidates
@@ -58,6 +58,7 @@ class CandidateManagerModel {
     }
 
     public void changeResultOfCandidate(int candidateId, InterviewStatus result) {
+        InterviewRepository.getInstance().pullInterviewsFromJSON();
         Interview interview = InterviewRepository.getInstance().getInterviewByCandidateId(candidateId);
         if(interview!=null) {
             interview.setStatus(result);
@@ -69,6 +70,8 @@ class CandidateManagerModel {
     }
 
     public void removeCandidate(int candidateId) {
+        CandidatesRepository.getInstance().pullCandidatesFromJSON();
+        InterviewRepository.getInstance().pullInterviewsFromJSON();
         Candidate candidate = CandidatesRepository.getInstance().getCandidateById(candidateId);
         if(candidate != null) {
             CandidatesRepository.getInstance().getCandidates().remove(candidate);
