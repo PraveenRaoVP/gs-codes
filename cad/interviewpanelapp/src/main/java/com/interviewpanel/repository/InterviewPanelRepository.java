@@ -67,6 +67,8 @@ public class InterviewPanelRepository {
     }
 
     public List<InterviewPanel> getInterviewPanelsByListOfInterviewPanelIds(int adminId) {
+        pullInterviewPanelFromJSON();
+        InterviewRepository.getInstance().pullInterviewsFromJSON();
         List<Integer> interviewPanelIds = AdminToInterviewPanelRepository.getInstance().getInterviewPanelsByAdminId(adminId);
         if(interviewPanelIds == null) {
             return null;

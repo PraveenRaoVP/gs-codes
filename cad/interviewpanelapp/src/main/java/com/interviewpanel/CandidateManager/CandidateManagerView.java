@@ -5,6 +5,7 @@ import com.interviewpanel.models.Candidate;
 import com.interviewpanel.models.helpers.InterviewStatus;
 import com.interviewpanel.repository.CacheMemory;
 import com.interviewpanel.repository.CandidatesRepository;
+import com.interviewpanel.repository.InterviewRepository;
 
 import java.util.Scanner;
 
@@ -56,6 +57,8 @@ public class CandidateManagerView {
     }
 
     public void viewCandidates() {
+        CandidatesRepository.getInstance().pullCandidatesFromJSON();
+        InterviewRepository.getInstance().pullInterviewsFromJSON();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the candidate id: ");
         int candidateId = scanner.nextInt();

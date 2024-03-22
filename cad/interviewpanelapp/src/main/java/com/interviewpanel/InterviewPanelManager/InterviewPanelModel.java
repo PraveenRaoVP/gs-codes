@@ -56,6 +56,7 @@ class InterviewPanelModel {
 
     public void terminateCurrentInterviewInPanel(int panelId) {
         InterviewPanel interviewPanel = InterviewPanelRepository.getInstance().getInterviewPanelById(panelId);
+        InterviewRepository.getInstance().pushInterviewsToJSON();
         if(!interviewPanel.getInterviews().isEmpty()) {
             Interview interview = interviewPanel.getInterviews().poll();
             if(interview != null)
@@ -66,7 +67,6 @@ class InterviewPanelModel {
             }
 
             InterviewPanelRepository.getInstance().pushInterviewPanelToJSON();
-            InterviewRepository.getInstance().pushInterviewsToJSON();
             if (interview != null) {
                 System.out.println(interview.getCandidateId() + " is under review");
             }
@@ -78,6 +78,7 @@ class InterviewPanelModel {
     public void clearInterviewPanel(int panelId) {
         InterviewPanel interviewPanel = InterviewPanelRepository.getInstance().getInterviewPanelById(panelId);
         interviewPanel.getInterviews().clear();
+        InterviewRepository.getInstance().pushInterviewsToJSON();
         InterviewPanelRepository.getInstance().pushInterviewPanelToJSON();
     }
 

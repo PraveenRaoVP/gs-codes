@@ -4,6 +4,7 @@ import com.interviewpanel.models.Candidate;
 import com.interviewpanel.models.Interview;
 import com.interviewpanel.models.InterviewPanel;
 import com.interviewpanel.models.Interviewer;
+import com.interviewpanel.models.helpers.InterviewStatus;
 import com.interviewpanel.repository.CacheMemory;
 import com.interviewpanel.repository.CandidatesRepository;
 import com.interviewpanel.repository.InterviewRepository;
@@ -77,11 +78,12 @@ public class InterviewPanelView {
             }
             for(Interview interview: interviewPanel.getInterviews()) {
                 Candidate candidate = CandidatesRepository.getInstance().getCandidateById(interview.getCandidateId());
-                assert candidate != null;
-                if(interviewPanel.getInterviews().peek() == interview) {
-                    System.out.print(candidate.getName()+"(In Progress), ");
-                } else {
-                    System.out.print(candidate.getName() + ", ");
+                if(candidate!=null && interview.getStatus() == InterviewStatus.IN_PROGRESS) {
+                    if(interviewPanel.getInterviews().peek() == interview) {
+                        System.out.print(candidate.getName()+"(In Progress), ");
+                    } else {
+                        System.out.print(candidate.getName() + ", ");
+                    }
                 }
             }
             System.out.println();

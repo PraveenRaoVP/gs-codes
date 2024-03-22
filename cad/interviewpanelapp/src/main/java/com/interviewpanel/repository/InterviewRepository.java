@@ -12,7 +12,7 @@ import java.util.Map;
 public class InterviewRepository {
     private static InterviewRepository interviewRepository;
 
-    private final Map<Integer, Interview> interviewMap = new HashMap<>();
+    private Map<Integer, Interview> interviewMap = new HashMap<>();
 
     private final String fileNamePath = "./src/main/resources/interviews.json";
     private InterviewRepository() {

@@ -15,7 +15,6 @@ public class CandidatesRepository {
     private static CandidatesRepository candidatesRepository;
 
     private CandidatesRepository() {
-        pullCandidatesFromJSON();
     }
 
     public static CandidatesRepository getInstance() {
@@ -60,7 +59,7 @@ public class CandidatesRepository {
     }
 
     public InterviewStatus getInterviewStatusByCandidateId(int candidateId) {
-        InterviewRepository.getInstance().pullInterviewsFromJSON();
+        pullCandidatesFromJSON();
         return InterviewRepository.getInstance().getInterviewByCandidateId(candidateId).getStatus();
     }
 }
