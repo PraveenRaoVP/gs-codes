@@ -6,7 +6,6 @@ import com.interviewpanel.models.Candidate;
 import com.interviewpanel.models.helpers.InterviewStatus;
 
 import java.io.File;
-import java.lang.reflect.Type;
 import java.util.*;
 
 public class CandidatesRepository {

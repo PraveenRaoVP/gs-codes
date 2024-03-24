@@ -4,29 +4,96 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c00cb2e-eda6-4725-8571-b85db66357dc" name="Changes" comment="" />
+    <list default="true" id="8c00cb2e-eda6-4725-8571-b85db66357dc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/interviewpanel/AdminManager/AdminModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/interviewpanel/AdminManager/AdminView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/admins.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/admintocredentials.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/admintointerviewpanels.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/candidates.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/credentials.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/interviewers.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/interviewpanels.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/interviews.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../interviewpanelapp/src/main/java/com/interviewpanel/CandidateManager/CandidateManagerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../interviewpanelapp/src/main/java/com/interviewpanel/CandidateManager/CandidateManagerModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../interviewpanelapp/src/main/java/com/interviewpanel/repository/CandidatesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../interviewpanelapp/src/main/java/com/interviewpanel/repository/CandidatesRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../interviewpanelapp/src/main/resources/adminToCredentials.json" beforeDir="false" afterPath="$PROJECT_DIR$/../interviewpanelapp/src/main/resources/adminToCredentials.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../interviewpanelapp/src/main/resources/adminToInterviewPanel.json" beforeDir="false" afterPath="$PROJECT_DIR$/../interviewpanelapp/src/main/resources/adminToInterviewPanel.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../interviewpanelapp/src/main/resources/candidates.json" beforeDir="false" afterPath="$PROJECT_DIR$/../interviewpanelapp/src/main/resources/candidates.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../interviewpanelapp/src/main/resources/credentials.json" beforeDir="false" afterPath="$PROJECT_DIR$/../interviewpanelapp/src/main/resources/credentials.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../interviewpanelapp/src/main/resources/interviewPanels.json" beforeDir="false" afterPath="$PROJECT_DIR$/../interviewpanelapp/src/main/resources/interviewPanels.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../interviewpanelapp/src/main/resources/interviewers.json" beforeDir="false" afterPath="$PROJECT_DIR$/../interviewpanelapp/src/main/resources/interviewers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/00000000000.xd" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/copilot/chatSessions/00000000000.xd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/xd.lck" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/copilot/chatSessions/xd.lck" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/interviewpanel/MainMenuManager/MainMenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/interviewpanel/MainMenuManager/MainMenuView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/interviewpanel/auth/LoginModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/interviewpanel/auth/LoginModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/interviewpanel/repository/AdminRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/interviewpanel/repository/AdminRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/interviewpanel/repository/CredentialsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/interviewpanel/repository/CredentialsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../librarymanagement/src/main/resources/books.json" beforeDir="false" afterPath="$PROJECT_DIR$/../librarymanagement/src/main/resources/books.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../librarymanagement/src/main/resources/customerToLibraryIdToBookId.json" beforeDir="false" afterPath="$PROJECT_DIR$/../librarymanagement/src/main/resources/customerToLibraryIdToBookId.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../librarymanagement/src/main/resources/customers.json" beforeDir="false" afterPath="$PROJECT_DIR$/../librarymanagement/src/main/resources/customers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../librarymanagement/src/main/resources/libraries.json" beforeDir="false" afterPath="$PROJECT_DIR$/../librarymanagement/src/main/resources/libraries.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../librarymanagement/src/main/resources/libraryBooks.json" beforeDir="false" afterPath="$PROJECT_DIR$/../librarymanagement/src/main/resources/libraryBooks.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2e2ofwFaanHIhj8CyzcJXWIDTNX" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "kotlin-language-version-configured": "true",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.InterviewPanelApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunManager">
+    <configuration name="InterviewPanelApplication" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.interviewpanel.InterviewPanelApplication" />
+      <module name="interviewpanelapplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -35,7 +102,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1711112143866</updated>
-      <workItem from="1711112145249" duration="3000" />
+      <workItem from="1711112145249" duration="6099000" />
+      <workItem from="1711163102818" duration="6692000" />
+      <workItem from="1711173955437" duration="11778000" />
+      <workItem from="1711192611191" duration="279000" />
+      <workItem from="1711250541370" duration="7954000" />
     </task>
     <servers />
   </component>
