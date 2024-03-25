@@ -1,6 +1,21 @@
 # Zoho School for Graduate Studies: Library Management System
 
 This Library Management System is a B2C application developed for admin users. It was developed using Java and completed within a development time of 3 days.
+## Architecture and Flow of the Application
+![Imgur](https://i.imgur.com/dCxvIPZ.png)
+
+## Screenshots
+### Login Screen:-
+![Imgur](https://i.imgur.com/MeSmfLm.png)
+
+### Adding New Books to The Library:-
+![Imgur](https://i.imgur.com/XXvpFtq.png)
+
+### Issuing Books:-
+![Imgur](https://i.imgur.com/76lPK2I.png)
+
+### Return Books:-
+![Imgur](https://i.imgur.com/VNjkiba.png)
 
 ## Features
 
