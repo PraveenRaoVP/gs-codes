@@ -13,17 +13,6 @@ public class Employee {
     private double employeeSalary;
     private static String companyName = "XYZ";
 
-    public Employee(int employeeId, String employeeName, String employeeDesignation, String employeeDepartment, String employeeAddress, String employeeEmail, String employeePhone, double employeeSalary) {
-        this.employeeId = employeeId;
-        this.employeeName = employeeName;
-        this.employeeDesignation = employeeDesignation;
-        this.employeeDepartment = employeeDepartment;
-        this.employeeAddress = employeeAddress;
-        this.employeeEmail = employeeEmail;
-        this.employeePhone = employeePhone;
-        this.employeeSalary = employeeSalary;
-    }
-
     public int getEmployeeId() {
         return employeeId;
     }
@@ -94,19 +83,5 @@ public class Employee {
 
     public void setEmployeeSalary(double employeeSalary) {
         this.employeeSalary = employeeSalary;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "employeeId=" + employeeId +
-                ", employeeName='" + employeeName + '\'' +
-                ", employeeDesignation='" + employeeDesignation + '\'' +
-                ", employeeDepartment='" + employeeDepartment + '\'' +
-                ", employeeAddress='" + employeeAddress + '\'' +
-                ", employeeEmail='" + employeeEmail + '\'' +
-                ", employeePhone='" + employeePhone + '\'' +
-                ", employeeSalary=" + employeeSalary +
-                '}';
     }
 }
