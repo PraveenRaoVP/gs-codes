@@ -7,13 +7,6 @@ public class Book {
     private String ISBN;
     private static int count = 0;
 
-    public Book(String bookName, String author, String ISBN) {
-        this.bookId = ++count;
-        this.bookName = bookName;
-        this.author = author;
-        this.ISBN = ISBN;
-    }
-
     public int getBookId() {
         return bookId;
     }
@@ -36,15 +29,5 @@ public class Book {
 
     public static void setCount(int count) {
         Book.count = count;
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "bookId=" + bookId +
-                ", bookName='" + bookName + '\'' +
-                ", author='" + author + '\'' +
-                ", ISBN='" + ISBN + '\'' +
-                '}';
     }
 }
