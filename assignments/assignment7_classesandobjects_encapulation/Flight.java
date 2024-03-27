@@ -12,19 +12,6 @@ public class Flight {
     private String arrivalTime;
     private String status;
 
-    public Flight(String flightNumber, String flightName, int terminal, String gate, String airline, String origin, String destination, String departureTime, String arrivalTime, String status) {
-        this.flightNumber = flightNumber;
-        this.flightName = flightName;
-        this.terminal = terminal;
-        this.gate = gate;
-        this.airline = airline;
-        this.origin = origin;
-        this.destination = destination;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
-        this.status = status;
-    }
-
     public String getFlightNumber() {
         return flightNumber;
     }
@@ -103,23 +90,5 @@ public class Flight {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    @Override  
-    public String toString() {
-        return "Flight{" +
-                "flightNumber='" + flightNumber + '\'' +
-                ", flightName='" + flightName + '\'' +
-                ", terminal=" + terminal +
-                ", gate='" + gate + '\'' +
-                ", airline='" + airline + '\'' +
-                ", origin='" + origin + '\'' +
-                ", destination='" + destination + '\'' +
-                ", departureTime='" + departureTime + '\'' +
-                ", arrivalTime='" + arrivalTime + '\'' +
-                ", status='" + status + '\'' +
-                '}';
-    }
-    
-    
+    } 
 }
