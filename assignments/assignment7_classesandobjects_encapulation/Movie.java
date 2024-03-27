@@ -13,18 +13,6 @@ public class Movie {
     private String duration;
     private String rating;
 
-    public Movie(int movieId, String movieName, String movieDirector, List<String> castMembers, String releaseDate, String genre, List<String> availableLanguages, String duration, String rating) {
-        this.movieId = movieId;
-        this.movieName = movieName;
-        this.movieDirector = movieDirector;
-        this.castMembers = castMembers;
-        this.releaseDate = releaseDate;
-        this.genre = genre;
-        this.availableLanguages = availableLanguages;
-        this.duration = duration;
-        this.rating = rating;
-    }
-
     public int getMovieId() {
         return movieId;
     }
@@ -96,20 +84,4 @@ public class Movie {
     public void setRating(String rating) {
         this.rating = rating;
     }
-
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "movieId=" + movieId +
-                ", movieName='" + movieName + '\'' +
-                ", movieDirector='" + movieDirector + '\'' +
-                ", castMembers=" + castMembers +
-                ", releaseDate='" + releaseDate + '\'' +
-                ", genre='" + genre + '\'' +
-                ", availableLanguages=" + availableLanguages +
-                ", duration='" + duration + '\'' +
-                ", rating='" + rating + '\'' +
-                '}';
-    }
-    
 }
