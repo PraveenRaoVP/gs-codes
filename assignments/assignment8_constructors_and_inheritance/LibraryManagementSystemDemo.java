@@ -201,7 +201,7 @@ class LibraryDatabase {
     }
 }
 
-class Staff {
+class Staff extends User{
     private String dept;
 
     public Staff(String dept) {
@@ -209,7 +209,7 @@ class Staff {
     }
 }
 
-class Student {
+class Student extends User{
     private String className;
 
     public Student(String className) {
