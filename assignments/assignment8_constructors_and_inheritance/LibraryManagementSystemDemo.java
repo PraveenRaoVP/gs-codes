@@ -204,7 +204,8 @@ class LibraryDatabase {
 class Staff extends User{
     private String dept;
 
-    public Staff(String dept) {
+    public Staff(String name, int id, String dept) {
+        super(name, id);
         this.dept = dept;
     }
 }
@@ -212,7 +213,8 @@ class Staff extends User{
 class Student extends User{
     private String className;
 
-    public Student(String className) {
+    public Student(String name, int id, String className) {
+        super(name, id);
         this.className = className;
     }
 }
@@ -250,9 +252,9 @@ public class LibraryManagementSystemDemo {
         libraryDatabase.display();
         libraryDatabase.search("Title");
 
-        Staff staff = new Staff("Dept");
+        Staff staff = new Staff("Staff", 1, "Dept");
 
-        Student student = new Student("Class");
+        Student student = new Student("Student", 1, "Class");
     }
 }
 
