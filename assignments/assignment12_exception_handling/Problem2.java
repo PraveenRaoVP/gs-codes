@@ -16,7 +16,7 @@ class CustomException extends Exception {
 public class Problem2 {
     public static void main(String[] args) {
         try {
-            throw new CustomException();
+            throw new CustomException("Custom exception is thrown");
         } catch (CustomException e) {
             e.printStackTrace();
         }
