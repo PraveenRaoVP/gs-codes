@@ -3,6 +3,10 @@ package assignments.assignment12_exception_handling;
 /*Create a custom Exception by yourself and try throwing and catching the same. */
 
 class CustomException extends Exception {
+    public CustomException(String msg) {
+        super(msg);
+    }
+    
     @Override
     public void printStackTrace() {
         System.out.println("This is a custom exception");
