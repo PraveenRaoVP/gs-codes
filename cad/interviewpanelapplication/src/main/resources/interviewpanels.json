@@ -1,1 +1,1 @@
-{"1":{"panelId":1,"interviewerId":1,"interviews":[]}}
+{"1":{"panelId":1,"interviewerId":1,"interviews":[{"interviewId":1,"interviewerId":1,"candidateId":4,"startTime":"2024-04-02T15:57:18.948845900","endTime":null,"status":"IN_PROGRESS"}]},"2":{"panelId":2,"interviewerId":2,"interviews":[{"interviewId":1,"interviewerId":2,"candidateId":5,"startTime":"2024-04-02T15:58:31.505797","endTime":null,"status":"IN_PROGRESS"}]}}
