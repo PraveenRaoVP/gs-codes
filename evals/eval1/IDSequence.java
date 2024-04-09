@@ -35,6 +35,6 @@ public class IDSequence {
         System.out.println(getMinNumber("IIDDIDID"));
         System.out.println(getMinNumber("IDIDII"));
         System.out.println(getMinNumber("DDDD"));
-        System.out.println(getMinNumber("IIII"));
+        System.out.println(getMinNumber("IIII")); 
     }
 }
