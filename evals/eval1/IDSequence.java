@@ -1,5 +1,6 @@
 package evals.eval1;
 
+import java.util.HashSet;
 import java.util.Stack;
 
 /*
@@ -15,7 +16,6 @@ IIII      ——>  12345
  */
 
 public class IDSequence {
-
 
     public static String getMinNumber(String sequence) {
         Stack<Integer> stack = new Stack<>();
