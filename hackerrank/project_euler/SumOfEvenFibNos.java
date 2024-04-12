@@ -1,4 +1,4 @@
-package hackerrank;
+package hackerrank.project_euler;
 
 import java.io.*;
 import java.math.*;
@@ -13,13 +13,21 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 
-public class SumSquareDifference {
-    public static long calcSumOfNaturalNos(long n){
-        return (long) Math.pow((n*(n+1))/2, 2);
-    }
 
-    public static long calcSumOfSquares(long n){
-        return (long) (n*(n+1)*(2*n+1))/6;
+public class SumOfEvenFibNos {
+    
+    public static long returnSumOfEvenFibNos(long n) {
+        if(n<2) return 0;
+        long a = 0, b=2;
+        long sum = a+b;
+        while(b <= n) {
+            long c = 4*b+a;
+            if(c > n) break;
+            a=b;
+            b=c;
+            sum+=b;
+        }
+        return sum;
     }
     
     public static void main(String[] args) throws IOException {
@@ -29,10 +37,8 @@ public class SumSquareDifference {
 
         IntStream.range(0, t).forEach(tItr -> {
             try {
-                int n = Integer.parseInt(bufferedReader.readLine().trim());
-                long x = calcSumOfNaturalNos(n);
-                long y = calcSumOfSquares(n);
-                System.out.println(Math.abs((x-y)));
+                long n = Long.parseLong(bufferedReader.readLine().trim());
+                System.out.println(returnSumOfEvenFibNos(n));
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -41,3 +47,4 @@ public class SumSquareDifference {
         bufferedReader.close();
     }
 }
+

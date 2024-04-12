@@ -1,4 +1,4 @@
-package hackerrank;
+package hackerrank.project_euler;
 
 import java.io.*;
 import java.math.*;
@@ -14,26 +14,25 @@ import static java.util.stream.Collectors.toList;
 
 
 
-public class LargestPrimeFactor {
-    public static void sieveOfEratosthenes(long n) {
-        boolean prime[] = new boolean[(int) (n + 1)];
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
-            }
-        }
-        for (int i = (int) n; i >= 2; i--) {
-            if (prime[i] && n % i == 0) {
-                System.out.println(i);
-                break;
-            }
-        }
+public class SmallestMultiple {
+    
+    public static long gcd(long a, long b) {
+        if(b==0) return a;
+        return gcd(b,a%b);
     }
-
+    
+    public static long calcLCM(long a, long b) {
+        return (a*b)/gcd(a,b);
+    }
+    
+    public static long computeSmallestMultiple(int n) {
+        long lcm = 1;
+        for(int i=2;i<=n;i++) {
+            lcm = calcLCM(lcm, i);
+        }
+        return lcm;
+    }
+    
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -41,8 +40,8 @@ public class LargestPrimeFactor {
 
         IntStream.range(0, t).forEach(tItr -> {
             try {
-                long n = Long.parseLong(bufferedReader.readLine().trim());
-                sieveOfEratosthenes(n);
+                int n = Integer.parseInt(bufferedReader.readLine().trim());
+                System.out.println(computeSmallestMultiple(n));
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -51,3 +50,4 @@ public class LargestPrimeFactor {
         bufferedReader.close();
     }
 }
+

@@ -1,4 +1,4 @@
-package hackerrank;
+package hackerrank.project_euler;
 
 import java.io.*;
 import java.math.*;
@@ -14,22 +14,26 @@ import static java.util.stream.Collectors.toList;
 
 
 
-public class SumOfEvenFibNos {
-    
-    public static long returnSumOfEvenFibNos(long n) {
-        if(n<2) return 0;
-        long a = 0, b=2;
-        long sum = a+b;
-        while(b <= n) {
-            long c = 4*b+a;
-            if(c > n) break;
-            a=b;
-            b=c;
-            sum+=b;
+public class LargestPrimeFactor {
+    public static void sieveOfEratosthenes(long n) {
+        boolean prime[] = new boolean[(int) (n + 1)];
+        for (int i = 0; i <= n; i++)
+            prime[i] = true;
+
+        for (int p = 2; p * p <= n; p++) {
+            if (prime[p] == true) {
+                for (int i = p * p; i <= n; i += p)
+                    prime[i] = false;
+            }
         }
-        return sum;
+        for (int i = (int) n; i >= 2; i--) {
+            if (prime[i] && n % i == 0) {
+                System.out.println(i);
+                break;
+            }
+        }
     }
-    
+
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -38,7 +42,7 @@ public class SumOfEvenFibNos {
         IntStream.range(0, t).forEach(tItr -> {
             try {
                 long n = Long.parseLong(bufferedReader.readLine().trim());
-                System.out.println(returnSumOfEvenFibNos(n));
+                sieveOfEratosthenes(n);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -47,4 +51,3 @@ public class SumOfEvenFibNos {
         bufferedReader.close();
     }
 }
-

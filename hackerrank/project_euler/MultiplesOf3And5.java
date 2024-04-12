@@ -1,4 +1,4 @@
-package hackerrank;
+package hackerrank.project_euler;
 import java.io.*;
 import java.math.*;
 import java.security.*;
