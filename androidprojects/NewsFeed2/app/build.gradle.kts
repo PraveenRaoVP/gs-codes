@@ -4,16 +4,15 @@ plugins {
 }
 
 android {
-    namespace = "com.example.dicerollinggame"
+    namespace = "android.example.newsfeed"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.dicerollinggame"
+        applicationId = "android.example.newsfeed"
         minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-        vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -34,6 +33,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    dataBinding {
+        enable = true
+    }
+
 }
 
 dependencies {

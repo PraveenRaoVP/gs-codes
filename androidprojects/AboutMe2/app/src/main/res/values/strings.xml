@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">About Me</string>
+    <string name="name">Praveen Rao</string>
+    <string name="yellow_star">Yellow Star</string>
+    <string name="bio">I am Praveen. I am a software developer with a passion for learning and teaching.
+        I have experience in web development, mobile development, and game development.
+        I am currently working on Android development and learning new technologies every day.
+        I love to share my knowledge with others and help them achieve their goals.
+        I believe that learning is a lifelong process and that we should never stop learning.
+        I am always looking for new challenges and opportunities to grow and improve myself.
+        I am excited to see what the future holds and what new technologies will emerge in the coming years.
+        I am confident that I can adapt to any situation and overcome any obstacle that comes my way.
+        I am a hard worker and a quick learner, and I am always looking for ways to improve my skills and knowledge.
+        I am passionate about technology and its potential to change the world for the better.
+        I am excited to be a part of this ever-changing industry and to see what the future holds.</string>
+    <string name="what_is_your_nickname">What is your Nickname?</string>
+    <string name="done">Done</string>
+</resources>
