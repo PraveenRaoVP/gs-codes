@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">NewsFeed</string>
+    <string name="search_btn_content_desc">Search Button</string>
+    <string name="profile_btn_content_desc">Profile Button</string>
+    <string name="check_in_text">Check In</string>
+    <string name="photo_text">Photo</string>
+    <string name="status_text">Status</string>
+    <string name="share_text">Share</string>
+    <string name="comment_text">Comment</string>
+    <string name="like_text">Like</string>
+    <string name="home">Home</string>
+    <string name="friends">friends</string>
+    <string name="settings">settings</string>
+    <string name="web">web</string>
+    <string name="messages">messages</string>
+    <string name="john_doe">John Doe</string>
+    <string name="lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
+    <string name="post">post</string>
+    <string name="_120_likes_50_comments">120 likes 50 comments</string>
 </resources>

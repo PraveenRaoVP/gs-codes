@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "android.example.newsfeed"
+    namespace = "android.example.triviagame"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "android.example.newsfeed"
+        applicationId = "android.example.triviagame"
         minSdk = 28
         targetSdk = 34
         versionCode = 1
@@ -33,10 +33,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        dataBinding = true
-    }
-
+    
 }
 
 dependencies {
