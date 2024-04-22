@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CalculatorApp</string>
+    <string name="result_text">Price: 2.34</string>
+</resources>

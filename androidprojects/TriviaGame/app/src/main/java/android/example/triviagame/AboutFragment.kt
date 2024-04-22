@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.navigation
+package android.example.triviagame
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
