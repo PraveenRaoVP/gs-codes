@@ -18,8 +18,12 @@ package android.example.dessertpusher///*
 
 import android.os.Handler
 import android.os.Looper
+import android.support.v4.os.IResultReceiver.Default
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import timber.log.Timber
 
 /**
@@ -37,7 +41,7 @@ import timber.log.Timber
  * https://developer.android.com/guide/components/processes-and-threads
  *
  */
-class DessertTimer(lifecycle: Lifecycle): LifecycleObserver {
+class DessertTimer(lifecycle: Lifecycle): DefaultLifecycleObserver {
 
     init {
         lifecycle.addObserver(this)
@@ -48,7 +52,8 @@ class DessertTimer(lifecycle: Lifecycle): LifecycleObserver {
 
     private lateinit var runnable: Runnable
 
-    fun startTimer() {
+    override fun onStart(owner: LifecycleOwner) {
+        super.onStart(owner)
         // Create the runnable action
         runnable = object : Runnable {
             override fun run() {
@@ -64,7 +69,8 @@ class DessertTimer(lifecycle: Lifecycle): LifecycleObserver {
     }
 
 
-    fun stopTimer() {
+    override fun onStop(owner: LifecycleOwner) {
+        super.onStop(owner)
         // Removes all pending posts of runnable from the handler's queue, effectively stopping the
         // timer
         handler.removeCallbacks(runnable)

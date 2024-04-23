@@ -19,6 +19,7 @@ package android.example.dessertpusher
 import android.content.ActivityNotFoundException
 import android.example.dessertpusher.databinding.ActivityMainBinding
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -30,6 +31,7 @@ import androidx.lifecycle.LifecycleObserver
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity(), LifecycleObserver {
+
 
     private var revenue = 0
     private var dessertsSold = 0
@@ -74,7 +76,12 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
             onDessertClicked()
         }
 
-        dessertTimer = DessertTimer()
+        if(savedInstanceState!=null) {
+            revenue = savedInstanceState.getInt("revenue")
+            dessertsSold = savedInstanceState.getInt("dessertsSold")
+        }
+
+        dessertTimer = DessertTimer(this.lifecycle)
 
 
         // Set the TextViews to the right values
@@ -154,7 +161,6 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
 
     override fun onStart() {
         Timber.i( "onStart Called")
-        dessertTimer.startTimer()
         super.onStart()
     }
 
@@ -170,12 +176,19 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
 
     override fun onStop() {
         Timber.i( "onStop Called")
-        dessertTimer.stopTimer()
         super.onStop()
     }
 
     override fun onDestroy() {
         Timber.i( "onDestroy Called")
         super.onDestroy()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("revenue", revenue)
+        outState.putInt("dessertsSold", dessertsSold) // if the stored value is not a primitive type, it should implement Parcelable or Serializable
+        // if the bundle size is too large, i.e >100kb , it will throw a TransactionTooLargeException
+        Timber.i( "onSaveInstanceState Called")
     }
 }
