@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/titleFragment"
         android:name="android.example.flamesapp.TitleFragment"
-        android:label="fragment_title"
-        tools:layout="@layout/fragment_title" >
+        android:label="Flames"
+        tools:layout="@layout/fragment_title">
         <action
             android:id="@+id/action_titleFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
@@ -17,8 +17,8 @@
     <fragment
         android:id="@+id/gameFragment"
         android:name="android.example.flamesapp.GameFragment"
-        android:label="fragment_game"
-        tools:layout="@layout/fragment_game" >
+        android:label="Flames"
+        tools:layout="@layout/fragment_game">
         <action
             android:id="@+id/action_gameFragment_to_resultFragment"
             app:destination="@id/resultFragment" />
@@ -26,11 +26,19 @@
     <fragment
         android:id="@+id/resultFragment"
         android:name="android.example.flamesapp.ResultFragment"
-        android:label="fragment_result"
-        tools:layout="@layout/fragment_result" >
+        android:label="Flames"
+        tools:layout="@layout/fragment_result">
         <argument
             android:name="name1"
             app:argType="string" />
         <argument android:name="name2" />
+        <action
+            android:id="@+id/action_resultFragment_to_titleFragment"
+            app:destination="@id/titleFragment"
+            app:popUpTo="@id/titleFragment" />
+        <action
+            android:id="@+id/action_resultFragment_to_gameFragment"
+            app:destination="@id/gameFragment"
+            app:popUpTo="@id/gameFragment" />
     </fragment>
 </navigation>

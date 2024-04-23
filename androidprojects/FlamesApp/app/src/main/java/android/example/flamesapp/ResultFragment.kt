@@ -4,9 +4,15 @@ import android.example.flamesapp.databinding.FragmentResultBinding
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
@@ -20,8 +26,6 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ResultFragment : Fragment() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -31,12 +35,15 @@ class ResultFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding: FragmentResultBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_result, container, false)
-        val name1 = arguments.let { ResultFragmentArgs.fromBundle(it!!).name1.replaceFirstChar {
+
+        val name1 = arguments.let { it ->
+            ResultFragmentArgs.fromBundle(it!!).name1.replaceFirstChar {
             if (it.isLowerCase()) it.titlecase(
                 Locale.getDefault()
             ) else it.toString()
         } }
-        val name2 = arguments.let { ResultFragmentArgs.fromBundle(it!!).name2.replaceFirstChar {
+        val name2 = arguments.let { it ->
+            ResultFragmentArgs.fromBundle(it!!).name2.replaceFirstChar {
             if (it.isLowerCase()) it.titlecase(
                 Locale.getDefault()
             ) else it.toString()
@@ -44,6 +51,12 @@ class ResultFragment : Fragment() {
         val result = calculateResult(name1, name2)
 
         binding.resultTextView.text = "$name1 and $name2 are $result"
+
+        binding.button.setOnClickListener { view: View ->
+            view.findNavController()
+                .navigate(ResultFragmentDirections.actionResultFragmentToTitleFragment())
+        }
+
         return binding.root
     }
 
@@ -56,8 +69,10 @@ class ResultFragment : Fragment() {
         val commonChars = name1Cleaned.filter { name2Cleaned.contains(it) }
         val remainingChars = name1Cleaned.length + name2Cleaned.length - 2 * commonChars.length
 
-        if(remainingChars == 0) return "Invalid"
-        if(remainingChars == 1) return "Friends"
+        if(remainingChars == 0) {
+            val finalAns = listOf("Friends", "Lovers", "Affectionate", "Marriage", "Enemies", "Siblings").random()
+            return finalAns
+        }
 
         // FLAMES acronym
         val flames = "FLAMES"
@@ -72,7 +87,8 @@ class ResultFragment : Fragment() {
             if (index >= 0 && endIndex <= flamesString.length) {
                 flamesString = flamesString.removeRange(index, endIndex)
             } else {
-                return "Invalid"
+                val finalAns = listOf("Friends", "Lovers", "Affectionate", "Marriage", "Enemies", "Siblings").random()
+                return finalAns
             }
             count++
             if (count == flames.length) break

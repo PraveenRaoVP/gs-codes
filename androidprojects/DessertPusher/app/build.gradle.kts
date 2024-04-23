@@ -5,7 +5,7 @@ plugins {
 
 apply(plugin = "com.android.application")
 apply(plugin = "kotlin-android")
-apply(plugin = "kotlin-aapt")
+apply(plugin = "kotlin-kapt")
 
 android {
     namespace = "android.example.dessertpusher"
