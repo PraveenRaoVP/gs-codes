@@ -2,6 +2,7 @@ package android.example.flamesapp
 
 import android.example.flamesapp.databinding.FragmentResultBinding
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -67,7 +68,7 @@ class ResultFragment : Fragment() {
                 Locale.getDefault()
             ) else it.toString()
         } }
-        val result = calculateResult(name1, name2)
+        val result = calculateResult2(name1, name2)
 
         binding.resultTextView.text = "$name1 and $name2 are $result"
 
@@ -122,6 +123,70 @@ class ResultFragment : Fragment() {
             "E" -> "Enemies"
             "S" -> "Siblings"
             else -> "Invalid"
+        }
+    }
+
+    private fun calculateResult2(name1: String, name2: String): String {
+        var sc = 0 // Similar characters count
+        val flames = "flames".toCharArray() // Possible results: [f, l, a, m, e, s]
+
+        val name1Chars = name1.toCharArray()
+        val name2Chars = name2.toCharArray()
+
+        // Count similar characters
+        for (i in name1Chars.indices) {
+            if(name1Chars[i] == ' ') name1Chars[i] = '-'
+            val c = name1Chars[i]
+            for (j in name2Chars.indices) {
+                if(name2Chars[j] == ' ') name2Chars[j] = '-'
+                if (c == name2Chars[j]) {
+                    name1Chars[i] = '-'
+                    name2Chars[j] = '-' // Mark matched characters with '-'
+                    sc += 2
+                    break
+                }
+            }
+        }
+
+        Log.i("ResultFragment Name 1: ", "${String(name1Chars)}")
+        Log.i("ResultFragment Name 2: ", "${String(name2Chars)}")
+
+        // Count remaining characters
+        val rc = name1.length + name2.length - sc
+
+        var fc = 5 // Remaining flames: f, l, a, m, e
+        var i = 0
+        var l = 1 // Index for removing flames
+        while (i >= 0) {
+            if (l == rc) {
+                for (k in i until flames.size - 1) {
+                    flames[k] = flames[k + 1] // Remove character from flames array
+                }
+                flames[flames.size - 1] = '0'
+                fc--
+                i--
+                l = 0
+            }
+            if (i == fc) {
+                i = -1
+            }
+            if (fc == 0) {
+                break
+            }
+            l++
+            i++
+            Log.i("ResultFragment Flames: ", "${String(flames)}")
+        }
+
+        // Print the result
+        val result = flames[0]
+        return when (result) {
+            'e' -> "Enemies"
+            'f' -> "Friends"
+            'm' -> "Marriage"
+            'l' -> "Lovers"
+            'a' -> "Affectionate"
+            else -> "Siblings"
         }
     }
 

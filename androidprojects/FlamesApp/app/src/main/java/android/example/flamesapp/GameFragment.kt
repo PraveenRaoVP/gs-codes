@@ -33,21 +33,32 @@ class GameFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_game, container, false)
 
         binding.startButton.setOnClickListener {view: View ->
-            val name1 = binding.name1EditText.text.toString()
-            val name2 = binding.name2EditText.text.toString()
+            val name1 = binding.name1EditText.text.toString().trim()
+            val name2 = binding.name2EditText.text.toString().trim()
 
             // if name1 or name2 is empty, show a toast
             if(name1.isEmpty() || name2.isEmpty()) {
-                if(name1.isEmpty()) {
+                if (name1.isEmpty()) {
                     binding.name1EditText.error = "Name 1 is required!"
                     Toast.makeText(context, "Name 1 is required!", Toast.LENGTH_SHORT).show()
                 }
-                if(name2.isEmpty()) {
+                if (name2.isEmpty()) {
                     binding.name2EditText.error = "Name 2 is required!"
                     Toast.makeText(context, "Name 2 is required!", Toast.LENGTH_SHORT).show()
                 }
                 return@setOnClickListener
-            } else {
+            } else if (!name1.matches("^[a-zA-Z.\\s]+$".toRegex()) || !name2.matches("^[a-zA-Z.\\s]+$".toRegex())) {
+                if (!name1.matches("^[a-zA-Z.\\s]+$".toRegex())) {
+                    binding.name1EditText.error = "Please enter a valid name without numbers or special characters!"
+                    Toast.makeText(context, "Please enter a valid name without numbers or special characters!", Toast.LENGTH_SHORT).show()
+                }
+                if (!name2.matches("^[a-zA-Z.\\s]+$".toRegex())) {
+                    binding.name2EditText.error = "Please enter a valid name without numbers or special characters!"
+                    Toast.makeText(context, "Please enter a valid name without numbers or special characters!", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            else {
                 view.findNavController().navigate(GameFragmentDirections.actionGameFragmentToResultFragment(name1, name2))
             }
 
