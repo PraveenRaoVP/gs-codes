@@ -70,4 +70,5 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     implementation("com.google.android.material:material:1.4.0")
+    implementation("nl.dionsegijn:konfetti-xml:2.0.4")
 }
