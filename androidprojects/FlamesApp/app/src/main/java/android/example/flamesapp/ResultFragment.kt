@@ -148,11 +148,15 @@ class ResultFragment : Fragment() {
             }
         }
 
-        Log.i("ResultFragment Name 1: ", "${String(name1Chars)}")
-        Log.i("ResultFragment Name 2: ", "${String(name2Chars)}")
+//        Log.i("ResultFragment Name 1: ", "${String(name1Chars)}")
+//        Log.i("ResultFragment Name 2: ", "${String(name2Chars)}")
 
         // Count remaining characters
         val rc = name1.length + name2.length - sc
+
+        if(rc == 0) {
+            return "the same person."
+        }
 
         var fc = 5 // Remaining flames: f, l, a, m, e
         var i = 0
@@ -175,7 +179,7 @@ class ResultFragment : Fragment() {
             }
             l++
             i++
-            Log.i("ResultFragment Flames: ", "${String(flames)}")
+//            Log.i("ResultFragment Flames: ", "${String(flames)}")
         }
 
         // Print the result
@@ -191,22 +195,6 @@ class ResultFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ResultFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ResultFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
     }
 }
