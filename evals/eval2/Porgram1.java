@@ -2,7 +2,6 @@ package evals.eval2;
 
 import java.util.Scanner;
 
-/* diamond pattern */
 
 public class Porgram1 {
 
