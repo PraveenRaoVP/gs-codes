@@ -80,51 +80,51 @@ class ResultFragment : Fragment() {
         return binding.root
     }
 
-    private fun calculateResult(name1: String, name2: String): String {
-        // Remove spaces and convert to lowercase
-        val name1Cleaned = name1.replace("\\s".toRegex(), "").lowercase()
-        val name2Cleaned = name2.replace("\\s".toRegex(), "").lowercase()
-
-        // Eliminate common characters
-        val commonChars = name1Cleaned.filter { name2Cleaned.contains(it) }
-        val remainingChars = name1Cleaned.length + name2Cleaned.length - 2 * commonChars.length
-
-        if(remainingChars == 0) {
-            val finalAns = listOf("Friends", "Lovers", "Affectionate", "Marriage", "Enemies", "Siblings").random()
-            return finalAns
-        }
-
-        // FLAMES acronym
-        val flames = "FLAMES"
-
-        // Calculate result
-        var index = 0
-        var count = 0
-        var flamesString = flames
-        while (flamesString.length > 1) {
-            index = (index + remainingChars - 1) % flamesString.length
-            val endIndex = index + 1
-            if (index >= 0 && endIndex <= flamesString.length) {
-                flamesString = flamesString.removeRange(index, endIndex)
-            } else {
-                val finalAns = listOf("Friends", "Lovers", "Affectionate", "Marriage", "Enemies", "Siblings").random()
-                return finalAns
-            }
-            count++
-            if (count == flames.length) break
-        }
-
-        // Interpret result
-        return when (flamesString) {
-            "F" -> "Friends"
-            "L" -> "Lovers"
-            "A" -> "Affectionate"
-            "M" -> "Marriage"
-            "E" -> "Enemies"
-            "S" -> "Siblings"
-            else -> "Invalid"
-        }
-    }
+//    private fun calculateResult(name1: String, name2: String): String {
+//        // Remove spaces and convert to lowercase
+//        val name1Cleaned = name1.replace("\\s".toRegex(), "").lowercase()
+//        val name2Cleaned = name2.replace("\\s".toRegex(), "").lowercase()
+//
+//        // Eliminate common characters
+//        val commonChars = name1Cleaned.filter { name2Cleaned.contains(it) }
+//        val remainingChars = name1Cleaned.length + name2Cleaned.length - 2 * commonChars.length
+//
+//        if(remainingChars == 0) {
+//            val finalAns = listOf("Friends", "Lovers", "Affectionate", "Marriage", "Enemies", "Siblings").random()
+//            return finalAns
+//        }
+//
+//        // FLAMES acronym
+//        val flames = "FLAMES"
+//
+//        // Calculate result
+//        var index = 0
+//        var count = 0
+//        var flamesString = flames
+//        while (flamesString.length > 1) {
+//            index = (index + remainingChars - 1) % flamesString.length
+//            val endIndex = index + 1
+//            if (index >= 0 && endIndex <= flamesString.length) {
+//                flamesString = flamesString.removeRange(index, endIndex)
+//            } else {
+//                val finalAns = listOf("Friends", "Lovers", "Affectionate", "Marriage", "Enemies", "Siblings").random()
+//                return finalAns
+//            }
+//            count++
+//            if (count == flames.length) break
+//        }
+//
+//        // Interpret result
+//        return when (flamesString) {
+//            "F" -> "Friends"
+//            "L" -> "Lovers"
+//            "A" -> "Affectionate"
+//            "M" -> "Marriage"
+//            "E" -> "Enemies"
+//            "S" -> "Siblings"
+//            else -> "Invalid"
+//        }
+//    }
 
     private fun calculateResult2(name1: String, name2: String): String {
         var sc = 0 // Similar characters count

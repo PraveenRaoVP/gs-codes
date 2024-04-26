@@ -12,49 +12,48 @@ public class Program5 {
 
     public static void printPattern(int n) {
         int[][] matrix = new int[n][n];
-        int noOfKuttyBorders = (int)Math.sqrt(n);
+        int noOfKuttyBorders = (int) Math.sqrt(n);
 
         int top = 0;
-        int bottom = n-1;
+        int bottom = n - 1;
         int left = 0;
-        int right = n-1;
+        int right = n - 1;
 
         int border = 1;
 
-        while(border <= noOfKuttyBorders) {
-            for(int i=left;i<=right;i++) {
+        while (border <= noOfKuttyBorders) {
+            for (int i = left; i <= right; i++) {
                 matrix[top][i] = 1;
             }
             top++;
 
-            for(int i=top;i<=bottom;i++) {
+            for (int i = top; i <= bottom; i++) {
                 matrix[i][right] = 1;
             }
             right--;
-            
-            for(int i=right;i>=left;i--) {
+
+            for (int i = right; i >= left; i--) {
                 matrix[bottom][i] = 1;
             }
             bottom--;
 
-            for(int i=bottom;i>=top;i--) {
+            for (int i = bottom; i >= top; i--) {
                 matrix[i][left] = 1;
             }
 
-            left+=2;
+            left += 2;
             top++;
             right--;
             bottom--;
             border++;
         }
 
-
-        for(int i=0;i<n;i++) {
-            for(int j=0;j<n;j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
                 System.out.print(matrix[i][j] + " ");
             }
             System.out.println();
         }
-        
+
     }
 }
