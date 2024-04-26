@@ -78,4 +78,13 @@ dependencies {
 
     // Lifecycles
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+
+    val lifecycle_version = "2.7.0"
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+
+    // Saved state module for ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
 }

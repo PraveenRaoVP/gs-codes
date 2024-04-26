@@ -8,8 +8,5 @@ public class StribgTokenizerDemo {
         while(st.hasMoreTokens()) {
             System.out.print(st.nextToken());
         }
-
-
-    
     }
 }
