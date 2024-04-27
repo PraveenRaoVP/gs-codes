@@ -24,6 +24,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 
@@ -32,6 +34,9 @@ import androidx.navigation.fragment.navArgs
  */
 
 class ScoreFragment : Fragment() {
+
+    private lateinit var scoreViewModel: ScoreViewModel
+    private lateinit var scoreViewModelFactory: ScoreViewModelFactory
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -49,13 +54,18 @@ class ScoreFragment : Fragment() {
 
         // Get args using by navArgs property delegate - ScoreFragmentArgs from the safe args plugin. by is a keyword in Kotlin that allows you to delegate a property to another object. In this case, you're delegating the property to the navArgs() function. What is delegating a property? It means that you're allowing another object to provide the implementation for the property. In this case, the navArgs() function provides the implementation for the property. The navArgs() function is a property delegate that retrieves the arguments passed to the fragment.
         val scoreFragmentArgs by navArgs<ScoreFragmentArgs>()
-        binding.scoreText.text = scoreFragmentArgs.score.toString()
-        binding.playAgainButton.setOnClickListener { onPlayAgain() }
+        scoreViewModelFactory = ScoreViewModelFactory(scoreFragmentArgs.score)
+        scoreViewModel = ViewModelProvider(this, scoreViewModelFactory)[ScoreViewModel::class.java]
+
+        binding.scoreViewModel = scoreViewModel
+
+        scoreViewModel.eventPlayAgain.observe(viewLifecycleOwner) {playAgain ->
+            if(playAgain) {
+                findNavController().navigate(ScoreFragmentDirections.actionRestart())
+                scoreViewModel.onPlayAgainComplete()
+            }
+        }
 
         return binding.root
-    }
-
-    private fun onPlayAgain() {
-        findNavController().navigate(ScoreFragmentDirections.actionRestart())
     }
 }
