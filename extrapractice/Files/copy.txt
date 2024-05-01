@@ -1,0 +1,71 @@
+Villivakkam, Egmore, Harbour, Chepauk-Thiruvallikeni, Thousand Lights and Anna Nagar.
+
+
+1. Get the Voter name, their constituency and the party name they endorse:-
+
+SELECT v.voter_name, c.sub_constituency_name ,p.party_name FROM voters v INNER JOIN voter_to_party_id vp ON v.voter_id=vp.voter_id INNER JOIN parties p ON p.party_id=vp.party_id INNER JOIN voter_to_subconstituency_id vc ON v.voter_id = vc.voter_id INNER JOIN subconstituencies c ON c.sub_constituency_id=vc.sub_constituency_id ORDER BY sub_constituency_name;
+
+2. Get the count of number of supporters from each constituency for each party
+
+SELECT c.sub_constituency_name, p.party_name,COUNT(*) AS no_of_supporters FROM voters v INNER JOIN voter_to_party_id vp ON v.voter_id=vp.voter_id INNER JOIN parties p ON
+ p.party_id=vp.party_id INNER JOIN voter_to_subconstituency_id vc ON v.voter_id=vc.voter_id INNER JOIN subconstituencies c ON c.sub_constituency_id = vc.sub_constituency_id GROUP BY p.party_name, c.sub_constituency_name ORDER BY sub_constituency_name;
+
+3. Get the subconstituencies with minimum votes for a party 
+
+SELECT c.sub_constituency_name, p.party_name, COALESCE(COUNT(v.voter_id), 0) AS vote_count
+FROM parties p
+LEFT JOIN voter_to_party_id vp ON p.party_id = vp.party_id 
+LEFT JOIN voters v ON vp.voter_id = v.voter_id 
+LEFT JOIN voter_to_subconstituency_id vc ON v.voter_id = vc.voter_id 
+LEFT JOIN subconstituencies c ON vc.sub_constituency_id = c.sub_constituency_id 
+GROUP BY c.sub_constituency_name, p.party_name
+HAVING vote_count = (
+    SELECT MIN(vote_count)
+    FROM (
+        SELECT COALESCE(COUNT(v.voter_id), 0) AS vote_count,
+	        c.sub_constituency_name
+        FROM parties p
+        LEFT JOIN voter_to_party_id vp ON p.party_id = vp.party_id 
+        LEFT JOIN voters v ON vp.voter_id = v.voter_id 
+        LEFT JOIN voter_to_subconstituency_id vc ON v.voter_id = vc.voter_id 
+        LEFT JOIN subconstituencies c ON vc.sub_constituency_id = c.sub_constituency_id 
+        GROUP BY c.sub_constituency_name, p.party_name
+    ) AS min_votes
+    WHERE min_votes.sub_constituency_name = c.sub_constituency_name
+)
+ORDER BY c.sub_constituency_name, vote_count;
+
+
+4. Get the subconstituencies for maximum votes for a party
+
+SELECT c.sub_constituency_name, p.party_name, COALESCE(COUNT(v.voter_id), 0) AS vote_count
+FROM parties p
+LEFT JOIN voter_to_party_id vp ON p.party_id = vp.party_id 
+LEFT JOIN voters v ON vp.voter_id = v.voter_id 
+LEFT JOIN voter_to_subconstituency_id vc ON v.voter_id = vc.voter_id 
+LEFT JOIN subconstituencies c ON vc.sub_constituency_id = c.sub_constituency_id 
+GROUP BY c.sub_constituency_name, p.party_name
+HAVING vote_count = (
+    SELECT MAX(vote_count)
+    FROM (
+        SELECT COALESCE(COUNT(v.voter_id), 0) AS vote_count,
+	        c.sub_constituency_name
+        FROM parties p
+        LEFT JOIN voter_to_party_id vp ON p.party_id = vp.party_id 
+        LEFT JOIN voters v ON vp.voter_id = v.voter_id 
+        LEFT JOIN voter_to_subconstituency_id vc ON v.voter_id = vc.voter_id 
+        LEFT JOIN subconstituencies c ON vc.sub_constituency_id = c.sub_constituency_id 
+        GROUP BY c.sub_constituency_name, p.party_name
+    ) AS min_votes
+    WHERE min_votes.sub_constituency_name = c.sub_constituency_name
+)
+ORDER BY c.sub_constituency_name, vote_count;
+
+5. Get the total votes in each constituency:-
+
+SELECT c.sub_constituency_name, COUNT(*) AS no_of_voters FROM subconstituencies c INNER JOIN voter_to_subconstituency_id vc ON c.sub_constituency_id = vc.sub_constituency_id INNER JOIN voters v ON v.voter_id = vc.voter_id GROUP BY sub_constituency_name;
+
+6. Get total votes in the Chennai central constituency:-
+
+SELECT SUM(no_of_voters) AS total_no_of_voters FROM (SELECT c.sub_constituency_name, COUNT(*) AS no_of_voters FROM subconstituencies c INNER JOIN voter_to_subconstituency_id vc ON c.sub_constituency_id = vc.sub_constituency_id INNER JOIN voters v ON v.voter_id = vc.voter_id GROUP BY sub_constituency_name) AS voters_constituency_list;
+
