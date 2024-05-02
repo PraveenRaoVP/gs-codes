@@ -1,8 +1,5 @@
 package evals.LiftSystem.Lifts;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import evals.LiftSystem.database.LiftDatabase;
 import evals.LiftSystem.utils.PrintersAndFormatters;
 
@@ -31,8 +28,13 @@ public class LiftModel {
         int[] lifts = getLifts();
         int min = 11;
         int liftNumber = -1;
-        for (int i : getRestrictedLifts(src, dest)) {
-            if (lifts[i] == -1 || checkIsLiftFull(liftNumber)) {
+        int[] restrictedLifts = getRestrictedLifts(src, dest);
+        if(checkIfAllLiftFull(lifts, restrictedLifts)) {
+            PrintersAndFormatters.showMessage("None of the lifts are available. Please wait for some time.");
+            return -1;
+        }
+        for (int i : restrictedLifts) {
+            if (lifts[i] == -1 || checkIsLiftFull(i)) { // || checkIsLiftFull(i)) {
                 continue;
             }
             if (src - dest < 0) {
@@ -56,9 +58,11 @@ public class LiftModel {
         if (liftNumber == -1) {
             PrintersAndFormatters.showMessage("All the lifts are full. Please wait for some time.");
         }
-        LiftDatabase.getInstance().incrementCurrentCapacity(liftNumber, src, dest); // getting in the lift
+        // LiftDatabase.getInstance().gettingIntoLift(liftNumber, src, dest); // getting in the lift
+        LiftDatabase.getInstance().incrementCapacity(liftNumber);
         LiftDatabase.getInstance().moveLift(liftNumber, dest);
-        LiftDatabase.getInstance().decrementCurrentCapacity(liftNumber, src, dest); // getting out the lift
+        // LiftDatabase.getInstance().decrementCapacity(liftNumber);
+        // LiftDatabase.getInstance().gettingOutOfLift(liftNumber, src, dest); // getting out the lift
         return liftNumber;
     }
 
@@ -99,10 +103,12 @@ public class LiftModel {
     public void setLiftValueToMaintenance(int liftNumber) {
         if(LiftDatabase.getInstance().getLifts()[liftNumber - 1] == -1) {
             LiftDatabase.getInstance().setLiftValue(liftNumber - 1, 0);
+            PrintersAndFormatters.showMessage("L"+(liftNumber)+" is set to working");
         } else {
             LiftDatabase.getInstance().setLiftValue(liftNumber - 1, -1);
+            PrintersAndFormatters.showMessage("L"+(liftNumber)+" is set to maintenance");
         }
-        addCapacityToLift(liftNumber, 0);
+        addCapacityToLift(liftNumber-1, 0);
         LiftDatabase.getInstance().setCapacity(liftNumber - 1, 0);
     }
 
@@ -133,13 +139,16 @@ public class LiftModel {
         return floorNumber >= 0 && floorNumber <= 10;
     }
 
-    /**
-     * Check if the lift is full
-     * @param liftNumber
-     * @return
-     */
     private boolean checkIsLiftFull(int liftNumber) {
-        return LiftDatabase.getInstance()
-                .getCurrentCapacity(liftNumber).size() >= LiftDatabase.getInstance().getCapacities()[liftNumber];
+        return LiftDatabase.getInstance().getCurrentCapacity(liftNumber) == LiftDatabase.getInstance().getMaxCapacities()[liftNumber];
+    }
+
+    private boolean checkIfAllLiftFull(int[] lifts, int[] restrictedLifts) {
+        for(int i: restrictedLifts) {
+            if(lifts[i] != -1 && !checkIsLiftFull(i)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

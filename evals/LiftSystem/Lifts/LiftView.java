@@ -36,8 +36,10 @@ public class LiftView {
             dest = sc.nextInt();
         }
         int liftNumber = liftModel.getClosestLift(src, dest);
-        System.out.println("L"+(liftNumber+1)+" is assigned");
-        displayLifts();
+        if(liftNumber != -1) {
+            System.out.println("L"+(liftNumber+1)+" is assigned");
+            displayLifts();
+        }
     }
 
     public void setLiftToMaintenance() {
@@ -51,7 +53,6 @@ public class LiftView {
             liftNumber = sc.nextInt();
         }
         liftModel.setLiftValueToMaintenance(liftNumber);
-        System.out.println("L"+(liftNumber)+" is set to maintenance");
         displayLifts();
     }
 

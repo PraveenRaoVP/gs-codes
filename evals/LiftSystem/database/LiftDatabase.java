@@ -1,11 +1,17 @@
 package evals.LiftSystem.database;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class LiftDatabase {
-    private LiftDatabase() {}
+    private LiftDatabase() {
+        liftUsers = new HashMap<>();
+        for(int i=0;i<5;i++) {
+            liftUsers.put(i, new ArrayList<>());
+        }
+    }
 
     private static LiftDatabase instance = null;
 
@@ -17,8 +23,11 @@ public class LiftDatabase {
     }
 
     int[] lifts = new int[5]; 
-    List<List<int[]>> liftUsers = new ArrayList<>();
-    int[] max_capacities = new int[]{5,5,5,5,5};
+    int[] currentCapacity = new int[5];
+
+    Map<Integer, List<int[]>> liftUsers;
+    
+    int[] max_capacities = new int[]{3,4,4,4,4};
 
     public int[] getLifts() {
         return lifts;
@@ -40,7 +49,7 @@ public class LiftDatabase {
         lifts[i] = value;
     }
 
-    public int[] getCapacities() {
+    public int[] getMaxCapacities() {
         return max_capacities;
     }
 
@@ -52,20 +61,32 @@ public class LiftDatabase {
         max_capacities[liftNumber] = cap;
     }
 
-    public List<int[]> getCurrentCapacity(int liftNumber) {
-        return liftUsers.get(liftNumber); 
+    // public List<int[]> getCurrentCapacity(int liftNumber) {
+    //     return liftUsers.get(liftNumber) == null ? new ArrayList<>() : liftUsers.get(liftNumber); 
+    // }
+
+    public int getCurrentCapacity(int liftNumber) {
+        return currentCapacity[liftNumber];
     }
 
-    public void incrementCurrentCapacity(int liftNumber, int src, int dest) {
-        liftUsers.get(liftNumber).add(new int[]{src, dest});
-    }   
+    // public void gettingIntoLift(int liftNumber, int src, int dest) {
+    //     liftUsers.get(liftNumber).add(new int[]{src, dest});
+    // }   
 
-    public void decrementCurrentCapacity(int liftNumber, int src ,int dest) {
-        for(int[] dests: liftUsers.get(liftNumber)) {
-            if(dests[0] == src && dests[1] == dest) {
-                liftUsers.get(liftNumber).remove(dests);
-                break;
-            }
-        }
+    public void incrementCapacity(int liftNumber) {
+        currentCapacity[liftNumber]++;
+    } 
+
+    public void decrementCapacity(int liftNumber) {
+        currentCapacity[liftNumber]--;
     }
+
+    // public void gettingOutOfLift(int liftNumber, int src ,int dest) {
+    //     for(int i=0;i<liftUsers.get(liftNumber).size();i++) {
+    //         if(liftUsers.get(liftNumber).get(i)[0] == src && liftUsers.get(liftNumber).get(i)[1] == dest) {
+    //             liftUsers.get(liftNumber).remove(i);
+    //             break;
+    //         }
+    //     }
+    // }
 }
