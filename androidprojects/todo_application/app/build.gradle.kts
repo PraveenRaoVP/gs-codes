@@ -16,11 +16,11 @@ buildscript {
 apply(plugin="androidx.navigation.safeargs.kotlin")
 
 android {
-    namespace = "android.example.sleeptracker"
+    namespace = "android.example.todo_application"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "android.example.sleeptracker"
+        applicationId = "android.example.todo_application"
         minSdk = 28
         targetSdk = 34
         versionCode = 1
@@ -48,7 +48,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
     buildFeatures {
         viewBinding = true
         dataBinding = true
@@ -89,10 +88,4 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
 
     implementation(libs.kotlinx.coroutines.android)
-
-    implementation(libs.androidx.recyclerview)
-    // For control over item selection of both touch and mouse driven selection
-    implementation(libs.androidx.recyclerview.selection)
-    implementation(libs.androidx.cardview)
-
 }
