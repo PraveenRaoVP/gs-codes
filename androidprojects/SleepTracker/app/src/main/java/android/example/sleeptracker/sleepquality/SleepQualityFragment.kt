@@ -17,6 +17,7 @@
 package android.example.sleeptracker.sleepquality
 
 import android.example.sleeptracker.R
+import android.example.sleeptracker.database.SleepDatabase
 import android.example.sleeptracker.databinding.FragmentSleepQualityBinding
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,6 +25,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 
 /**
  * Fragment that displays a list of clickable icons,
@@ -46,6 +49,27 @@ class SleepQualityFragment : Fragment() {
                 inflater, R.layout.fragment_sleep_quality, container, false)
 
         val application = requireNotNull(this.activity).application
+
+        val arguments = SleepQualityFragmentArgs.fromBundle(requireArguments()!!)
+
+        val dataSource = SleepDatabase.getInstance(application).sleepDatabaseDao()
+
+        val viewModelFactory = SleepQualityViewModelFactory(arguments.sleepNightKey, dataSource)
+
+        val sleepQualityViewModel =
+            ViewModelProvider(
+                this, viewModelFactory)[SleepQualityViewModel::class.java]
+
+        binding.sleepQualityViewModel = sleepQualityViewModel
+
+        sleepQualityViewModel.navigateToSleepTracker.observe(viewLifecycleOwner) {
+            if(it == true) {
+                findNavController().navigate(
+                    SleepQualityFragmentDirections.actionSleepQualityFragmentToSleepTrackerFragment()
+                )
+                sleepQualityViewModel.doneNavigating()
+            }
+        }
 
         return binding.root
     }

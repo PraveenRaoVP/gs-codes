@@ -4,6 +4,17 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath(libs.androidx.navigation.safe.args.gradle.plugin)
+    }
+}
+apply(plugin="androidx.navigation.safeargs.kotlin")
+
 android {
     namespace = "android.example.sleeptracker"
     compileSdk = 34
@@ -68,6 +79,8 @@ dependencies {
     // Kotlin
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+//    val nav_version = "2.7.7"
+    // Kotlin
 
     val lifecycle_version = "2.7.0"
     // ViewModel
