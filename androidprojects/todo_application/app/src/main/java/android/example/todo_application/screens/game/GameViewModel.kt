@@ -2,9 +2,7 @@ package android.example.todo_application.screens.game
 
 import android.app.Application
 import android.example.todo_application.database.Note
-import android.example.todo_application.database.NoteDatabase
 import android.example.todo_application.database.NoteDatabaseDao
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope

@@ -8,14 +8,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -33,7 +30,7 @@ class NoteFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_note_fragment, container, false)
 
-        (activity as AppCompatActivity).supportActionBar?.title = "Note"
+//        (activity as AppCompatActivity).supportActionBar?.title = "Note"
 
         val dataSource = NoteDatabase.getInstance(requireContext().applicationContext).noteDatabaseDao()
         val application = requireNotNull(this.activity).application
@@ -48,14 +45,14 @@ class NoteFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    findNavController().popBackStack()
-                }
-            }
-        )
+//        requireActivity().onBackPressedDispatcher.addCallback(
+//            viewLifecycleOwner,
+//            object : OnBackPressedCallback(true) {
+//                override fun handleOnBackPressed() {
+//                    findNavController().popBackStack()
+//                }
+//            }
+//        )
 
         noteViewModel.navigateToGame.observe(viewLifecycleOwner) {
             if (it == true) {

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/gameFragment"
         android:name="android.example.todo_application.screens.game.GameFragment"
-        android:label="fragment_game"
+        android:label="Noteify"
         tools:layout="@layout/fragment_game" >
         <action
             android:id="@+id/action_gameFragment_to_noteFragment"
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/noteFragment"
         android:name="android.example.todo_application.screens.notes.NoteFragment"
-        android:label="fragment_note_fragment"
+        android:label="Note"
         tools:layout="@layout/fragment_note_fragment" >
         <action
             android:id="@+id/action_noteFragment_to_gameFragment"

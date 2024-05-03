@@ -1,7 +1,6 @@
 package android.example.todo_application.screens.game
 
 import android.app.Application
-import android.example.todo_application.database.NoteDatabase
 import android.example.todo_application.database.NoteDatabaseDao
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

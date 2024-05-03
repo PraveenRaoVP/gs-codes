@@ -16,16 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [GameFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class GameFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
@@ -70,10 +61,10 @@ class GameFragment : Fragment() {
 
     private fun getNotes() {
         // display content only upto 20 chars in recycler view
-        val adapter = NoteAdapter(gameViewModel, emptyList())
+        val adapter = NoteAdapter(gameViewModel)
         recyclerView.adapter = adapter
         gameViewModel.notes.observe(viewLifecycleOwner) {
-            adapter.dataList = it
+            adapter.submitList(it)
             for (note in it) {
                 if (note.content.length > 20) {
                     note.content = note.content.substring(0, 20) + "..."
@@ -81,26 +72,5 @@ class GameFragment : Fragment() {
             }
             adapter.notifyDataSetChanged()
         }
-
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment GameFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            GameFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
