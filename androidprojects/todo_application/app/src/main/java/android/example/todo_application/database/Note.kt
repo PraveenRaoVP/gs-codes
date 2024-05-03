@@ -10,8 +10,8 @@ data class Note (
     var id: Long = 0L,
 
     @ColumnInfo(name="title")
-    val title: String = "",
+    var title: String = "",
 
     @ColumnInfo(name = "description")
-    val content: String = ""
+    var content: String = ""
 )

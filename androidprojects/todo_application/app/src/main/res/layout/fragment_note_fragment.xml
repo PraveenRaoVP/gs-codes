@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="noteViewModel"
+            type="android.example.todo_application.screens.notes.NoteViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,6 +22,7 @@
             android:contentDescription="Title Edit Text"
             android:hint="Title"
             android:gravity="top|left"
+            android:text="@{noteViewModel.title}"
             app:layout_constraintBottom_toTopOf="@+id/content_edit_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.373"
@@ -29,6 +37,7 @@
             android:gravity="top|left"
             android:contentDescription="Content Text Edit"
             android:hint="Write your notes..."
+            android:text="@{noteViewModel.content}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.343"
@@ -46,6 +55,7 @@
             app:layout_constraintHorizontal_bias="0.834"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{() -> noteViewModel.onSubmitClicked()}"
             app:layout_constraintVertical_bias="0.945" />
 
         <Button
@@ -58,7 +68,16 @@
             app:layout_constraintHorizontal_bias="0.105"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{() -> noteViewModel.onClearClicked()}"
             app:layout_constraintVertical_bias="0.944" />
+
+<!--        <Button-->
+<!--            android:id="@+id/button3"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Delete"-->
+<!--            tools:layout_editor_absoluteX="145dp"-->
+<!--            tools:layout_editor_absoluteY="524dp" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,29 +1,28 @@
 package android.example.todo_application.screens.notes
 
 import android.example.todo_application.R
+import android.example.todo_application.database.NoteDatabase
 import android.example.todo_application.databinding.FragmentNoteFragmentBinding
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [NoteFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class NoteFragment : Fragment() {
     private lateinit var binding: FragmentNoteFragmentBinding
 
@@ -34,28 +33,76 @@ class NoteFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_note_fragment, container, false)
 
+        (activity as AppCompatActivity).supportActionBar?.title = "Note"
 
+        val dataSource = NoteDatabase.getInstance(requireContext().applicationContext).noteDatabaseDao()
+        val application = requireNotNull(this.activity).application
 
-        return binding.root
-    }
+        val arguments = NoteFragmentArgs.fromBundle(requireArguments()!!)
+        val noteViewModel = NoteViewModel(dataSource, application)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment note_fragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NoteFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        // i need to pass arguments to the view model
+        noteViewModel.noteId = arguments.id
+
+        binding.noteViewModel = noteViewModel
+
+        binding.lifecycleOwner = this
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().popBackStack()
                 }
             }
+        )
+
+        noteViewModel.navigateToGame.observe(viewLifecycleOwner) {
+            if (it == true) {
+                Log.i("NoteFragment", "Navigating to GameFragment")
+                this.findNavController()
+                    .navigate(NoteFragmentDirections.actionNoteFragmentToGameFragment())
+                noteViewModel.doneNavigating()
+            }
+        }
+
+        noteViewModel.showErrorToast.observe(viewLifecycleOwner) {
+            if (it == true) {
+                Log.i("NoteFragment", "Showing error toast")
+                Toast.makeText(context, "Title cannot be empty", Toast.LENGTH_SHORT).show()
+                noteViewModel.doneShowingErrorToast()
+            }
+        }
+
+        binding.titleEditText.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // do nothing
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                do nothing
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                noteViewModel.title.value = s.toString()
+            }
+        })
+
+        binding.contentEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // do nothing
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // do nothing
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                noteViewModel.content.value = s.toString()
+            }
+
+        })
+
+        return binding.root
     }
 }

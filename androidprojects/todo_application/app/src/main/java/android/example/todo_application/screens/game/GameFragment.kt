@@ -9,6 +9,7 @@ import android.example.todo_application.R
 import android.example.todo_application.database.NoteDatabase
 import android.example.todo_application.databinding.FragmentGameBinding
 import android.example.todo_application.screens.notes.NoteAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -35,6 +36,9 @@ class GameFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        (activity as AppCompatActivity).supportActionBar?.title = "Noteify"
+
+
         val binding: FragmentGameBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_game, container, false)
 
         recyclerView = binding.recyclerView
@@ -60,10 +64,24 @@ class GameFragment : Fragment() {
             this.findNavController().navigate(GameFragmentDirections.actionGameFragmentToNoteFragment(it))
         }
 
+
         return binding.root
     }
 
     private fun getNotes() {
+        // display content only upto 20 chars in recycler view
+        val adapter = NoteAdapter(gameViewModel, emptyList())
+        recyclerView.adapter = adapter
+        gameViewModel.notes.observe(viewLifecycleOwner) {
+            adapter.dataList = it
+            for (note in it) {
+                if (note.content.length > 20) {
+                    note.content = note.content.substring(0, 20) + "..."
+                }
+            }
+            adapter.notifyDataSetChanged()
+        }
+
     }
 
     companion object {
