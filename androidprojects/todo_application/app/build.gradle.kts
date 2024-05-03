@@ -72,6 +72,8 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     ksp("androidx.room:room-compiler:$room_version")
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$room_version")
 
     val nav_version = "2.7.7"
 
@@ -88,4 +90,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
 
     implementation(libs.kotlinx.coroutines.android)
+
+    implementation(libs.androidx.recyclerview)
+    // For control over item selection of both touch and mouse driven selection
+    implementation(libs.androidx.recyclerview.selection)
+    implementation(libs.androidx.cardview)
 }
