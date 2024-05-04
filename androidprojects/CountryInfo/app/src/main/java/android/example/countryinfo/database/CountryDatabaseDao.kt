@@ -10,7 +10,7 @@ interface CountryDatabaseDao {
     @Insert
     suspend fun insert(countryDetails: CountryDetails)
 
-    @Query("SELECT * FROM country_details ORDER BY id DESC")
+    @Query("SELECT * FROM country_details ORDER BY country_name DESC")
     suspend fun getAllCountryDetails(): List<CountryDetails>
 
     @Query("SELECT * FROM country_details WHERE country_name = :countryName")
@@ -21,4 +21,7 @@ interface CountryDatabaseDao {
 
     @Query("DELETE FROM country_details")
     suspend fun deleteAll()
+
+    @Query("DELETE FROM country_details WHERE id = :id")
+    suspend fun deleteCountryDetailsById(id: Int)
 }
