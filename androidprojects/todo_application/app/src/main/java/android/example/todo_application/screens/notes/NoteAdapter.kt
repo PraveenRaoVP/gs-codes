@@ -19,6 +19,7 @@ class NoteAdapter(val gameViewModel: GameViewModel): ListAdapter<Note, NoteAdapt
     class NoteViewHolder private constructor(val binding: ItemNoteBinding ) : RecyclerView.ViewHolder(binding.root) { // this is the view holder which contains the card view content
         val cardView: CardView = binding.cardView
         val deleteButton: FloatingActionButton = binding.deleteButton
+
         fun bind(note: Note) { // this function binds the note to the card view
             binding.note = note
             binding.executePendingBindings()
