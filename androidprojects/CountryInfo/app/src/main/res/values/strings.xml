@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CountryInfo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="country_flag">Country Flag</string>
+    <string name="error_loading_data">There was an error during fetching. Please try again later or try a different country</string>
 </resources>

@@ -91,6 +91,15 @@ dependencies {
 
     // Retrofit
     implementation(libs.retrofit)
-// Retrofit with Scalar Converter
+    // Retrofit with Jackson Converter
     implementation(libs.retrofit2.converter.scalars)
+
+    // Moshi
+    implementation("com.squareup.moshi:moshi:1.15.1")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+
+
+    // Gson
+    implementation("com.google.code.gson:gson:2.10.1")
 }
