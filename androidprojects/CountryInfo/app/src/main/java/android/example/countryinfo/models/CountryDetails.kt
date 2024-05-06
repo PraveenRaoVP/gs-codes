@@ -9,7 +9,7 @@ import androidx.room.TypeConverters
 
 @Entity(tableName = "country_details")
 @TypeConverters(MapStringStringConverter::class, ListStringConverter::class)
-data class CountryDetails (
+data class CountryDetails(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
     @ColumnInfo(name = "country_name")
@@ -17,13 +17,13 @@ data class CountryDetails (
     @ColumnInfo(name = "country_capital")
     var countryCapital: String,
     @ColumnInfo(name = "flag_image_url")
-    var flagImageUrl: String,
+    var flagImageUrl: String?,
     @ColumnInfo(name = "country_population")
     var countryPopulation: Long,
     @ColumnInfo(name = "languages_spoken")
     var languagesSpoken: Map<String, String>,
     @ColumnInfo(name = "country_currency")
-    var countryCurrencies: Map<String, String>,
+    var countryCurrencies: Map<String, Map<String, String>>?,
     @ColumnInfo(name = "country_continent")
     var countryContinents: List<String>
 )

@@ -6,6 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.example.countryinfo.R
+import android.example.countryinfo.database.CountryDatabase
+import android.example.countryinfo.databinding.FragmentCountryBinding
+import android.util.Log
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
+import java.lang.Exception
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,8 +42,42 @@ class CountryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_country, container, false)
+
+        val binding: FragmentCountryBinding = FragmentCountryBinding.inflate(inflater, container, false)
+
+        val application = requireNotNull(this.activity).application
+        val dataSource = CountryDatabase.getInstance(application).countryDatabaseDao()
+
+        val viewModelFactory = CountryViewModelFactory(dataSource, application)
+        val countryViewModel = ViewModelProvider(this, viewModelFactory)[CountryViewModel::class.java]
+
+        val arguments = CountryFragmentArgs.fromBundle(requireArguments())
+
+        countryViewModel.countryId = arguments.id
+
+        binding.lifecycleOwner = this
+        binding.countryViewModel = countryViewModel
+
+        countryViewModel.countryDetail.observe(viewLifecycleOwner) { countryDetail ->
+            Picasso.get().load(countryDetail.flagImageUrl).into(binding.flag, object : Callback {
+                override fun onSuccess() {
+                    Log.i("CountryFragment", "Image loaded successfully")
+                }
+
+                override fun onError(e: Exception?) {
+                    Log.e("CountryFragment", "Error loading image: $e")
+                }
+            })
+        }
+
+        countryViewModel.backButtonPressed.observe(viewLifecycleOwner) {
+            if(it == true) {
+                this.findNavController().navigate(CountryFragmentDirections.actionCountryFragmentToListCountriesFragment())
+                countryViewModel.doneNavigatingBack()
+            }
+        }
+
+        return binding.root
     }
 
     companion object {

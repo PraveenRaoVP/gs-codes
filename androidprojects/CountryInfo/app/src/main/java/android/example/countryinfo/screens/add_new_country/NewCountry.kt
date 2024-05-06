@@ -56,7 +56,6 @@ class NewCountry : Fragment() {
         newCountryViewModel.onSearchClickBtn.observe(viewLifecycleOwner) {
             if(it == true) {
                 newCountryViewModel.searchCountry(binding.searchEditText.text.toString())
-                binding.textView.text = newCountryViewModel.countryDetails.value?.name.toString()
                 newCountryViewModel.onDoneSearching()
             }
         }

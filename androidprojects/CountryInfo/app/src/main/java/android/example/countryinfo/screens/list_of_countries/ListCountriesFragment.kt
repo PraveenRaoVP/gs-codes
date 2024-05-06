@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * A simple [Fragment] subclass.
@@ -24,6 +26,9 @@ class ListCountriesFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var listCountriesViewModel: ListCountriesViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,10 +39,16 @@ class ListCountriesFragment : Fragment() {
         val dataSource = CountryDatabase.getInstance(application).countryDatabaseDao()
 
         val viewModelFactory = ListCountriesViewModelFactory(dataSource, application)
-        val listCountriesViewModel = ViewModelProvider(this, viewModelFactory)[ListCountriesViewModel::class.java]
+        listCountriesViewModel = ViewModelProvider(this, viewModelFactory)[ListCountriesViewModel::class.java]
+
+        recyclerView = binding.recyclerView
 
         binding.lifecycleOwner = this
         binding.listCountriesViewModel = listCountriesViewModel
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        recyclerView.setHasFixedSize(true)
+
+        getCountries()
 
         listCountriesViewModel.navigateToNewCountry.observe(viewLifecycleOwner) {
             if(it == true) {
@@ -46,8 +57,29 @@ class ListCountriesFragment : Fragment() {
             }
         }
 
+        listCountriesViewModel.navigateToCountryDetail.observe(viewLifecycleOwner) { navigate ->
+            if (navigate) {
+                listCountriesViewModel.countryId.value?.let { id ->
+                    this.findNavController().navigate(
+                        ListCountriesFragmentDirections.actionListCountriesFragmentToCountryFragment(id)
+                    )
+                    listCountriesViewModel.doneNavigatingToCountryDetail()
+                }
+            }
+        }
+
         return binding.root
     }
 
+    private fun getCountries() {
+        val adapter = CountryItemAdapter(listCountriesViewModel)
+        recyclerView.adapter = adapter
+        listCountriesViewModel.countries.observe(viewLifecycleOwner) {
+            it?.let {
+                adapter.submitList(it)
+                adapter.notifyDataSetChanged()
+            }
+        }
+    }
 
 }

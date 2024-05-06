@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_countryFragment_to_listCountriesFragment"
             app:destination="@id/listCountriesFragment" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/newCountry"

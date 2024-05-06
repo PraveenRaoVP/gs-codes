@@ -2,6 +2,7 @@ package android.example.countryinfo.screens.add_new_country
 
 import android.app.Application
 import android.example.countryinfo.database.CountryDatabaseDao
+import android.example.countryinfo.models.CountryDetails
 import android.example.countryinfo.network.CountryAPI
 import android.example.countryinfo.network.CountryProperty
 import android.util.Log
@@ -20,8 +21,8 @@ class NewCountryViewModel(
     private val dataSource: CountryDatabaseDao,
     private val application: Application
 ) : AndroidViewModel(application) {
-    private val _countryDetails = MutableLiveData<CountryProperty?>()
-    val countryDetails: LiveData<CountryProperty?>
+    private val _countryDetails = MutableLiveData<List<CountryProperty>?>()
+    val countryDetails: LiveData<List<CountryProperty>?>
         get() = _countryDetails
 
     private val _showSnackBarEvent = MutableLiveData<Boolean>()
@@ -43,15 +44,28 @@ class NewCountryViewModel(
         val retrofitService = CountryAPI.retrofitService
         val call = retrofitService.getCountryDetailsByName(name)
         uiScope.launch {
-            call.enqueue(object : Callback<CountryProperty> {
+            call.enqueue(object : Callback<List<CountryProperty>> {
                 override fun onResponse(
-                    call: Call<CountryProperty>,
-                    response: Response<CountryProperty>
+                    call: Call<List<CountryProperty>>,
+                    response: Response<List<CountryProperty>>
                 ) {
                     if (response.isSuccessful) {
                         val countryProperty = response.body()
                         Log.i("NewCountryViewModel", "CountryProperty: $countryProperty")
                         _countryDetails.value = countryProperty
+                        uiScope.launch {
+                            if (countryProperty != null) {
+                                val name: String? = countryProperty[0].name.common
+                                val capital: List<String> = countryProperty[0].capital
+                                val flag: String? = countryProperty[0].flagImageUrl ?: ""
+                                val population: Long = countryProperty[0].population
+                                val languages: Map<String, String>? = countryProperty[0].languages
+                                val currencies: Map<String, Map<String, String>>? = countryProperty[0].currencies
+                                val continents: List<String> = countryProperty[0].continents
+                                val countryDetails: CountryDetails = CountryDetails(0,name!!, capital[0], flag, population, languages!!, currencies, continents)
+                                dataSource.insert(countryDetails)
+                            }
+                        }
                         _navigateToCountry.value = true
                     } else {
                         Log.i("NewCountryViewModel", "Error: ${response.errorBody()}")
@@ -59,7 +73,7 @@ class NewCountryViewModel(
                     }
                 }
 
-                override fun onFailure(call: Call<CountryProperty>, t: Throwable) {
+                override fun onFailure(call: Call<List<CountryProperty>>, t: Throwable) {
                     Log.i("NewCountryViewModel", "Failure: ${t.message}")
                     _showSnackBarEvent.value = true
                 }
@@ -81,5 +95,10 @@ class NewCountryViewModel(
 
     fun onDoneSearching() {
         _onSearchClickBtn.value = false
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
     }
 }
