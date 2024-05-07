@@ -18,7 +18,7 @@
             android:id="@+id/textView"
             android:layout_width="112dp"
             android:layout_height="43dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="40dp"
             android:text="@{countryViewModel.countryDetail.countryName}"
             android:textAlignment="center"
             android:textFontWeight="700"
@@ -44,11 +44,11 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="20dp"
             android:text="Currencies : "
             app:layout_constraintBottom_toTopOf="@+id/textView6"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.127"
+            app:layout_constraintHorizontal_bias="0.126"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -59,40 +59,40 @@
             android:text="Capital :  "
             app:layout_constraintBottom_toTopOf="@+id/textView3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.119"
+            app:layout_constraintHorizontal_bias="0.121"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="40dp"
             android:text="Population : "
             app:layout_constraintBottom_toTopOf="@+id/textView4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.127"
+            app:layout_constraintHorizontal_bias="0.128"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="36dp"
             android:text="Languages : "
             app:layout_constraintBottom_toTopOf="@+id/textView5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.128"
+            app:layout_constraintHorizontal_bias="0.129"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="108dp"
+            android:layout_marginBottom="120dp"
             android:text="Continents : "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.127"
+            app:layout_constraintHorizontal_bias="0.126"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
@@ -112,26 +112,24 @@
             android:id="@+id/capital_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
             android:layout_marginEnd="160dp"
-            android:text="@{countryViewModel.countryDetail.countryCapital}"
+            android:layout_marginBottom="28dp"
+            android:text="@{countryViewModel.countryDetail.countryCapital.toString()}"
             app:layout_constraintBottom_toTopOf="@+id/population_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.978"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/flag"
-            app:layout_constraintVertical_bias="0.095" />
+            app:layout_constraintHorizontal_bias="0.633"
+            app:layout_constraintStart_toEndOf="@+id/textView2" />
 
         <TextView
             android:id="@+id/population_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="72dp"
-            android:layout_marginBottom="28dp"
-            android:text="@{countryViewModel.countryDetail.countryPopulation}"
+            android:layout_marginBottom="32dp"
+            android:text="@{String.valueOf(countryViewModel.countryDetail.countryPopulation)}"
             app:layout_constraintBottom_toTopOf="@+id/languages_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.006"
+            app:layout_constraintHorizontal_bias="0.018"
             app:layout_constraintStart_toEndOf="@+id/textView3" />
 
         <TextView
@@ -139,11 +137,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="68dp"
-            android:layout_marginBottom="20dp"
-            android:text="@{countryViewModel.countryDetail.languagesSpoken.toString()}"
+            android:layout_marginBottom="24dp"
+            android:text="@{countryViewModel.countryDetail.languagesSpoken.values().toString().replace('{',' ').replace('}',' ').replace('[',' ').replace(']',' ').replace(',','\n')}"
             app:layout_constraintBottom_toTopOf="@+id/currencies_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.012"
+            app:layout_constraintHorizontal_bias="0.022"
             app:layout_constraintStart_toEndOf="@+id/textView4" />
 
         <TextView
@@ -151,11 +149,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="68dp"
-            android:layout_marginBottom="24dp"
-            android:text="@{countryViewModel.countryDetail.countryCurrencies.toString()}"
+            android:layout_marginBottom="20dp"
+            android:text="@{countryViewModel.countryDetail.countryCurrencies.values().toString().replace('{', ' ').replace('}',' ').replace('[',' ').replace(']',' ').replace(',','\n')}"
             app:layout_constraintBottom_toTopOf="@+id/continents_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.018"
+            app:layout_constraintHorizontal_bias="0.031"
             app:layout_constraintStart_toEndOf="@+id/textView5" />
 
         <TextView
@@ -163,11 +161,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="68dp"
-            android:layout_marginBottom="108dp"
-            android:text="@{countryViewModel.countryDetail.countryContinents.toString()}"
+            android:layout_marginBottom="128dp"
+            android:text="@{countryViewModel.countryDetail.countryContinents.toString().replace('[', ' ').replace(']',' ').replace(',',' ')}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.03"
+            app:layout_constraintHorizontal_bias="0.031"
             app:layout_constraintStart_toEndOf="@+id/textView6" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

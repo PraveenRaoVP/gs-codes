@@ -19,11 +19,9 @@ import retrofit2.Response
 
 class NewCountryViewModel(
     private val dataSource: CountryDatabaseDao,
-    private val application: Application
+    application: Application
 ) : AndroidViewModel(application) {
     private val _countryDetails = MutableLiveData<List<CountryProperty>?>()
-    val countryDetails: LiveData<List<CountryProperty>?>
-        get() = _countryDetails
 
     private val _showSnackBarEvent = MutableLiveData<Boolean>()
     val showSnackBarEvent: LiveData<Boolean>
@@ -51,7 +49,6 @@ class NewCountryViewModel(
                 ) {
                     if (response.isSuccessful) {
                         val countryProperty = response.body()
-                        Log.i("NewCountryViewModel", "CountryProperty: $countryProperty")
                         _countryDetails.value = countryProperty
                         uiScope.launch {
                             if (countryProperty != null) {
@@ -62,19 +59,17 @@ class NewCountryViewModel(
                                 val languages: Map<String, String>? = countryProperty[0].languages
                                 val currencies: Map<String, Map<String, String>>? = countryProperty[0].currencies
                                 val continents: List<String> = countryProperty[0].continents
-                                val countryDetails: CountryDetails = CountryDetails(0,name!!, capital[0], flag, population, languages!!, currencies, continents)
+                                val countryDetails = CountryDetails(0,name!!, capital[0], flag, population, languages!!, currencies, continents)
                                 dataSource.insert(countryDetails)
                             }
                         }
                         _navigateToCountry.value = true
                     } else {
-                        Log.i("NewCountryViewModel", "Error: ${response.errorBody()}")
                         _showSnackBarEvent.value = true
                     }
                 }
 
                 override fun onFailure(call: Call<List<CountryProperty>>, t: Throwable) {
-                    Log.i("NewCountryViewModel", "Failure: ${t.message}")
                     _showSnackBarEvent.value = true
                 }
             })

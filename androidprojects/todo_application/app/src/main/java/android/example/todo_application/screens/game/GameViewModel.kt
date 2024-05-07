@@ -4,6 +4,7 @@ import android.app.Application
 import android.example.todo_application.database.Note
 import android.example.todo_application.database.NoteDatabaseDao
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,9 +32,13 @@ class GameViewModel(
         }
     }
 
-    private val _navigateToNoteDetail = MutableLiveData<Long>()
-    val navigateToNoteDetail
-        get() = _navigateToNoteDetail
+    private val _onNoteClickedEvent = MutableLiveData<Boolean>()
+    val onNoteClickedEvent: LiveData<Boolean>
+        get() = _onNoteClickedEvent
+
+    private val _noteIdMonitor = MutableLiveData<Long>()
+    val noteIdMonitor
+        get() = _noteIdMonitor
 
     private val _onDeleteEvent = MutableLiveData<Boolean>()
     val onDeleteEvent
@@ -47,15 +52,21 @@ class GameViewModel(
     }
 
     fun onAddClicked() {
-        _navigateToNoteDetail.value = -1
+        _noteIdMonitor.value = -1
     }
 
     fun onNoteClicked(id: Long) {
-        _navigateToNoteDetail.value = id
+        _noteIdMonitor.value = id
+        _onNoteClickedEvent.value = true
     }
 
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    fun onDoneNavigating() {
+        _noteIdMonitor.value = -2L
+        _onNoteClickedEvent.value = false
     }
 }

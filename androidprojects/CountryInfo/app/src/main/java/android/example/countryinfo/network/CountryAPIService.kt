@@ -12,11 +12,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 private val BASE_URL = "https://restcountries.com/v3.1/"
-//
-//private val moshi = Moshi.Builder()
-//    .add(KotlinJsonAdapterFactory())
-//    .add(CountryPropertyAdapter())
-//    .build()
+
 
 private val retroFit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())

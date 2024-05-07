@@ -27,8 +27,8 @@ class CountryItemAdapter(private val listCountriesViewModel: ListCountriesViewMo
         }
         companion object {
             fun from(parent: ViewGroup): CountryViewHolder {
-                val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_country, parent, false)
                 val layoutInflater = LayoutInflater.from(parent.context)
+                layoutInflater.inflate(R.layout.item_country, parent, false)
                 val binding = ItemCountryBinding.inflate(layoutInflater, parent, false)
                 return CountryViewHolder(binding)
             }
@@ -45,7 +45,6 @@ class CountryItemAdapter(private val listCountriesViewModel: ListCountriesViewMo
 
         Picasso.get().load(countryDetails.flagImageUrl).into(holder.countryFlag, object : Callback {
             override fun onSuccess() {
-                Log.i("CountryItemAdapter", "Image loaded successfully")
             }
 
             override fun onError(e: Exception?) {
@@ -53,7 +52,6 @@ class CountryItemAdapter(private val listCountriesViewModel: ListCountriesViewMo
             }
         })
 
-        Log.i("CountryItemAdapter", "CountryDetails: $countryDetails")
         holder.countryCard.setOnClickListener {
             listCountriesViewModel.onCountryItemClicked(countryDetails.id)
         }

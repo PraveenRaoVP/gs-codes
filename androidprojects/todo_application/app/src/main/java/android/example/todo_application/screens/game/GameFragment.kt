@@ -51,8 +51,21 @@ class GameFragment : Fragment() {
 
         getNotes()
 
-        gameViewModel.navigateToNoteDetail.observe(viewLifecycleOwner) {
-            this.findNavController().navigate(GameFragmentDirections.actionGameFragmentToNoteFragment(it))
+//        gameViewModel.noteIdMonitor.observe(viewLifecycleOwner) {
+//            this.findNavController().navigate(GameFragmentDirections.actionGameFragmentToNoteFragment(it))
+//        }
+        gameViewModel.onNoteClickedEvent.observe(viewLifecycleOwner) {
+            if(it==true){
+                this.findNavController().navigate(GameFragmentDirections.actionGameFragmentToNoteFragment(gameViewModel.noteIdMonitor.value!!))
+                gameViewModel.onDoneNavigating()
+            }
+        }
+
+        gameViewModel.noteIdMonitor.observe(viewLifecycleOwner) {
+            if(it == -1L) {
+                this.findNavController().navigate(GameFragmentDirections.actionGameFragmentToNoteFragment(-1))
+                gameViewModel.onDoneNavigating()
+            }
         }
 
 

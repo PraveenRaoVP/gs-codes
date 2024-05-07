@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class ListCountriesViewModel(
     private val dataSource: CountryDatabaseDao,
-    private val application: Application
+    application: Application
 ) : AndroidViewModel(application) {
 
     val countries = MutableLiveData<List<CountryDetails>>()
@@ -62,11 +62,12 @@ class ListCountriesViewModel(
     }
 
     fun onCountryItemClicked(id: Int) {
-        _navigateToCountryDetail.value = true
         _countryId.value = id
+        _navigateToCountryDetail.value = true
     }
 
     fun doneNavigatingToCountryDetail() {
+        _countryId.value = -1
         _navigateToCountryDetail.value = false
     }
 

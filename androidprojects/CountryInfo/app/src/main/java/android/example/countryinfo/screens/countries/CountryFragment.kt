@@ -26,18 +26,6 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class CountryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,11 +49,11 @@ class CountryFragment : Fragment() {
         countryViewModel.countryDetail.observe(viewLifecycleOwner) { countryDetail ->
             Picasso.get().load(countryDetail.flagImageUrl).into(binding.flag, object : Callback {
                 override fun onSuccess() {
-                    Log.i("CountryFragment", "Image loaded successfully")
+//                    Log.i("CountryFragment", "Image loaded successfully")
                 }
 
                 override fun onError(e: Exception?) {
-                    Log.e("CountryFragment", "Error loading image: $e")
+//                    Log.e("CountryFragment", "Error loading image: $e")
                 }
             })
         }
@@ -78,25 +66,5 @@ class CountryFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CountryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CountryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

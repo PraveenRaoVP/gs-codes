@@ -2,7 +2,6 @@ package android.example.countryinfo.database
 
 import android.content.Context
 import android.example.countryinfo.models.CountryDetails
-import android.example.countryinfo.network.CountryProperty
 import android.example.countryinfo.utils.FlagToStringConverter
 import android.example.countryinfo.utils.ListStringConverter
 import android.example.countryinfo.utils.MapStringMapConverter
