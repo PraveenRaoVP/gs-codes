@@ -17,6 +17,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+enum class CountryAPIStatus { IDLE, LOADING, ERROR, DONE }
+
 class NewCountryViewModel(
     private val dataSource: CountryDatabaseDao,
     application: Application
@@ -30,6 +32,14 @@ class NewCountryViewModel(
     private val _navigateToCountry = MutableLiveData<Boolean>()
     val navigateToCountry: LiveData<Boolean>
         get() = _navigateToCountry
+
+    private val _status = MutableLiveData<CountryAPIStatus>()
+    val status: LiveData<CountryAPIStatus>
+        get() = _status
+
+    init {
+        _status.value = CountryAPIStatus.IDLE
+    }
 
     private val job: Job = Job()
     private val uiScope = CoroutineScope(job + Dispatchers.Main)
@@ -47,9 +57,11 @@ class NewCountryViewModel(
                     call: Call<List<CountryProperty>>,
                     response: Response<List<CountryProperty>>
                 ) {
+                    _status.value = CountryAPIStatus.LOADING
                     if (response.isSuccessful) {
                         val countryProperty = response.body()
                         _countryDetails.value = countryProperty
+                        _status.value = CountryAPIStatus.DONE
                         uiScope.launch {
                             if (countryProperty != null) {
                                 val name: String? = countryProperty[0].name.common
@@ -65,11 +77,13 @@ class NewCountryViewModel(
                         }
                         _navigateToCountry.value = true
                     } else {
+                        _status.value = CountryAPIStatus.ERROR
                         _showSnackBarEvent.value = true
                     }
                 }
 
                 override fun onFailure(call: Call<List<CountryProperty>>, t: Throwable) {
+                    _status.value = CountryAPIStatus.ERROR
                     _showSnackBarEvent.value = true
                 }
             })

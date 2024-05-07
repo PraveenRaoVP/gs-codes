@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.example.countryinfo.R
+import android.example.countryinfo.adapters.BindingAdapters
 import android.example.countryinfo.database.CountryDatabase
 import android.example.countryinfo.databinding.FragmentCountryBinding
 import android.example.countryinfo.databinding.FragmentNewCountryBinding
+import android.graphics.Rect
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -16,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 
 
 class NewCountry : Fragment() {
+    private var originalBottomMargin = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +32,7 @@ class NewCountry : Fragment() {
         val viewModelFactory = NewCountryViewModelFactory(dataSource, application)
 
         val newCountryViewModel = ViewModelProvider(this, viewModelFactory)[NewCountryViewModel::class.java]
+
 
         binding.lifecycleOwner = this
         binding.newCountryViewModel = newCountryViewModel
@@ -55,6 +59,31 @@ class NewCountry : Fragment() {
                     Snackbar.LENGTH_SHORT
                 ).show()
                 newCountryViewModel.onShowSnackBarEventFinish()
+            }
+        }
+
+        // code to adjust the position of the button when the keyboard is shown
+        val rootView = binding.root
+
+        rootView.viewTreeObserver.addOnGlobalLayoutListener {
+            val r = Rect()
+            rootView.getWindowVisibleDisplayFrame(r)
+            val screenHeight = rootView.height
+            val keypadHeight = screenHeight - r.bottom
+            if (keypadHeight > screenHeight * 0.15) {
+                if (originalBottomMargin == 0) {
+                    val params = binding.button.layoutParams as ViewGroup.MarginLayoutParams
+                    originalBottomMargin = params.bottomMargin
+                }
+                val params = binding.button.layoutParams as ViewGroup.MarginLayoutParams
+                params.bottomMargin = originalBottomMargin + keypadHeight
+                binding.button.layoutParams = params
+            } else {
+                if(originalBottomMargin != 0) {
+                    val params = binding.button.layoutParams as ViewGroup.MarginLayoutParams
+                    params.bottomMargin = originalBottomMargin
+                    binding.button.layoutParams = params
+                }
             }
         }
 

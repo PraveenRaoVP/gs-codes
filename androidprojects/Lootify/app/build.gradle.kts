@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.devtools.ksp")
-    id("kotlin-kapt")
 }
 
 buildscript {
@@ -15,24 +14,20 @@ buildscript {
         classpath(libs.androidx.navigation.safe.args.gradle.plugin)
     }
 }
+
 apply(plugin="androidx.navigation.safeargs.kotlin")
-// kapt
-apply(plugin="kotlin-kapt")
 
 android {
-    namespace = "android.example.countryinfo"
+    namespace = "android.example.lootify"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "android.example.countryinfo"
+        applicationId = "android.example.lootify"
         minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-        multiDexEnabled = true
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -52,18 +47,15 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        viewBinding = true
-        dataBinding = true
-    }
 
-    dataBinding {
-        enable = true
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
     }
 }
 
-
 dependencies {
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -73,24 +65,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    val room_version = "2.6.1"
-
-    implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
-    ksp("androidx.room:room-compiler:$room_version")
-    // optional - Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:$room_version")
-
     // Kotlin
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-
-    // ViewModel
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    // LiveData
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-
-    implementation(libs.kotlinx.coroutines.android)
 
     implementation(libs.androidx.recyclerview)
     // For control over item selection of both touch and mouse driven selection
@@ -99,16 +76,5 @@ dependencies {
 
     // Retrofit
     implementation(libs.retrofit)
-    // Retrofit with Jackson Converter
-    implementation(libs.retrofit2.converter.scalars)
 
-    // Moshi
-    implementation("com.squareup.moshi:moshi:1.15.1")
-    implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
-    // Gson
-    implementation("com.google.code.gson:gson:2.10.1")
-    implementation("com.squareup.picasso:picasso:2.8")
 }

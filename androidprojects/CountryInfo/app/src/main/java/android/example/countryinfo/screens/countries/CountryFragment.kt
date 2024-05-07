@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.example.countryinfo.R
 import android.example.countryinfo.database.CountryDatabase
 import android.example.countryinfo.databinding.FragmentCountryBinding
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -64,6 +65,9 @@ class CountryFragment : Fragment() {
                 countryViewModel.doneNavigatingBack()
             }
         }
+
+        binding.languagesText.movementMethod = ScrollingMovementMethod()
+        binding.currenciesText.movementMethod = ScrollingMovementMethod()
 
         return binding.root
     }
