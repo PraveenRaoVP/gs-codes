@@ -28,38 +28,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/jetbrains_mono_extrabold"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="172dp"
             android:fontFamily="@font/hellborne"
             android:text="Enter Your Names"
             android:textSize="34sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.168" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/name1InputLayout"
             android:layout_width="322dp"
             android:layout_height="76dp"
-            android:layout_marginTop="68dp"
-            android:textColorHint="#000000"
-            android:textColor="#000000"
-            android:hint="Enter Name 1"
+            android:layout_marginTop="276dp"
             android:fontFamily="@font/jetbrains_mono_extrabold"
-            app:layout_constraintBottom_toTopOf="@+id/name2InputLayout"
+            android:hint="Enter Name 1"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name1EditText"
@@ -75,15 +73,17 @@
             android:id="@+id/name2InputLayout"
             android:layout_width="322dp"
             android:layout_height="76dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="58dp"
             android:fontFamily="@font/jetbrains_mono_extrabold"
             android:hint="Enter Name 2"
             android:textColor="#000000"
             android:textColorHint="#000000"
             app:layout_constraintBottom_toTopOf="@+id/heartAnimation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintEnd_toEndOf="@+id/name1InputLayout"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/name1InputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/name1InputLayout"
+            app:layout_constraintVertical_bias="0.105">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name2EditText"
@@ -99,12 +99,13 @@
             android:id="@+id/heartAnimation"
             android:layout_width="207dp"
             android:layout_height="162dp"
-            android:layout_marginBottom="48dp"
+            android:layout_marginBottom="100dp"
             android:clickable="true"
             android:contentDescription="Click to check match"
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
             app:lottie_fileName="heart_btn_anim_new_light.json" />
 

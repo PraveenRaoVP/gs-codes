@@ -51,6 +51,14 @@ class MainActivity : AppCompatActivity() {
     var doubleBackToExitPressedOnce = false
 
     override fun onBackPressed() {
+        val navController = this.findNavController(R.id.nav_host_fragment)
+
+        if(navController.currentDestination?.id == R.id.gameFragment) {
+            // navigate to title fragment
+            navController.navigate(GameFragmentDirections.actionGameFragmentToTitleFragment())
+            return
+        }
+
         if(supportFragmentManager.primaryNavigationFragment?.childFragmentManager?.backStackEntryCount!=0) {
             super.onBackPressed()
             return
