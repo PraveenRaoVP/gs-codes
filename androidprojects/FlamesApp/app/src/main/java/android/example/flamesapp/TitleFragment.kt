@@ -2,10 +2,15 @@ package android.example.flamesapp
 
 import android.example.flamesapp.databinding.FragmentTitleBinding
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewPropertyAnimator
+import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 
@@ -21,17 +26,9 @@ private const val ARG_PARAM2 = "param2"
  */
 
 class TitleFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val handler = Handler()
+    private lateinit var cardView: CardView
+    private var animationRunnable: Runnable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,30 +37,47 @@ class TitleFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding: FragmentTitleBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_title, container, false)
 
-        binding.playButton.setOnClickListener { view: View ->
+        cardView = binding.titleCardView
+        /* repeat the animation every 2 seconds */
+        startAnimation()
+
+        binding.titleImage.setOnClickListener {view: View ->
             view.findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToGameFragment())
+            val mainActivity = activity as MainActivity
+            mainActivity.doubleBackToExitPressedOnce = false
+            stopAnimation()
         }
 
         return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TitleFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TitleFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    private fun startAnimation() {
+        animationRunnable = Runnable {
+            val animator: ViewPropertyAnimator =
+                cardView.animate().scaleX(1.2f).scaleY(1.2f).setDuration(ANIMATION_DELAY * 3 / 2)
+            animator.withEndAction {
+                cardView.animate().scaleX(1.0f).scaleY(1.0f).setDuration(ANIMATION_DELAY * 3 / 2)
+
+                handler.postDelayed(animationRunnable!!, ANIMATION_DELAY)
             }
+            animator.start()
+        }
+        handler.post(animationRunnable!!)
+    }
+
+    private fun stopAnimation() {
+        handler.removeCallbacks(animationRunnable!!)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        stopAnimation()
+    }
+
+
+
+
+    companion object {
+        private const val ANIMATION_DELAY = 1000L // Animation delay in milliseconds
     }
 }

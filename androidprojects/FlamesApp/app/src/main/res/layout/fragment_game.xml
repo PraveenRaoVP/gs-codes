@@ -12,53 +12,101 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
+        >
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="9dp"
+            android:layout_height="20dp"
+            android:fontFamily="@font/jetbrains_mono_extrabold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/jetbrains_mono_extrabold"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/hellborne"
             android:text="Enter Your Names"
-            android:textSize="24sp"
+            android:textSize="34sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.155" />
+            app:layout_constraintVertical_bias="0.168" />
 
-        <EditText
-            android:id="@+id/name1EditText"
-            android:layout_width="290dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="76dp"
-            android:maxLines="1"
-            android:inputType="text"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name1InputLayout"
+            android:layout_width="322dp"
+            android:layout_height="76dp"
+            android:layout_marginTop="68dp"
+            android:textColorHint="#000000"
+            android:textColor="#000000"
             android:hint="Enter Name 1"
+            android:fontFamily="@font/jetbrains_mono_extrabold"
+            app:layout_constraintBottom_toTopOf="@+id/name2InputLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+            app:layout_constraintVertical_bias="0.0">
 
-        <EditText
-            android:id="@+id/name2EditText"
-            android:layout_width="290dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="76dp"
-            android:maxLines="1"
-            android:inputType="text"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name1EditText"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:fontFamily="@font/jetbrains_mono_extrabold"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name2InputLayout"
+            android:layout_width="322dp"
+            android:layout_height="76dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/jetbrains_mono_extrabold"
             android:hint="Enter Name 2"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/heartAnimation"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name1EditText" />
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/startButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:text="Start"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name2EditText"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:fontFamily="@font/jetbrains_mono_extrabold"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/heartAnimation"
+            android:layout_width="207dp"
+            android:layout_height="162dp"
+            android:layout_marginBottom="48dp"
+            android:clickable="true"
+            android:contentDescription="Click to check match"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name2EditText" />
+            app:lottie_fileName="heart_btn_anim_new_light.json" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

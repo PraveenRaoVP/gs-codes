@@ -1,23 +1,19 @@
-buildscript {
-    repositories {
-        google()
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:7.1.0")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.7")
-    }
-}
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
 }
 
-apply(plugin = "com.android.application")
-apply(plugin = "kotlin-android")
-apply(plugin = "androidx.navigation.safeargs.kotlin")
-apply(plugin = "kotlin-kapt")
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven(url = "https://jitpack.io")
+    }
+    dependencies {
+        classpath(libs.androidx.navigation.safe.args.gradle.plugin)
+    }
+}
+apply(plugin="androidx.navigation.safeargs.kotlin")
 
 android {
     namespace = "android.example.flamesapp"
@@ -65,10 +61,15 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
     val nav_version = "2.7.7"
-    // Kotlin
-    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     implementation("com.google.android.material:material:1.4.0")
     implementation("nl.dionsegijn:konfetti-xml:2.0.4")
+
+    implementation("com.airbnb.android:lottie:4.2.0")
+
+
 }

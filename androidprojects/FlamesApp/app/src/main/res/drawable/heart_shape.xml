@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Background: Heart Animation -->
+    <item>
+        <!-- heart is in assets folder -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="207dp"
+            android:layout_height="162dp"
+            app:lottie_fileName="heart_btn_anim.json"
+            android:gravity="center" />
+    </item>
+
+    <!-- Border: Yellow Border -->
+    <item android:id="@+id/border">
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/yellow" />
+        </shape>
+    </item>
+</layer-list>

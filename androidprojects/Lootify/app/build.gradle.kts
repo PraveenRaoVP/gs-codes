@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.devtools.ksp")
+    id("kotlin-kapt")
 }
 
 buildscript {
@@ -14,8 +15,9 @@ buildscript {
         classpath(libs.androidx.navigation.safe.args.gradle.plugin)
     }
 }
-
 apply(plugin="androidx.navigation.safeargs.kotlin")
+// kapt
+apply(plugin="kotlin-kapt")
 
 android {
     namespace = "android.example.lootify"
@@ -27,7 +29,10 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        multiDexEnabled = true
+        vectorDrawables {
+            useSupportLibrary = true
+        }
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -69,6 +74,13 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
+    // ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    // LiveData
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+
+    implementation(libs.kotlinx.coroutines.android)
+
     implementation(libs.androidx.recyclerview)
     // For control over item selection of both touch and mouse driven selection
     implementation(libs.androidx.recyclerview.selection)
@@ -76,5 +88,11 @@ dependencies {
 
     // Retrofit
     implementation(libs.retrofit)
+
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Gson
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.picasso:picasso:2.8")
 
 }

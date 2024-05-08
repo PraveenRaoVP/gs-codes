@@ -3,39 +3,144 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ResultFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/resultFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
         >
+
         <nl.dionsegijn.konfetti.xml.KonfettiView
             android:id="@+id/konfettiView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="16dp" />
 
         <TextView
             android:id="@+id/resultTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="267dp"
+            android:layout_height="65dp"
+            android:fontFamily="@font/hellborne"
+            android:gravity="center"
             android:text="Result Screen"
             android:textAlignment="center"
-            android:textSize="24sp"
+            android:textColor="#FFFFFF"
+            android:textSize="48sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.573" />
 
-        <Button
+        <LinearLayout
             android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="108dp"
-            android:text="Return Home"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="236dp"
+            android:layout_height="106dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/konfettiView"
             app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintHorizontal_bias="0.488"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/resultTextView"
-            app:layout_constraintVertical_bias="0.669" />
+            app:layout_constraintTop_toBottomOf="@+id/resultTextView">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                style="@style/CircularImageStyle"
+                android:layout_width="97dp"
+                android:layout_height="97dp"
+                android:background="@color/transparent"
+                android:elevation="16dp"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:innerRadius="0dp"
+                android:scaleType="fitCenter"
+                android:shape="ring"
+                android:thicknessRatio="1.9"
+                app:cardCornerRadius="100dp"
+                >
+                <ImageButton
+                    android:id="@+id/navBtnImage"
+                    style="@style/CircularImageStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/ic_launcher_new_background"
+                    android:clickable="true"
+                    android:contentDescription="Flames App"
+                    app:srcCompat="@drawable/ic_launcher_new_foreground" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="138dp"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/hellborne"
+                android:gravity="center"
+                android:text="Play Again"
+                android:textSize="34sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/name1Text"
+            android:layout_width="135dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="132dp"
+            android:fontFamily="@font/jetbrains_mono_extrabold"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.485"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/konfettiView" />
+
+        <TextView
+            android:id="@+id/andText"
+            android:layout_width="140dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/hellborne"
+            android:gravity="center"
+            android:text="AND"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/name1Text"
+            app:layout_constraintStart_toStartOf="@+id/name1Text"
+            app:layout_constraintTop_toBottomOf="@+id/name1Text" />
+
+        <TextView
+            android:id="@+id/name2Text"
+            android:layout_width="140dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="22dp"
+            android:fontFamily="@font/jetbrains_mono_extrabold"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/andText"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/andText"
+            app:layout_constraintTop_toBottomOf="@+id/andText" />
+
+        <TextView
+            android:id="@+id/areText"
+            android:layout_width="145dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="11dp"
+            android:fontFamily="@font/hellborne"
+            android:gravity="center"
+            android:text="ARE"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/name2Text"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/name2Text"
+            app:layout_constraintTop_toBottomOf="@+id/name2Text" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

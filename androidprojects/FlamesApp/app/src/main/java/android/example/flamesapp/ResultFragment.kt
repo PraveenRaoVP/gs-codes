@@ -2,16 +2,14 @@ package android.example.flamesapp
 
 import android.example.flamesapp.databinding.FragmentResultBinding
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
+import android.view.ViewPropertyAnimator
+import android.widget.LinearLayout
+import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import nl.dionsegijn.konfetti.core.Party
@@ -31,6 +29,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ResultFragment : Fragment() {
+    private val handler = Handler()
+    private lateinit var linearLayout: LinearLayout
+    private var animationRunnable: Runnable? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -43,7 +45,11 @@ class ResultFragment : Fragment() {
 
         val binding: FragmentResultBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_result, container, false)
 
+        linearLayout = binding.button
+
         val viewKonfetti = binding.konfettiView
+
+        startAnimation()
 
         val party = Party(
             speed = 0f,
@@ -70,61 +76,44 @@ class ResultFragment : Fragment() {
         } }
         val result = calculateResult2(name1, name2)
 
-        binding.resultTextView.text = "$name1 and $name2 are $result"
+
+        binding.name1Text.text = name1
+        binding.name2Text.text = name2
+        binding.resultTextView.text = "$result !"
+
+        // change color for each result
+        var color: String = "#000000"
+        when(result) {
+            "Friends" -> color = "#FFC107" // Amber
+            "Lovers" -> color = "#FF5722" // Deep Orange
+            "Affectionate" -> color = "#FFEB3B" // Yellow
+            "Marriage" -> color = "#4CAF50" // Green
+            "Enemies" -> color = "#F44336" // Red
+            "Siblings" -> color = "#2196F3" // Blue
+        }
+
+        binding.resultTextView.setTextColor(android.graphics.Color.parseColor(color))
 
         binding.button.setOnClickListener { view: View ->
-            view.findNavController()
-                .navigate(ResultFragmentDirections.actionResultFragmentToTitleFragment())
+            navigationToTitleFragment(view)
+        }
+
+        binding.cardView.setOnClickListener { view: View ->
+            navigationToTitleFragment(view)
+        }
+
+        binding.navBtnImage.setOnClickListener {view: View ->
+            navigationToTitleFragment(view)
         }
 
         return binding.root
     }
 
-//    private fun calculateResult(name1: String, name2: String): String {
-//        // Remove spaces and convert to lowercase
-//        val name1Cleaned = name1.replace("\\s".toRegex(), "").lowercase()
-//        val name2Cleaned = name2.replace("\\s".toRegex(), "").lowercase()
-//
-//        // Eliminate common characters
-//        val commonChars = name1Cleaned.filter { name2Cleaned.contains(it) }
-//        val remainingChars = name1Cleaned.length + name2Cleaned.length - 2 * commonChars.length
-//
-//        if(remainingChars == 0) {
-//            val finalAns = listOf("Friends", "Lovers", "Affectionate", "Marriage", "Enemies", "Siblings").random()
-//            return finalAns
-//        }
-//
-//        // FLAMES acronym
-//        val flames = "FLAMES"
-//
-//        // Calculate result
-//        var index = 0
-//        var count = 0
-//        var flamesString = flames
-//        while (flamesString.length > 1) {
-//            index = (index + remainingChars - 1) % flamesString.length
-//            val endIndex = index + 1
-//            if (index >= 0 && endIndex <= flamesString.length) {
-//                flamesString = flamesString.removeRange(index, endIndex)
-//            } else {
-//                val finalAns = listOf("Friends", "Lovers", "Affectionate", "Marriage", "Enemies", "Siblings").random()
-//                return finalAns
-//            }
-//            count++
-//            if (count == flames.length) break
-//        }
-//
-//        // Interpret result
-//        return when (flamesString) {
-//            "F" -> "Friends"
-//            "L" -> "Lovers"
-//            "A" -> "Affectionate"
-//            "M" -> "Marriage"
-//            "E" -> "Enemies"
-//            "S" -> "Siblings"
-//            else -> "Invalid"
-//        }
-//    }
+    fun navigationToTitleFragment(view: View) {
+        view.findNavController()
+            .navigate(ResultFragmentDirections.actionResultFragmentToGameFragment())
+        stopAnimation()
+    }
 
     private fun calculateResult2(name1: String, name2: String): String {
         var sc = 0 // Similar characters count
@@ -147,9 +136,6 @@ class ResultFragment : Fragment() {
                 }
             }
         }
-
-//        Log.i("ResultFragment Name 1: ", "${String(name1Chars)}")
-//        Log.i("ResultFragment Name 2: ", "${String(name2Chars)}")
 
         // Count remaining characters
         val rc = name1.length + name2.length - sc
@@ -194,7 +180,30 @@ class ResultFragment : Fragment() {
         }
     }
 
-    companion object {
+    private fun startAnimation() {
+        animationRunnable = Runnable {
+            val animator: ViewPropertyAnimator =
+                linearLayout.animate().scaleX(1.2f).scaleY(1.2f).setDuration(ResultFragment.ANIMATION_DELAY * 3 / 2)
+            animator.withEndAction {
+                linearLayout.animate().scaleX(1.0f).scaleY(1.0f).setDuration(ResultFragment.ANIMATION_DELAY * 3 / 2)
 
+                handler.postDelayed(animationRunnable!!, ResultFragment.ANIMATION_DELAY)
+            }
+            animator.start()
+        }
+        handler.post(animationRunnable!!)
+    }
+
+    private fun stopAnimation() {
+        handler.removeCallbacks(animationRunnable!!)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        stopAnimation()
+    }
+
+    companion object {
+        const val ANIMATION_DELAY: Long = 1000
     }
 }

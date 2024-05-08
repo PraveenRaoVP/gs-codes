@@ -6,50 +6,71 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <Button
-            android:id="@+id/playButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/horizontal_margin"
-            android:layout_marginEnd="@dimen/horizontal_margin"
-            android:paddingStart="@dimen/button_padding"
-            android:paddingEnd="@dimen/button_padding"
-            android:text="Play"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/button_text_size"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleImage" />
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
+        >
 
         <TextView
             android:id="@+id/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
-            android:text="Flames Application!"
+            android:layout_marginBottom="152dp"
+            android:fontFamily="@font/hellborne"
+            android:text="Flames"
             android:textFontWeight="700"
-            android:textSize="30sp"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleImage" />
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/titleImage"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/image_header_height"
-            android:layout_marginStart="@dimen/horizontal_margin"
-            android:layout_marginEnd="@dimen/horizontal_margin"
-            android:contentDescription="Flames App"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/titleCardView"
+            style="@style/CircularImageStyle"
+            android:layout_width="197dp"
+            android:layout_height="197dp"
+            android:background="@color/transparent"
+            android:elevation="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:innerRadius="0dp"
             android:scaleType="fitCenter"
-            app:layout_constraintBottom_toTopOf="@+id/playButton"
+            android:shape="ring"
+            android:thicknessRatio="1.9"
+            app:cardCornerRadius="100dp"
+            app:layout_constraintBottom_toTopOf="@+id/titleText"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_launcher_foreground" />
+            app:layout_constraintVertical_bias="0.78">
+
+            <ImageButton
+                android:id="@+id/titleImage"
+                style="@style/CircularImageStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/ic_launcher_new_background"
+                android:clickable="true"
+                android:contentDescription="Flames App"
+                app:srcCompat="@drawable/ic_launcher_new_foreground" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="241dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="56dp"
+            android:fontFamily="@font/hellborne"
+            android:gravity="center"
+            android:text="Click the Heart to Proceed"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/titleText"
+            app:layout_constraintStart_toStartOf="@+id/titleText"
+            app:layout_constraintTop_toBottomOf="@+id/titleText"
+            app:layout_constraintVertical_bias="0.0" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

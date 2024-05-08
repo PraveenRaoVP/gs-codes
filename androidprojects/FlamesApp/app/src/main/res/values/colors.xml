@@ -6,4 +6,13 @@
     <color name="youWinDark">#35A571</color>
     <color name="youWinBackground">#B7F8C9</color>
     <color name="gameOverBackground">#f8bbd0</color>
+    <color name="transparent">#00000000</color>
+    <color name="yellow">#FFD700</color>
+    <color name="red">#AC1313</color>
+    <!-- Define a color array representing a gradient -->
+    <color name="gradient_yellow_to_red">
+        <item>@color/yellow</item>
+        <item>@color/red</item>
+    </color>
+
 </resources>

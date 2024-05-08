@@ -1,5 +1,6 @@
 package android.example.countryinfo.network
 
+import androidx.room.ColumnInfo
 import com.squareup.moshi.Json
 
 data class CountryProperty(
