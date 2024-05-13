@@ -1,4 +1,5 @@
 package assignments.assignment4_unconditional_statements;
+// 2. Write a program to print prime numbers between 1 to 30
 
 public class PrintPrimeNumbers {
     public static boolean isPrime(int n) {

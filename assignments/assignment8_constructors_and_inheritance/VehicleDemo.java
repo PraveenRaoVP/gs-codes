@@ -1,5 +1,7 @@
 package assignments.assignment8_constructors_and_inheritance;
 
+// Vehicle Hierarchy
+
 class Vehicle {
     String vehicleName;
     String vehicleModel;

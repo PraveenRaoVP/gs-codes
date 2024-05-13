@@ -1,6 +1,7 @@
 package assignments.assignment1;
 
 import java.util.Scanner;
+// 1. Write a program that calculates the average weight of 10 people. Use descriptive and meaningful variable names following Java naming conventions. Use proper datatypes for the variables.
 
 public class CalculateAverageWeight {
     public double calculateAverageWeight(double[] weights, int noOfPeople) {

@@ -1,6 +1,7 @@
 package assignments.assignment6_strings;
 
 import java.util.Scanner;
+// 3. Write a program to reverse the words in a sentence.
 
 public class ReverseWordsInSentence {
 

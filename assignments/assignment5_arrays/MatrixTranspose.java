@@ -2,6 +2,9 @@ package assignments.assignment5_arrays;
 
 import java.util.Scanner;
 
+/*2. Write a program to find transpose of a matrix
+ */
+
 public class MatrixTranspose {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

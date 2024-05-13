@@ -2,6 +2,9 @@ package assignments.assignment3_control_statements;
 
 import java.util.Scanner;
 
+// 3. Create a program that takes a student's score as input and outputs their corresponding grade.
+
+
 public class ScoreToGrade {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

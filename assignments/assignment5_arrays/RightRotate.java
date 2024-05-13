@@ -2,6 +2,8 @@ package assignments.assignment5_arrays;
 
 import java.util.Scanner;
 
+// 1. Create a program that rotates the elements of an array to the right by a specified number of positions. Get the array and the rotation count from the user
+
 // 3 1 2 4 5 7 1. 2 -> 7 1 3 1 2 4 5
 
 public class RightRotate {
@@ -20,6 +22,7 @@ public class RightRotate {
         }
         System.out.println();
     }
+
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

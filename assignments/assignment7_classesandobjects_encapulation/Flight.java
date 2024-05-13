@@ -1,5 +1,8 @@
 package assignments.assignment7_classesandobjects_encapulation;
 
+// 3. Create Flight DTO class. Create appropriate instance variables, static variables and methods with appropriate access modifiers.
+
+
 public class Flight {
     private String flightNumber;
     private String flightName;

@@ -1,5 +1,8 @@
 package assignments.assignment8_constructors_and_inheritance;
 
+// 2. Write a hierarchy of geometric shape classes 'Circle', 'Rectangle', etc inherited from a common base class 'Shape'
+
+
 class Shape {
     public void draw() {
         System.out.println("Drawing a shape");

@@ -6,6 +6,32 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
+/* Question: In the BMI calculator program done in Java Assignment 2, write methods to get height and weight for 2 or more persons and compare their BMIs.
+
+Sample I/O:
+
+Enter the number of persons to compare: 3
+
+Enter the name of person 1: Athos
+Enter weight of person 1 in kg: 65
+Enter height of person 1 in cm: 180
+
+Enter the name of person 2: Porthos
+Enter weight of person 2 in kg: 80
+Enter height of person 2 in cm: 165
+
+Enter the name of person 3: Aramis
+Enter weight of person 3 in kg: 45
+Enter height of person 3 in cm: 170
+
+BMI report in decreasing order:
+
+Name       | BMI        | Remark
+Porthos    | 29.4        | Overweight
+Athos.      | 20.1        | Normal
+Aramis     | 15.6        | Underweight
+ */
+
 class Person implements Comparable {
     public String name;
     public double height;

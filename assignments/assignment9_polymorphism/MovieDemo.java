@@ -1,4 +1,5 @@
 package assignments.assignment9_polymorphism;
+// 5. Create hierarchy from Movie class with Child classes of different genre movies like RomComMovie, ThrillerMovie, etc. Demonstrate polymorphism using them.
 
 class Movie {
     private String name;

@@ -82,10 +82,12 @@ class GameFragment : Fragment() {
                 binding.heartAnimation.startAnimation(shakeAnimation)
                 if (name1.isEmpty()) {
                     binding.name1EditText.error = "Name 1 is required!"
+                    binding.name1InputLayout.helperText = "Name 1 is required!"
                     Toast.makeText(context, "Name 1 is required!", Toast.LENGTH_SHORT).show()
                 }
                 if (name2.isEmpty()) {
                     binding.name2EditText.error = "Name 2 is required!"
+                    binding.name2InputLayout.helperText = "Name 2 is required!"
                     Toast.makeText(context, "Name 2 is required!", Toast.LENGTH_SHORT).show()
                 }
                 return@setOnClickListener
@@ -93,15 +95,19 @@ class GameFragment : Fragment() {
                 binding.heartAnimation.startAnimation(shakeAnimation)
                 if (!name1.matches("^[a-zA-Z.\\s]+$".toRegex())) {
                     binding.name1EditText.error = "Please enter a valid name without numbers or special characters!"
+                    binding.name1InputLayout.helperText = "Please enter a valid name without numbers or special characters!"
                     Toast.makeText(context, "Please enter a valid name without numbers or special characters!", Toast.LENGTH_SHORT).show()
                 }
                 if (!name2.matches("^[a-zA-Z.\\s]+$".toRegex())) {
                     binding.name2EditText.error = "Please enter a valid name without numbers or special characters!"
+                    binding.name2InputLayout.helperText = "Please enter a valid name without numbers or special characters!"
                     Toast.makeText(context, "Please enter a valid name without numbers or special characters!", Toast.LENGTH_SHORT).show()
                 }
             }
 
             else {
+                binding.name1InputLayout.helperText = ""
+                binding.name2InputLayout.helperText = ""
                 repeat(3) {
                     binding.heartAnimation.playAnimation()
                     // Delay between each animation

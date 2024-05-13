@@ -2,6 +2,13 @@ package assignments.assignment5_arrays;
 
 import java.util.Scanner;
 
+/*
+ * Initialize a jagged array with N rows with weights of N persons. Each person can have different number of weights. Write
+      (i) A function to enter the weight of any user at any time.
+      (ii) A function to calculate the minimum weight of the nth person.
+*
+ */
+
 public class JaggedWeights {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

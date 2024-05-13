@@ -1,6 +1,7 @@
 package assignments.assignment6_strings;
 
 import java.util.Scanner;
+// 2. Write a program to reverse the characters of a string.
 
 public class ReverseCharsOfString {
 

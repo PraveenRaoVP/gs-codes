@@ -1,4 +1,5 @@
 package assignments.assignment7_classesandobjects_encapulation;
+// 5. Write two DTO classes to exhibit the has-a relationship given in the diagram. https://cdn-proxy.slickplan.com/wp-content/uploads/2023/10/8_uml.png
 
 class Player {
     private String name;

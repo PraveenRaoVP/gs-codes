@@ -1,6 +1,8 @@
 package assignments.assignment5_arrays;
 
 import java.util.Scanner;
+// 3. Write a program to implement matrix multiplication
+// 
 
 public class MatrixMultiplication {
     public static void main(String[] args) {

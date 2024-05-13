@@ -1,4 +1,5 @@
 package assignments.assignment6_strings;
+//5. Write a program to capitalize the first letter of each words in a sentence.
 
 public class CapitalizeString {
     public static String capitalize(String str) {

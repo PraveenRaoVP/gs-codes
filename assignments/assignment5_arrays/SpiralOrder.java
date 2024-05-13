@@ -2,6 +2,8 @@ package assignments.assignment5_arrays;
 
 import java.util.Scanner;
 
+// 4. Write a program to generate the matrix with integers in spiral order. Get size N from the user and generate an NxN spiral matrix.
+
 public class SpiralOrder {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

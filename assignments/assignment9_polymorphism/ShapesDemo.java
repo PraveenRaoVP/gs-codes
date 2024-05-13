@@ -1,4 +1,5 @@
 package assignments.assignment9_polymorphism;
+// 1. Use the hierarchy of shape classes done already in previous assignments. Demonstrate polymorphism by calculating area and perimeter of various shapes.
 
 abstract class Shape {
     public abstract void area();

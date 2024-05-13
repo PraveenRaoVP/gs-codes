@@ -1,5 +1,7 @@
 package assignments.assignment6_strings;
 
+// 4. Write a program to validate email address (contains @ and proper domain format). Note: Don't use regular expressions
+
 public class ValidateEmailAddress {
 
     public static boolean validateEmail(String email) {

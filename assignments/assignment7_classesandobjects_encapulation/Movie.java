@@ -1,6 +1,7 @@
 package assignments.assignment7_classesandobjects_encapulation;
 
 import java.util.List;
+// 4. Create a Movie DTO class
 
 public class Movie {
     private int movieId;
