@@ -9,6 +9,8 @@ import android.example.newsapp.R
 import android.example.newsapp.databinding.FragmentNewsWebViewBinding
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
 
 class NewsWebViewFragment : Fragment() {
     // TODO: Rename and change types of parameters
@@ -31,6 +33,7 @@ class NewsWebViewFragment : Fragment() {
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.webViewClient = MyWebViewClient()
         binding.webView.loadUrl(args.webPageLink)
+        (activity as AppCompatActivity).supportActionBar?.title = args.webPageTitle
 
         return binding.root
     }

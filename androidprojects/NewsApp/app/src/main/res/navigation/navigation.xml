@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/newsListFragment"
         android:name="android.example.newsapp.screens.newslist.NewsListFragment"
-        android:label="fragment_news_list"
+        android:label="News Application"
         tools:layout="@layout/fragment_news_list" >
         <action
             android:id="@+id/action_newsListFragment_to_newsWebViewFragment"
@@ -17,13 +17,16 @@
     <fragment
         android:id="@+id/newsWebViewFragment"
         android:name="android.example.newsapp.screens.newswebview.NewsWebViewFragment"
-        android:label="fragment_news_web_view"
+        android:label="News"
         tools:layout="@layout/fragment_news_web_view" >
         <action
             android:id="@+id/action_newsWebViewFragment_to_newsListFragment"
             app:destination="@id/newsListFragment" />
         <argument
             android:name="webPageLink"
+            app:argType="string" />
+        <argument
+            android:name="webPageTitle"
             app:argType="string" />
     </fragment>
 </navigation>

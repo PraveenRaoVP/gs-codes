@@ -46,7 +46,7 @@ class NewsListAdapter(private val newsListViewModel: NewsListViewModel) : ListAd
         holder.titleText.text = newsProperty.title
 
         holder.itemView.setOnClickListener {
-            newsListViewModel.onClickNewsItem(newsProperty.readMoreUrl)
+            newsListViewModel.onClickNewsItem(newsProperty.readMoreUrl, newsProperty.title)
         }
     }
 }

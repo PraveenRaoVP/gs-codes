@@ -124,17 +124,17 @@ class NewsListFragment : Fragment() {
             }
         }
 
-        newsListViewModel.addWeatherData.observe(viewLifecycleOwner) {
-            if(it) {
-                binding.tempText.text = newsListViewModel.temperature.toString() + "°C"
-                newsListViewModel.onCompletedAddWeatherData()
+        newsListViewModel.weatherData.observe(viewLifecycleOwner) { weatherData ->
+            // Update UI with weather data
+            weatherData?.let {
+                binding.tempText.text = "${it.temperature}°C"
             }
         }
 
         newsListViewModel.newsItemClicked.observe(viewLifecycleOwner) {
             if(it) {
                 Log.i("NewsListFragment", "newsItemClicked with url ${newsListViewModel.newsItemUrl.value}")
-                val action = NewsListFragmentDirections.actionNewsListFragmentToNewsWebViewFragment(newsListViewModel.newsItemUrl.value!!)
+                val action = NewsListFragmentDirections.actionNewsListFragmentToNewsWebViewFragment(newsListViewModel.newsItemUrl.value!!, newsListViewModel.newsItemTitle.value!!)
                 findNavController().navigate(action)
                 newsListViewModel.onCompletedNavigation()
             }
@@ -170,6 +170,21 @@ class NewsListFragment : Fragment() {
         })
 
         val searchView = binding.searchView
+
+        searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // SearchView gained focus, collapse temperature details
+                binding.tempText.visibility = View.GONE
+                // match parent width
+                searchView.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+            } else {
+                // SearchView lost focus, bring back temperature details
+                binding.tempText.visibility = View.VISIBLE
+                // wrap content width
+                searchView.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+            }
+        }
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 // Perform search when user submits query
@@ -208,7 +223,6 @@ class NewsListFragment : Fragment() {
                     locationName.value = convertCoordinatesToLocation(latitude, longitude).split(",")[2]
                     Log.d("ListViewFragment -> location", "Location Name: ${locationName.value}")
                 } ?: run {
-                    Toast.makeText(requireContext(), "Location not available", Toast.LENGTH_SHORT).show()
                     locationName.value = "chennai"
                 }
             }

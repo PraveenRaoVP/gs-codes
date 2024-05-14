@@ -24,7 +24,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class NewsListViewModel(private val dataSource: NewsDao, private val application: Application) : AndroidViewModel(application) {
+class NewsListViewModel(private val dataSource: NewsDao, private val application: Application) :
+    AndroidViewModel(application) {
 
     private val job: Job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
@@ -70,6 +71,10 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     val newsItemUrl: MutableLiveData<String>
         get() = _newsItemUrl
 
+    private val _newsItemTitle = MutableLiveData<String>()
+    val newsItemTitle: MutableLiveData<String>
+        get() = _newsItemTitle
+
     private val _showErrorToast = MutableLiveData<Boolean>()
     val showErrorToast: MutableLiveData<Boolean>
         get() = _showErrorToast
@@ -86,8 +91,13 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     val addWeatherData: LiveData<Boolean>
         get() = _addWeatherData
 
-    var temperature: Double = 0.0
-        get() = values?.temperature ?: 0.0
+    private val _weatherData = MutableLiveData<Values?>()
+    val weatherData: LiveData<Values?>
+        get() = _weatherData
+
+    private val _isFirstTime = MutableLiveData<Boolean>(true)
+    val isFirstTime: LiveData<Boolean>
+        get() = _isFirstTime
 
     val _location = MutableLiveData<String>("chennai")
 
@@ -120,7 +130,7 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         _isLoading.value = false
     }
 
-    private fun fetchWeatherApi(): Deferred<Unit> {
+    fun fetchWeatherApi(): Deferred<Unit> {
         return uiScope.async {
             _isLoadingWeather.value = true
             val retrofit = WeatherAPIService.retrofitService
@@ -130,9 +140,11 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
                 }
                 // Handle the response here
                 if (weatherData != null) {
-                    Log.i("NewsListViewModel", "Weather data fetched: ${weatherData.data} ${weatherData.location}")
-                    values = weatherData.data.values
-                    temperature = values!!.temperature
+                    Log.i(
+                        "NewsListViewModel",
+                        "Weather data fetched: ${weatherData.data} ${weatherData.location}"
+                    )
+                    _weatherData.value = weatherData?.data?.values
                 } else {
                     Log.i("NewsListViewModel", "Failed to get weather data from API")
                 }
@@ -166,7 +178,10 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
                         news.url
                     )
                     dataSource.insert(newsProperty)
-                    Log.i("NewsListViewModel", "Data inserted in DB with category ${newsData.category}")
+                    Log.i(
+                        "NewsListViewModel",
+                        "Data inserted in DB with category ${newsData.category}"
+                    )
                 }
             } else {
                 Log.i("NewsListViewModel", "Failed to get data from API")
@@ -177,7 +192,8 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     }
 
     private fun isNetworkAvailable(): Boolean {
-        val connectivityManager = application.getSystemService(android.content.Context.CONNECTIVITY_SERVICE) as android.net.ConnectivityManager
+        val connectivityManager =
+            application.getSystemService(android.content.Context.CONNECTIVITY_SERVICE) as android.net.ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
         return networkInfo != null && networkInfo.isConnected
     }
@@ -248,7 +264,10 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
             }
         }
 
-        Log.i("NewsListViewModel", "Data fetched from DB with category $category with size ${_newsData.value?.size}")
+        Log.i(
+            "NewsListViewModel",
+            "Data fetched from DB with category $category with size ${_newsData.value?.size}"
+        )
     }
 
     fun loadMoreData(category: String) {
@@ -264,15 +283,19 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         val limit = pageSize // Number of items to fetch per page
         val offset = currentPage * limit // Calculate the offset based on the current page
 
-        if(searchQuery.isEmpty()) {
+        if (searchQuery.isEmpty()) {
             getDataFromDatabase(currentCategory.value ?: "all")
         }
 
         uiScope.launch {
             val searchData = withContext(Dispatchers.IO) {
-                dataSource.searchNewsWithLimit("%$searchQuery%", limit, offset) // Use "%" for wildcard search
+                dataSource.searchNewsWithLimit(
+                    "%$searchQuery%",
+                    limit,
+                    offset
+                ) // Use "%" for wildcard search
             }
-            if(searchData.isEmpty()) {
+            if (searchData.isEmpty()) {
                 _showNoNewsToast.value = true
             }
             _newsData.postValue(searchData)
@@ -284,8 +307,9 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         _categoryClicked.value = false
     }
 
-    fun onClickNewsItem(readMoreUrl: String) {
+    fun onClickNewsItem(readMoreUrl: String, title: String) {
         _newsItemUrl.value = readMoreUrl
+        _newsItemTitle.value = title
         _newsItemClicked.value = true
     }
 
