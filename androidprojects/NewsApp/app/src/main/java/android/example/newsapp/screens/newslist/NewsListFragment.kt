@@ -1,23 +1,26 @@
 package android.example.newsapp.screens.newslist
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.example.newsapp.R
 import android.example.newsapp.adapters.ListItemAdapter
+import android.example.newsapp.adapters.NewsItemClickListener
 import android.example.newsapp.adapters.NewsListAdapter
 import android.example.newsapp.database.NewsDatabase
 import android.example.newsapp.databinding.FragmentNewsListBinding
+import android.example.newsapp.screens.enlargeimage.EnlargeImageDialog
 import android.location.Geocoder
 import android.location.Location
 import android.util.Log
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ShareCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -25,11 +28,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.squareup.picasso.Picasso
 import java.util.Locale
 
 
-class NewsListFragment : Fragment() {
+class NewsListFragment : Fragment(), NewsItemClickListener {
 
     private lateinit var newsListViewModel: NewsListViewModel
     private lateinit var newsRecyclerView: RecyclerView
@@ -37,6 +44,24 @@ class NewsListFragment : Fragment() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val locationName = MutableLiveData<String>()
 
+    val locationRequest = LocationRequest.create().apply {
+        interval = 10000 // 10 seconds
+        fastestInterval = 5000 // 5 seconds
+        priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+    }
+
+    val locationCallback = object : LocationCallback() {
+        override fun onLocationResult(p0: LocationResult) {
+            super.onLocationResult(p0)
+            for (location in p0.locations) {
+                // Handle location updates here
+                val latitude = location.latitude
+                val longitude = location.longitude
+                Log.i("Location Update", "Latitude: $latitude, Longitude: $longitude")
+                locationName.value = convertCoordinatesToLocation(latitude, longitude)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +85,7 @@ class NewsListFragment : Fragment() {
         val binding: FragmentNewsListBinding = FragmentNewsListBinding.inflate(inflater, container, false)
 
         newsRecyclerView = binding.newsListRecyclerView
-        val newsItemAdapter = NewsListAdapter(newsListViewModel)
+        val newsItemAdapter = NewsListAdapter(newsListViewModel, this)
         newsRecyclerView.adapter = newsItemAdapter
         newsRecyclerView.layoutManager = LinearLayoutManager(this.context)
 
@@ -128,6 +153,7 @@ class NewsListFragment : Fragment() {
             // Update UI with weather data
             weatherData?.let {
                 binding.tempText.text = "${it.temperature}°C"
+                Picasso.get().load(newsListViewModel.getWeatherImage(newsListViewModel.getWeatherCondition(it))).into(binding.tempImage)
             }
         }
 
@@ -153,6 +179,13 @@ class NewsListFragment : Fragment() {
             }
         }
 
+        newsListViewModel.shareNews.observe(viewLifecycleOwner) {
+            if(it) {
+                startActivity(getShareIntent())
+                newsListViewModel.onCompletedShareNews()
+            }
+        }
+
         newsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -171,6 +204,8 @@ class NewsListFragment : Fragment() {
 
         val searchView = binding.searchView
 
+        val searchViewWidth = searchView.layoutParams.width
+
         searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 // SearchView gained focus, collapse temperature details
@@ -181,7 +216,7 @@ class NewsListFragment : Fragment() {
                 // SearchView lost focus, bring back temperature details
                 binding.tempText.visibility = View.VISIBLE
                 // wrap content width
-                searchView.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+                searchView.layoutParams.width = searchViewWidth
             }
         }
 
@@ -205,6 +240,14 @@ class NewsListFragment : Fragment() {
         return binding.root
     }
 
+    private fun getShareIntent() : Intent {
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        return ShareCompat.IntentBuilder.from(requireActivity())
+            .setText(newsListViewModel.shareNewsTitle.value + "\n" + newsListViewModel.shareNewsUrl.value)
+            .setType("text/plain")
+            .intent
+    }
+
     private fun populateData() {
         val adapter = newsRecyclerView.adapter as NewsListAdapter
         if(newsListViewModel.newsData.value != null)
@@ -213,17 +256,21 @@ class NewsListFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun requestLocation() {
-        // Get the last known location from Fused Location Provider
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 location?.let {
                     val latitude = location.latitude
                     val longitude = location.longitude
                     // Convert coordinates to location name
-                    locationName.value = convertCoordinatesToLocation(latitude, longitude).split(",")[2]
+                    locationName.value = convertCoordinatesToLocation(latitude, longitude)
                     Log.d("ListViewFragment -> location", "Location Name: ${locationName.value}")
                 } ?: run {
-                    locationName.value = "chennai"
+                    // If last known location is not available, request location updates
+                    fusedLocationClient.requestLocationUpdates(
+                        locationRequest,
+                        locationCallback,
+                        null /* Looper */
+                    )
                 }
             }
             .addOnFailureListener { e ->
@@ -236,7 +283,7 @@ class NewsListFragment : Fragment() {
         val addresses = geocoder.getFromLocation(latitude, longitude, 1)
         val locationName = addresses?.get(0)?.getAddressLine(0)
         Log.d("ListViewFragment -> location", "Location Name: $locationName")
-        return locationName?:"Unknown"
+        return locationName ?: "Unknown"
     }
 
     @Deprecated("Deprecated in Java")
@@ -257,5 +304,10 @@ class NewsListFragment : Fragment() {
 
     companion object {
         private const val REQUEST_LOCATION_PERMISSION = 123
+    }
+
+    override fun onImageClicked(imageUrl: String) {
+        val dialog = EnlargeImageDialog(requireContext(), imageUrl)
+        dialog.show()
     }
 }

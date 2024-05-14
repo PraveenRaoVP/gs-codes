@@ -1,15 +1,20 @@
 package android.example.newsapp.screens.newslist
 
 import android.app.Application
+import android.content.Intent
+import android.example.newsapp.R
 import android.example.newsapp.database.NewsDao
 import android.example.newsapp.database.NewsProperty
 import android.example.newsapp.models.Location
 import android.example.newsapp.models.NewsData
 import android.example.newsapp.models.Values
+import android.example.newsapp.models.WeatherData
 import android.example.newsapp.network.RetroInstance
 import android.example.newsapp.network.news.NewsAPIService
 import android.example.newsapp.network.weather.WeatherAPIService
+import android.example.newsapp.utils.WeatherCondition
 import android.util.Log
+import androidx.core.app.ShareCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -87,9 +92,6 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     val showNoNewsToast: LiveData<Boolean>
         get() = _showNoNewsToast
 
-    private val _addWeatherData = MutableLiveData<Boolean>()
-    val addWeatherData: LiveData<Boolean>
-        get() = _addWeatherData
 
     private val _weatherData = MutableLiveData<Values?>()
     val weatherData: LiveData<Values?>
@@ -99,7 +101,19 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     val isFirstTime: LiveData<Boolean>
         get() = _isFirstTime
 
-    val _location = MutableLiveData<String>("chennai")
+    private val _shareNews = MutableLiveData<Boolean>()
+    val shareNews: LiveData<Boolean>
+        get() = _shareNews
+
+    private val _shareNewsTitle = MutableLiveData<String>()
+    val shareNewsTitle: LiveData<String>
+        get() = _shareNewsTitle
+
+    private val _shareNewsUrl = MutableLiveData<String>()
+    val shareNewsUrl: LiveData<String>
+        get() = _shareNewsUrl
+
+    val _location = MutableLiveData<String>("delhi")
 
     var values: Values? = null
     var location: Location? = null
@@ -107,13 +121,19 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     var currentPage = 0
     val pageSize = 4
 
-
+    /**
+     * Triggered when the categories are clicked
+     * @param category The category that was clicked
+     */
     fun onClickCategory(category: String) {
         currentCategory.value = category
         _categoryClicked.value = true
         Log.i("NewsListViewModel", "Category clicked: $category")
     }
 
+    /**
+     * Fetch data from the API for all categories and store it in the database
+     */
     private suspend fun fetchDataFromAllCategories() {
         _isLoading.value = true
         val deferredList = mutableListOf<Deferred<Unit>>()
@@ -130,6 +150,50 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         _isLoading.value = false
     }
 
+    /**
+     * Get the weather condition based on the temperature, humidity, and precipitation probability
+     * @param data The weather data
+     * @return The weather condition
+     */
+    fun getWeatherCondition(data: Values): WeatherCondition {
+        val temperature = data.temperature
+        val humidity = data.humidity
+        val precipitationProbability = data.precipitationProbability
+
+        return when {
+            temperature > 25 && humidity > 60 -> WeatherCondition.HOT_AND_HUMID
+            temperature > 25 && precipitationProbability > 50 -> WeatherCondition.WARM_WITH_HIGH_CHANCE_OF_RAIN
+            temperature > 25 -> WeatherCondition.WARM
+            temperature in 20.0..25.0 -> WeatherCondition.MILD
+            temperature in 10.0..20.0 -> WeatherCondition.COOL
+            temperature < 10 && precipitationProbability > 50 -> WeatherCondition.COLD_WITH_HIGH_CHANCE_OF_RAIN
+            temperature < 10 -> WeatherCondition.COLD
+            else -> WeatherCondition.UNKNOWN
+        }
+    }
+
+    /**
+     * Get the weather image based on the weather condition
+     * @param condition The weather condition
+     * @return The weather image
+     */
+    fun getWeatherImage(condition: WeatherCondition): Int {
+        return when (condition) {
+            WeatherCondition.HOT_AND_HUMID -> R.drawable.sun
+            WeatherCondition.WARM_WITH_HIGH_CHANCE_OF_RAIN -> R.drawable.cloudy_with_rain
+            WeatherCondition.WARM -> R.drawable.sun
+            WeatherCondition.MILD -> R.drawable.cloudy
+            WeatherCondition.COOL -> R.drawable.cloudy
+            WeatherCondition.COLD_WITH_HIGH_CHANCE_OF_RAIN -> R.drawable.rain
+            WeatherCondition.COLD -> R.drawable.cloudy
+            WeatherCondition.UNKNOWN -> R.drawable.unknown
+        }
+    }
+
+    /**
+     * Fetch weather data from the API
+     * @return A deferred object representing the completion of the fetch operation
+     */
     fun fetchWeatherApi(): Deferred<Unit> {
         return uiScope.async {
             _isLoadingWeather.value = true
@@ -156,6 +220,10 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         }
     }
 
+    /**
+     * Fetch data from the API for a specific category and store it in the database
+     * @param category The category to fetch data for
+     */
     private suspend fun fetchDataFromAPIAndStoreInDB(category: String) {
         val retrofit = NewsAPIService.retrofitService
         try {
@@ -191,6 +259,10 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         }
     }
 
+    /**
+     * Check if the network is available
+     * @return boolean
+     */
     private fun isNetworkAvailable(): Boolean {
         val connectivityManager =
             application.getSystemService(android.content.Context.CONNECTIVITY_SERVICE) as android.net.ConnectivityManager
@@ -198,6 +270,10 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         return networkInfo != null && networkInfo.isConnected
     }
 
+    /**
+     * Populate data from the database. Uses deferred objects to fetch data from the API and the database in parallel
+     * @param category The category to populate data for
+     */
     fun populateDataFromDatabase(category: String) {
         synchronized(this) {
             if (isNetworkAvailable()) {
@@ -206,7 +282,6 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
                     val weatherDeferred = fetchWeatherApi()
                     weatherDeferred.await()
                     _isLoadingWeather.value = false
-                    _addWeatherData.value = true
                     dataSource.clear()
                     fetchDataFromAllCategories()
                     // Wait for fetchDataFromAllCategories() to complete
@@ -221,23 +296,13 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     }
 
 
-//    fun getDataFromDatabase(category: String) {
-//        if(category.lowercase() == "all") {
-//            uiScope.launch {
-//                withContext(Dispatchers.IO) {
-//                    _newsData.postValue(dataSource.getAllNews())
-//                }
-//            }
-//        } else {
-//            uiScope.launch {
-//                withContext(Dispatchers.IO) {
-//                    _newsData.postValue(dataSource.getNewsByCategory(category.lowercase()))
-//                }
-//            }
-//        }
-//        Log.i("NewsListViewModel", "Data fetched from DB with category $category with size ${_newsData.value?.size}")
-//    }
-
+    /**
+     * Get paginated data from the database
+     *
+     * Calls the appropriate database function based on the category
+     *
+     * @param category The category to get data for
+     */
     fun getDataFromDatabase(category: String) {
         val limit = pageSize // Number of items to fetch per page
         val offset = currentPage * limit // Calculate the offset based on the current page
@@ -270,6 +335,10 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         )
     }
 
+    /**
+     * Load more data from the database. Increases the current page and fetches more data
+     * @param category The category to load more data for
+     */
     fun loadMoreData(category: String) {
         if (!_isLoading.value!!) {
             _isLoading.value = true
@@ -279,6 +348,11 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         }
     }
 
+    /**
+     * Search for news in the database
+     * Experimental feature: Search is case-insensitive and uses the "%" wildcard for partial matches
+     * @param searchQuery The search query
+     */
     fun searchNews(searchQuery: String) {
         val limit = pageSize // Number of items to fetch per page
         val offset = currentPage * limit // Calculate the offset based on the current page
@@ -302,17 +376,28 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         }
     }
 
-    fun onCompleteCategoryClicked() {
-//        currentCategory.value = ""
-        _categoryClicked.value = false
+    /**
+     * Before populating data with a new category, reset the current page and clear the existing data
+     */
+    fun prePopulating() {
+        currentPage = 0
+        _newsData.value = emptyList()
     }
 
+    /**
+     * Triggered when the news item is clicked
+     * @param readMoreUrl The URL to open when the news item is clicked
+     * @param title The title of the news item
+     */
     fun onClickNewsItem(readMoreUrl: String, title: String) {
         _newsItemUrl.value = readMoreUrl
         _newsItemTitle.value = title
         _newsItemClicked.value = true
     }
 
+    /**
+     * Triggered when the news item is clicked and completed
+     */
     fun onCompletedNavigation() {
         _newsItemUrl.value = ""
         _newsItemClicked.value = false
@@ -323,21 +408,31 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         job.cancel()
     }
 
+
     fun onCompletedShowErrorToast() {
         _showErrorToast.value = false
     }
 
-    fun onCompletedAddWeatherData() {
-        _addWeatherData.value = false
-    }
-
-    fun prePopulating() {
-        currentPage = 0
-        _newsData.value = emptyList()
+    /**
+     * Triggered when the category is clicked and completed
+     */
+    fun onCompleteCategoryClicked() {
+//        currentCategory.value = ""
+        _categoryClicked.value = false
     }
 
     fun onCompletedShowNoNewsToast() {
         _showNoNewsToast.value = false
+    }
+
+    fun shareNews(title: String, readMoreUrl: String) {
+        _shareNewsTitle.value = title
+        _shareNewsUrl.value = readMoreUrl
+        _shareNews.value = true
+    }
+
+    fun onCompletedShareNews() {
+        _shareNews.value = false
     }
 
 }
