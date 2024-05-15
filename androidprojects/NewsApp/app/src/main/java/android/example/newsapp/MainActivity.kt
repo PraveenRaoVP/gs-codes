@@ -1,6 +1,8 @@
 package android.example.newsapp
 
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -39,6 +41,35 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(navController.graph)
+        doubleBackToExitPressed = false
         return navController.navigateUp(appBarConfiguration)
+    }
+
+    private var doubleBackToExitPressed = false
+
+    override fun onBackPressed() {
+        val navController = this.findNavController(R.id.nav_host_fragment)
+
+        if(navController.currentDestination?.id == R.id.newsDetailsFragment) {
+            navController.popBackStack()
+            return
+        }
+
+        if(supportFragmentManager.primaryNavigationFragment?.childFragmentManager?.backStackEntryCount!=0) {
+            super.onBackPressed()
+            return
+        }
+
+        if (doubleBackToExitPressed) {
+            super.onBackPressed()
+            return
+        }
+
+        this.doubleBackToExitPressed = true
+        Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show()
+
+        Handler().postDelayed({
+            doubleBackToExitPressed = false
+        }, 2000)
     }
 }

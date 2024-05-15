@@ -396,6 +396,7 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
      */
     fun searchNews(searchQuery: String) {
         val limit = pageSize // Number of items to fetch per page
+        currentPage = 0
         val offset = currentPage * limit // Calculate the offset based on the current page
 
         if (searchQuery.isEmpty()) {
