@@ -2,6 +2,7 @@ package android.example.newsapp.adapters
 
 import android.example.newsapp.databinding.ListCategoriesItemBinding
 import android.example.newsapp.screens.newslist.NewsListViewModel
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -46,7 +47,23 @@ class ListItemAdapter(private val newsListViewModel: NewsListViewModel) : ListAd
         val category = getItem(position)
         holder.bind(category)
 
+        holder.categoryItem.setCardBackgroundColor(Color.parseColor("#FFFFFF"))
+
         holder.categoryItem.setOnClickListener {
+
+            // change the color of the selected category to #E4DDDD and the rest to white
+            holder.categoryItem.setCardBackgroundColor(Color.parseColor("#E4DDDD"))
+
+            val recyclerView = holder.itemView.parent as? RecyclerView
+            recyclerView?.let { rv ->
+                for (i in 0 until rv.childCount) {
+                    val child = rv.getChildAt(i)
+                    val viewHolder = rv.getChildViewHolder(child) as? ListItemViewHolder
+                    if (viewHolder != null && viewHolder.adapterPosition != position) {
+                        viewHolder.categoryItem.setCardBackgroundColor(Color.parseColor("#FFFFFF"))
+                    }
+                }
+            }
             newsListViewModel.onClickCategory(category!!)
         }
     }

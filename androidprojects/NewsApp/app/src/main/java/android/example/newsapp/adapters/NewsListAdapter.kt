@@ -60,8 +60,8 @@ class NewsListAdapter(private val newsListViewModel: NewsListViewModel, private 
             newsListViewModel.shareNews(newsProperty.title, newsProperty.readMoreUrl)
         }
 
-//        holder.itemView.setOnClickListener {
-//            newsListViewModel.onClickNewsItem(newsProperty.readMoreUrl, newsProperty.title)
-//        }
+        holder.readMoreBtn.setOnClickListener {
+            newsListViewModel.onClickNewsItem(newsProperty)
+        }
     }
 }

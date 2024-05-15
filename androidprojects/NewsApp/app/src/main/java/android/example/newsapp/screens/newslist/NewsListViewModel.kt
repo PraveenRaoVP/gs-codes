@@ -1,23 +1,26 @@
 package android.example.newsapp.screens.newslist
 
+import android.Manifest
 import android.app.Application
-import android.content.Intent
+import android.content.pm.PackageManager
 import android.example.newsapp.R
 import android.example.newsapp.database.NewsDao
 import android.example.newsapp.database.NewsProperty
-import android.example.newsapp.models.Location
-import android.example.newsapp.models.NewsData
 import android.example.newsapp.models.Values
-import android.example.newsapp.models.WeatherData
 import android.example.newsapp.network.RetroInstance
 import android.example.newsapp.network.news.NewsAPIService
 import android.example.newsapp.network.weather.WeatherAPIService
 import android.example.newsapp.utils.WeatherCondition
+import android.location.Location
+import android.os.Looper
 import android.util.Log
-import androidx.core.app.ShareCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -32,6 +35,9 @@ import kotlinx.coroutines.withContext
 class NewsListViewModel(private val dataSource: NewsDao, private val application: Application) :
     AndroidViewModel(application) {
 
+    private var fusedLocationClient: FusedLocationProviderClient =
+        LocationServices.getFusedLocationProviderClient(application)
+
     private val job: Job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
@@ -42,6 +48,9 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean>
         get() = _isLoading
+
+
+    var firstTimeFlag = false
 
     val categories = listOf(
         "All",
@@ -63,7 +72,6 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
 
     private val fetchingDeferred = CompletableDeferred<Unit>()
 
-
     private val _categoryClicked = MutableLiveData<Boolean>()
     val categoryClicked: MutableLiveData<Boolean>
         get() = _categoryClicked
@@ -72,13 +80,6 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     val newsItemClicked: MutableLiveData<Boolean>
         get() = _newsItemClicked
 
-    private val _newsItemUrl = MutableLiveData<String>()
-    val newsItemUrl: MutableLiveData<String>
-        get() = _newsItemUrl
-
-    private val _newsItemTitle = MutableLiveData<String>()
-    val newsItemTitle: MutableLiveData<String>
-        get() = _newsItemTitle
 
     private val _showErrorToast = MutableLiveData<Boolean>()
     val showErrorToast: MutableLiveData<Boolean>
@@ -97,9 +98,6 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     val weatherData: LiveData<Values?>
         get() = _weatherData
 
-    private val _isFirstTime = MutableLiveData<Boolean>(true)
-    val isFirstTime: LiveData<Boolean>
-        get() = _isFirstTime
 
     private val _shareNews = MutableLiveData<Boolean>()
     val shareNews: LiveData<Boolean>
@@ -113,13 +111,20 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     val shareNewsUrl: LiveData<String>
         get() = _shareNewsUrl
 
+    private val _clickedCurrentNews = MutableLiveData<NewsProperty>()
+    val clickedCurrentNews: LiveData<NewsProperty>
+        get() = _clickedCurrentNews
+
     val _location = MutableLiveData<String>("delhi")
 
     var values: Values? = null
-    var location: Location? = null
 
-    var currentPage = 0
-    val pageSize = 4
+    private var currentPage = 0
+    private val pageSize = 4
+
+    init {
+        requestLocationUpdates()
+    }
 
     /**
      * Triggered when the categories are clicked
@@ -144,7 +149,9 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
             deferredList.add(deferred)
         }
         // Wait for all fetchDataFromAPIAndStoreInDB coroutines to complete
-        deferredList.awaitAll()
+        if(firstTimeFlag) {
+            deferredList.awaitAll()
+        }
         // Signal that all categories have been fetched
         fetchingDeferred.complete(Unit)
         _isLoading.value = false
@@ -194,13 +201,13 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
      * Fetch weather data from the API
      * @return A deferred object representing the completion of the fetch operation
      */
-    fun fetchWeatherApi(): Deferred<Unit> {
+    private fun fetchWeatherApi(latitude: Double, longitude: Double): Deferred<Unit> {
         return uiScope.async {
             _isLoadingWeather.value = true
             val retrofit = WeatherAPIService.retrofitService
             try {
                 val weatherData = withContext(Dispatchers.IO) {
-                    retrofit.getWeather(_location.value!!, RetroInstance.WEATHER_API_KEY)
+                    retrofit.getWeather("$latitude,$longitude", RetroInstance.WEATHER_API_KEY)
                 }
                 // Handle the response here
                 if (weatherData != null) {
@@ -233,19 +240,29 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
             // Handle the response here
             if (newsData != null) {
                 for (news in newsData.data) {
-                    val newsProperty = NewsProperty(
-                        0,
-                        newsData.category,
-                        news.author,
-                        news.content,
-                        news.date,
-                        news.imageUrl,
-                        news.readMoreUrl,
-                        news.time,
-                        news.title,
-                        news.url
-                    )
-                    dataSource.insert(newsProperty)
+                    // check if the news is already present in the database
+                    val existingNews = dataSource.getNewsByUrl(news.url)
+                    if (existingNews != null) {
+                        Log.i(
+                            "NewsListViewModel",
+                            "News already present in DB with category ${newsData.category}"
+                        )
+                        continue
+                    } else {
+                        val newsProperty = NewsProperty(
+                            0,
+                            newsData.category,
+                            news.author,
+                            news.content,
+                            news.date,
+                            news.imageUrl,
+                            news.readMoreUrl,
+                            news.time,
+                            news.title,
+                            news.url
+                        )
+                        dataSource.insert(newsProperty)
+                    }
                     Log.i(
                         "NewsListViewModel",
                         "Data inserted in DB with category ${newsData.category}"
@@ -278,16 +295,16 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         synchronized(this) {
             if (isNetworkAvailable()) {
                 uiScope.launch {
-                    _isLoadingWeather.value = true
-                    val weatherDeferred = fetchWeatherApi()
-                    weatherDeferred.await()
-                    _isLoadingWeather.value = false
-                    dataSource.clear()
-                    fetchDataFromAllCategories()
-                    // Wait for fetchDataFromAllCategories() to complete
-                    fetchingDeferred.await()
-                    // Now that fetchDataFromAllCategories() has completed, fetch data from the database
-                    getDataFromDatabase(currentCategory.value ?: "all")
+                    if(dataSource.getNumberOfRecords() == 0) {
+                        firstTimeFlag = true
+                        fetchDataFromAllCategories()
+                        fetchingDeferred.await()
+                        getDataFromDatabase(currentCategory.value ?: "all")
+                    } else {
+                        firstTimeFlag = false
+                        fetchDataFromAllCategories()
+                        getDataFromDatabase(currentCategory.value ?: "all")
+                    }
                 }
             } else {
                 getDataFromDatabase(currentCategory.value ?: "all")
@@ -363,11 +380,12 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
 
         uiScope.launch {
             val searchData = withContext(Dispatchers.IO) {
-                dataSource.searchNewsWithLimit(
-                    "%$searchQuery%",
-                    limit,
-                    offset
-                ) // Use "%" for wildcard search
+//                dataSource.searchNewsWithLimit(
+//                    "%$searchQuery%",
+//                    limit,
+//                    offset
+//                ) // Use "%" for wildcard search
+                dataSource.searchNews("%$searchQuery%")
             }
             if (searchData.isEmpty()) {
                 _showNoNewsToast.value = true
@@ -384,55 +402,102 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         _newsData.value = emptyList()
     }
 
-    /**
-     * Triggered when the news item is clicked
-     * @param readMoreUrl The URL to open when the news item is clicked
-     * @param title The title of the news item
-     */
-    fun onClickNewsItem(readMoreUrl: String, title: String) {
-        _newsItemUrl.value = readMoreUrl
-        _newsItemTitle.value = title
-        _newsItemClicked.value = true
+    /************* WEATHER API FUNCTIONS *************/
+
+    @Suppress("MissingPermission")
+    private fun requestLocationUpdates() {
+        val locationRequest = com.google.android.gms.location.LocationRequest.create().apply {
+            priority = com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
+            interval = 10000 // 10 seconds
+        }
+
+        val locationCallback = object : LocationCallback() {
+            override fun onLocationResult(p0: LocationResult) {
+                p0 ?: return
+                for (location in p0.locations) {
+                    // Handle location updates
+                    Log.i("NewsListViewModel", "Requested Location: ${location.latitude}, ${location.longitude}")
+                }
+            }
+        }
+
+        fusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.getMainLooper()
+        )
+    }
+
+    @Suppress("MissingPermission")
+    fun getCurrentLocationAndFetchWeather() {
+        Log.d("NewsListViewModel", "Getting current location")
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                if (location == null) {
+                    Log.e("NewsListViewModel", "Location is null")
+                    requestLocationUpdates() // Request location updates as a fallback
+                    return@addOnSuccessListener
+                }
+                location?.let {
+                    Log.i("NewsListViewModel", "Location: ${it.latitude}, ${it.longitude}")
+                    uiScope.launch {
+                        fetchWeatherApi(it.latitude, it.longitude)
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("NewsListViewModel", "Error getting location: ${e.message}")
+            }
+        Log.d("NewsListViewModel", "Got current location")
     }
 
     /**
-     * Triggered when the news item is clicked and completed
-     */
-    fun onCompletedNavigation() {
-        _newsItemUrl.value = ""
-        _newsItemClicked.value = false
-    }
+ * Triggered when the news item is clicked
+ * @param readMoreUrl The URL to open when the news item is clicked
+ * @param title The title of the news item
+ */
+fun onClickNewsItem(newsProperty: NewsProperty) {
+    _clickedCurrentNews.value = newsProperty
+    _newsItemClicked.value = true
+}
 
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
-    }
+/**
+ * Triggered when the news item is clicked and completed
+ */
+fun onCompletedNavigation() {
+    _newsItemClicked.value = false
+}
+
+override fun onCleared() {
+    super.onCleared()
+    job.cancel()
+}
 
 
-    fun onCompletedShowErrorToast() {
-        _showErrorToast.value = false
-    }
+fun onCompletedShowErrorToast() {
+    _showErrorToast.value = false
+}
 
-    /**
-     * Triggered when the category is clicked and completed
-     */
-    fun onCompleteCategoryClicked() {
+/**
+ * Triggered when the category is clicked and completed
+ */
+fun onCompleteCategoryClicked() {
 //        currentCategory.value = ""
-        _categoryClicked.value = false
-    }
+    _categoryClicked.value = false
+}
 
-    fun onCompletedShowNoNewsToast() {
-        _showNoNewsToast.value = false
-    }
+fun onCompletedShowNoNewsToast() {
+    _showNoNewsToast.value = false
+}
 
-    fun shareNews(title: String, readMoreUrl: String) {
-        _shareNewsTitle.value = title
-        _shareNewsUrl.value = readMoreUrl
-        _shareNews.value = true
-    }
+fun shareNews(title: String, readMoreUrl: String) {
+    _shareNewsTitle.value = title
+    _shareNewsUrl.value = readMoreUrl
+    _shareNews.value = true
+}
 
-    fun onCompletedShareNews() {
-        _shareNews.value = false
-    }
+fun onCompletedShareNews() {
+    _shareNews.value = false
+}
 
 }

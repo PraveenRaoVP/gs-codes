@@ -34,8 +34,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/content_container"
-            android:layout_width="348dp"
-            android:layout_height="167dp"
+            android:layout_width="360dp"
+            android:layout_height="150dp"
             android:background="#E4DDDD"
             android:clickable="true"
             android:outlineAmbientShadowColor="#393737"
@@ -53,19 +53,19 @@
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/author"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.271"
+                app:layout_constraintHorizontal_bias="0.366"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.296" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/author"
                 android:layout_width="195dp"
                 android:layout_height="44dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.104"
+                app:layout_constraintHorizontal_bias="0.157"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageButton
@@ -92,10 +92,10 @@
                 android:contentDescription="@string/expandArticleBtn"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.428"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/shareBtn"
                 app:layout_constraintTop_toBottomOf="@+id/title"
-                app:layout_constraintVertical_bias="0.837"
+                app:layout_constraintVertical_bias="0.733"
                 app:srcCompat="@drawable/next_icon_foreground" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
