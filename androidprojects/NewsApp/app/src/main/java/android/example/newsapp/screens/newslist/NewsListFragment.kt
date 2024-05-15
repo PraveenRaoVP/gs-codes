@@ -2,18 +2,22 @@ package android.example.newsapp.screens.newslist
 
 import android.Manifest
 import android.content.Intent
+import android.content.res.Configuration
+import android.example.newsapp.R
 import android.example.newsapp.adapters.ListItemAdapter
-import android.example.newsapp.adapters.NewsItemClickListener
 import android.example.newsapp.adapters.NewsListAdapter
 import android.example.newsapp.database.NewsDatabase
 import android.example.newsapp.databinding.FragmentNewsListBinding
 import android.example.newsapp.screens.enlargeimage.EnlargeImageDialog
+import android.example.newsapp.utils.ImageClickListener
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.OrientationEventListener
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
@@ -27,7 +31,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
 
-class NewsListFragment : Fragment(), NewsItemClickListener {
+class NewsListFragment : Fragment(), ImageClickListener {
 
     private lateinit var newsListViewModel: NewsListViewModel
     private lateinit var newsRecyclerView: RecyclerView
@@ -105,6 +109,14 @@ class NewsListFragment : Fragment(), NewsItemClickListener {
             }
         }
 
+        newsListViewModel.isLocationPresent.observe(viewLifecycleOwner) {
+            if(it) {
+                binding.weatherBar.visibility = View.GONE
+                Picasso.get().load(R.drawable.cloud_off_foreground).into(binding.tempImage)
+                newsListViewModel.isLocationPresent.value = false
+            }
+        }
+
         newsListViewModel.weatherData.observe(viewLifecycleOwner) { weatherData ->
             // Update UI with weather data
             weatherData?.let {
@@ -146,6 +158,14 @@ class NewsListFragment : Fragment(), NewsItemClickListener {
             }
         }
 
+        val slideDownAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
+        val slideUpAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up)
+
+        val orientation = resources.configuration.orientation
+        val isLandscape = orientation == Configuration.ORIENTATION_LANDSCAPE
+        var isScrollingDown = false
+
+
         newsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -154,6 +174,24 @@ class NewsListFragment : Fragment(), NewsItemClickListener {
                 val totalItemCount = layoutManager.itemCount
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
+//                val orientation = resources.configuration.orientation
+//                val isLandscape = orientation == Configuration.ORIENTATION_LANDSCAPE
+
+                // Check if scrolling down and app is in landscape mode
+                if (isLandscape && dy > 0) {
+                    // Landscape mode and scrolling down
+                    if (!isScrollingDown) {
+                        isScrollingDown = true
+                        //hide the categoryRecyclerView smoothly
+                        categoryRecyclerView.startAnimation(slideUpAnimation)
+                        categoryRecyclerView.visibility = View.GONE
+                    }
+                } else if(isLandscape && dy <= 0) {
+                    isScrollingDown = false
+                    //show the categoryRecyclerView smoothly
+                    categoryRecyclerView.startAnimation(slideDownAnimation)
+                    categoryRecyclerView.visibility = View.VISIBLE
+                }
                 if (!newsListViewModel.isLoading.value!! && visibleItemCount + firstVisibleItemPosition >= totalItemCount
                     && firstVisibleItemPosition >= 0
                 ) {
@@ -183,19 +221,18 @@ class NewsListFragment : Fragment(), NewsItemClickListener {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 // Perform search when user submits query
-                query?.let { newsListViewModel.searchNews(it) }
+                query?.let {
+                    newsListViewModel.searchNews(it)
+                }
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                // Optionally, perform search as user types (if needed)
-                if(newText == "") {
-                    newsListViewModel.getDataFromDatabase(newsListViewModel.currentCategory.value ?: "all")
-                    populateData()
-                }
                 return false
             }
         })
+
+
 
         return binding.root
     }
@@ -212,42 +249,6 @@ class NewsListFragment : Fragment(), NewsItemClickListener {
         if(newsListViewModel.newsData.value != null)
             adapter.submitList(newsListViewModel.newsData.value)
     }
-
-//    private fun requestLocationPermission() {
-//        if (ActivityCompat.shouldShowRequestPermissionRationale(
-//                requireActivity(),
-//                Manifest.permission.ACCESS_FINE_LOCATION
-//            )
-//        ) {
-//            // Explain why the app needs location permission (optional)
-//            Log.i("NewsListFragment", "Location permission needed")
-//        } else {
-//            // No explanation needed, request the permission
-//            ActivityCompat.requestPermissions(
-//                requireActivity(),
-//                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-//                REQUEST_LOCATION_PERMISSION
-//            )
-//        }
-//    }
-//
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<String>,
-//        grantResults: IntArray
-//    ) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        if (requestCode == REQUEST_LOCATION_PERMISSION) {
-//            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-//                // Permission granted, fetch weather data
-//                Log.i("NewsListFragment","Permission granted.")
-//                newsListViewModel.getCurrentLocationAndFetchWeather()
-//            } else {
-//                // Permission denied, handle accordingly
-//                Log.i("NewsListFragment", "Location permission denied")
-//            }
-//        }
-//    }
 
     private fun requestLocationPermission() {
         val locationPermissionRequest = registerForActivityResult(

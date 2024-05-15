@@ -14,6 +14,10 @@ class NewsDetailsViewModel(private val application: Application) : AndroidViewMo
     val isLinkClicked: MutableLiveData<Boolean>
         get() = _isLinkClicked
 
+    private val _isImageClicked = MutableLiveData<Boolean>()
+    val isImageClicked: MutableLiveData<Boolean>
+        get() = _isImageClicked
+
     fun onShareClicked() {
         _isShareClicked.value = true
     }
@@ -22,11 +26,19 @@ class NewsDetailsViewModel(private val application: Application) : AndroidViewMo
         _isLinkClicked.value = true
     }
 
+    fun onImageClicked() {
+        _isImageClicked.value = true
+    }
+
     fun onShareComplete() {
         _isShareClicked.value = false
     }
 
     fun onLinkComplete() {
         _isLinkClicked.value = false
+    }
+
+    fun onImageClickComplete() {
+        _isImageClicked.value = false
     }
 }

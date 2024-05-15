@@ -3,16 +3,13 @@ package android.example.newsapp.adapters
 import android.example.newsapp.database.NewsProperty
 import android.example.newsapp.databinding.ListNewsItemBinding
 import android.example.newsapp.screens.newslist.NewsListViewModel
+import android.example.newsapp.utils.ImageClickListener
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-
-interface NewsItemClickListener {
-    fun onImageClicked(imageUrl: String)
-}
 
 class NewsListDiffCallback : DiffUtil.ItemCallback<NewsProperty>() {
     override fun areItemsTheSame(oldItem: NewsProperty, newItem: NewsProperty): Boolean {
@@ -24,11 +21,12 @@ class NewsListDiffCallback : DiffUtil.ItemCallback<NewsProperty>() {
     }
 }
 
-class NewsListAdapter(private val newsListViewModel: NewsListViewModel, private val clickListener: NewsItemClickListener) : ListAdapter<NewsProperty, NewsListAdapter.NewsListViewHolder>(NewsListDiffCallback()) {
+class NewsListAdapter(private val newsListViewModel: NewsListViewModel, private val clickListener: ImageClickListener) : ListAdapter<NewsProperty, NewsListAdapter.NewsListViewHolder>(NewsListDiffCallback()) {
     class NewsListViewHolder(private val binding: ListNewsItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val newsImage = binding.image
         val authorText = binding.author
         val titleText = binding.title
+        val dateText = binding.dateText
 
         val shareBtn = binding.shareBtn
         val readMoreBtn = binding.readMoreBtn
@@ -51,6 +49,7 @@ class NewsListAdapter(private val newsListViewModel: NewsListViewModel, private 
         Picasso.get().load(newsProperty.imageUrl).into(holder.newsImage)
         holder.authorText.text = newsProperty.author
         holder.titleText.text = newsProperty.title
+        holder.dateText.text = "${newsProperty.date}, ${newsProperty.time}"
 
         holder.newsImage.setOnClickListener {
             clickListener.onImageClicked(newsProperty.imageUrl)

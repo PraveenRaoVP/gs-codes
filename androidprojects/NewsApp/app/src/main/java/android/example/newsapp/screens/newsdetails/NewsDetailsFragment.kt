@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.example.newsapp.R
 import android.example.newsapp.databinding.FragmentNewsDetailsBinding
+import android.example.newsapp.screens.enlargeimage.EnlargeImageDialog
+import android.example.newsapp.utils.ImageClickListener
+import android.text.method.ScrollingMovementMethod
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.squareup.picasso.Picasso
 
 
-class NewsDetailsFragment : Fragment() {
+class NewsDetailsFragment : Fragment(), ImageClickListener {
 
     private lateinit var arguments: NewsDetailsFragmentArgs
     override fun onCreateView(
@@ -38,6 +41,15 @@ class NewsDetailsFragment : Fragment() {
         binding.titleText.text = arguments.newsTitle
         binding.contentText.text = arguments.newsContent
         binding.lifecycleOwner = this
+
+        binding.contentText.movementMethod = ScrollingMovementMethod()
+
+        newsDetailsViewModel.isImageClicked.observe(viewLifecycleOwner) {
+            if(it) {
+                onImageClicked(arguments.imageUrl)
+                newsDetailsViewModel.onImageClickComplete()
+            }
+        }
 
         newsDetailsViewModel.isShareClicked.observe(viewLifecycleOwner) {
             if(it) {
@@ -68,5 +80,10 @@ class NewsDetailsFragment : Fragment() {
     }
 
     companion object {
+    }
+
+    override fun onImageClicked(imageUrl: String) {
+        val dialog = EnlargeImageDialog(requireContext(), imageUrl)
+        dialog.show()
     }
 }

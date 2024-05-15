@@ -47,7 +47,11 @@ class ListItemAdapter(private val newsListViewModel: NewsListViewModel) : ListAd
         val category = getItem(position)
         holder.bind(category)
 
-        holder.categoryItem.setCardBackgroundColor(Color.parseColor("#FFFFFF"))
+        if (position == 0)
+            holder.categoryItem.setCardBackgroundColor(Color.parseColor("#E4DDDD"))
+        else
+            holder.categoryItem.setCardBackgroundColor(Color.parseColor("#FFFFFF"))
+        // the category all should have a different color in first load
 
         holder.categoryItem.setOnClickListener {
 

@@ -1,8 +1,6 @@
 package android.example.newsapp.screens.newslist
 
-import android.Manifest
 import android.app.Application
-import android.content.pm.PackageManager
 import android.example.newsapp.R
 import android.example.newsapp.database.NewsDao
 import android.example.newsapp.database.NewsProperty
@@ -80,7 +78,6 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     val newsItemClicked: MutableLiveData<Boolean>
         get() = _newsItemClicked
 
-
     private val _showErrorToast = MutableLiveData<Boolean>()
     val showErrorToast: MutableLiveData<Boolean>
         get() = _showErrorToast
@@ -93,11 +90,9 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     val showNoNewsToast: LiveData<Boolean>
         get() = _showNoNewsToast
 
-
     private val _weatherData = MutableLiveData<Values?>()
     val weatherData: LiveData<Values?>
         get() = _weatherData
-
 
     private val _shareNews = MutableLiveData<Boolean>()
     val shareNews: LiveData<Boolean>
@@ -115,7 +110,7 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     val clickedCurrentNews: LiveData<NewsProperty>
         get() = _clickedCurrentNews
 
-    val _location = MutableLiveData<String>("delhi")
+    var isLocationPresent = MutableLiveData<Boolean>()
 
     var values: Values? = null
 
@@ -149,7 +144,7 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
             deferredList.add(deferred)
         }
         // Wait for all fetchDataFromAPIAndStoreInDB coroutines to complete
-        if(firstTimeFlag) {
+        if (firstTimeFlag) {
             deferredList.awaitAll()
         }
         // Signal that all categories have been fetched
@@ -295,7 +290,7 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         synchronized(this) {
             if (isNetworkAvailable()) {
                 uiScope.launch {
-                    if(dataSource.getNumberOfRecords() == 0) {
+                    if (dataSource.getNumberOfRecords() == 0) {
                         firstTimeFlag = true
                         fetchDataFromAllCategories()
                         fetchingDeferred.await()
@@ -380,12 +375,12 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
 
         uiScope.launch {
             val searchData = withContext(Dispatchers.IO) {
-//                dataSource.searchNewsWithLimit(
-//                    "%$searchQuery%",
-//                    limit,
-//                    offset
-//                ) // Use "%" for wildcard search
-                dataSource.searchNews("%$searchQuery%")
+                dataSource.searchNewsWithLimit(
+                    "%$searchQuery%",
+                    limit,
+                    offset
+                ) // Use "%" for wildcard search
+//                dataSource.searchNews("%$searchQuery%")
             }
             if (searchData.isEmpty()) {
                 _showNoNewsToast.value = true
@@ -404,6 +399,9 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
 
     /************* WEATHER API FUNCTIONS *************/
 
+    /**
+     *  Request location updates. This is a fallback in case the last location is null.
+     */
     @Suppress("MissingPermission")
     private fun requestLocationUpdates() {
         val locationRequest = com.google.android.gms.location.LocationRequest.create().apply {
@@ -416,7 +414,10 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
                 p0 ?: return
                 for (location in p0.locations) {
                     // Handle location updates
-                    Log.i("NewsListViewModel", "Requested Location: ${location.latitude}, ${location.longitude}")
+                    Log.i(
+                        "NewsListViewModel",
+                        "Requested Location: ${location.latitude}, ${location.longitude}"
+                    )
                 }
             }
         }
@@ -428,6 +429,9 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         )
     }
 
+    /**
+     * Get the current location and fetch weather data
+     */
     @Suppress("MissingPermission")
     fun getCurrentLocationAndFetchWeather() {
         Log.d("NewsListViewModel", "Getting current location")
@@ -435,12 +439,13 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
             .addOnSuccessListener { location: Location? ->
                 if (location == null) {
                     Log.e("NewsListViewModel", "Location is null")
+                    isLocationPresent.value = true
                     requestLocationUpdates() // Request location updates as a fallback
-                    return@addOnSuccessListener
                 }
                 location?.let {
                     Log.i("NewsListViewModel", "Location: ${it.latitude}, ${it.longitude}")
                     uiScope.launch {
+                        isLocationPresent.value = false
                         fetchWeatherApi(it.latitude, it.longitude)
                     }
                 }
@@ -452,52 +457,54 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     }
 
     /**
- * Triggered when the news item is clicked
- * @param readMoreUrl The URL to open when the news item is clicked
- * @param title The title of the news item
- */
-fun onClickNewsItem(newsProperty: NewsProperty) {
-    _clickedCurrentNews.value = newsProperty
-    _newsItemClicked.value = true
-}
+     * Triggered when the news item is clicked
+     * @param readMoreUrl The URL to open when the news item is clicked
+     * @param title The title of the news item
+     */
+    fun onClickNewsItem(newsProperty: NewsProperty) {
+        _clickedCurrentNews.value = newsProperty
+        _newsItemClicked.value = true
+    }
 
-/**
- * Triggered when the news item is clicked and completed
- */
-fun onCompletedNavigation() {
-    _newsItemClicked.value = false
-}
+    fun shareNews(title: String, readMoreUrl: String) {
+        _shareNewsTitle.value = title
+        _shareNewsUrl.value = readMoreUrl
+        _shareNews.value = true
+    }
 
-override fun onCleared() {
-    super.onCleared()
-    job.cancel()
-}
+    /**
+     * Triggered when the news item is clicked and completed
+     */
+    fun onCompletedNavigation() {
+        _newsItemClicked.value = false
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
+    }
 
 
-fun onCompletedShowErrorToast() {
-    _showErrorToast.value = false
-}
+    fun onCompletedShowErrorToast() {
+        _showErrorToast.value = false
+    }
 
-/**
- * Triggered when the category is clicked and completed
- */
-fun onCompleteCategoryClicked() {
+    /**
+     * Triggered when the category is clicked and completed
+     */
+    fun onCompleteCategoryClicked() {
 //        currentCategory.value = ""
-    _categoryClicked.value = false
-}
+        _categoryClicked.value = false
+    }
 
-fun onCompletedShowNoNewsToast() {
-    _showNoNewsToast.value = false
-}
+    fun onCompletedShowNoNewsToast() {
+        _showNoNewsToast.value = false
+    }
 
-fun shareNews(title: String, readMoreUrl: String) {
-    _shareNewsTitle.value = title
-    _shareNewsUrl.value = readMoreUrl
-    _shareNews.value = true
-}
 
-fun onCompletedShareNews() {
-    _shareNews.value = false
-}
+
+    fun onCompletedShareNews() {
+        _shareNews.value = false
+    }
 
 }
