@@ -5,6 +5,7 @@ import android.example.newsapp.R
 import android.example.newsapp.database.NewsDao
 import android.example.newsapp.database.NewsProperty
 import android.example.newsapp.models.Values
+import android.example.newsapp.models.WeatherData
 import android.example.newsapp.network.RetroInstance
 import android.example.newsapp.network.news.NewsAPIService
 import android.example.newsapp.network.weather.WeatherAPIService
@@ -43,7 +44,7 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     val newsData: LiveData<List<NewsProperty>>
         get() = _newsData
 
-    private val _isLoading = MutableLiveData<Boolean>()
+    private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
@@ -196,7 +197,35 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
      * Fetch weather data from the API
      * @return A deferred object representing the completion of the fetch operation
      */
-    private fun fetchWeatherApi(latitude: Double, longitude: Double): Deferred<Unit> {
+    fun fetchWeatherApi(latitude: Double, longitude: Double): Deferred<Unit> {
+
+        if(!isNetworkAvailable()) {
+            _weatherData.value = Values(0.0,
+                0.0,
+                0,
+                0.0,
+                0,
+                0,
+                0,
+                0.0,
+                0.0,
+                0,
+                0,
+                0.0,
+                0.0,
+                0,
+                0,
+                0.0,
+                0,
+                0.0,
+                0.0,
+                0.0
+                )
+            return uiScope.async {
+                Log.i("NewsListViewModel", "No network available")
+            }
+        }
+
         return uiScope.async {
             _isLoadingWeather.value = true
             val retrofit = WeatherAPIService.retrofitService
