@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso
 
 class NewsListDiffCallback : DiffUtil.ItemCallback<NewsProperty>() {
     override fun areItemsTheSame(oldItem: NewsProperty, newItem: NewsProperty): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.readMoreUrl == newItem.readMoreUrl
     }
 
     override fun areContentsTheSame(oldItem: NewsProperty, newItem: NewsProperty): Boolean {

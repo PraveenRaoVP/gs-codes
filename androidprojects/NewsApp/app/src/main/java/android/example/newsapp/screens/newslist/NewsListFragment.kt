@@ -47,6 +47,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
         newsListViewModel = ViewModelProvider(this, viewModelFactory)[NewsListViewModel::class.java]
         Log.i("NewsListFragment", "currentCategory is ${newsListViewModel.currentCategory.value}")
 
+        // fetch data only once when the fragment is created.
         newsListViewModel.populateDataFromDatabase(newsListViewModel.currentCategory.value ?: "all")
     }
 
@@ -158,6 +159,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
             }
         }
 
+        // animation to hide/show categoryRecyclerView smoothly
         val slideDownAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
         val slideUpAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up)
 
@@ -165,7 +167,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
         val isLandscape = orientation == Configuration.ORIENTATION_LANDSCAPE
         var isScrollingDown = false
 
-
+        // handle pagination while scrolling, and hide/show categoryRecyclerView when in landscape mode
         newsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -174,10 +176,6 @@ class NewsListFragment : Fragment(), ImageClickListener {
                 val totalItemCount = layoutManager.itemCount
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
-//                val orientation = resources.configuration.orientation
-//                val isLandscape = orientation == Configuration.ORIENTATION_LANDSCAPE
-
-                // Check if scrolling down and app is in landscape mode
                 if (isLandscape && dy > 0) {
                     // Landscape mode and scrolling down
                     if (!isScrollingDown) {
