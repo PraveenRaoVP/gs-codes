@@ -511,12 +511,9 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         _newsItemClicked.value = false
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
-    }
-
-
+    /**
+     * Triggered when the error toast is displayed
+     */
     fun onCompletedShowErrorToast() {
         _showErrorToast.value = false
     }
@@ -529,14 +526,22 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         _categoryClicked.value = false
     }
 
+    /**
+     * Triggered when there are no more news data in the category
+     */
     fun onCompletedShowNoNewsToast() {
         _showNoNewsToast.value = false
     }
 
-
-
+    /**
+     * Triggered when the news is shared and completed
+     */
     fun onCompletedShareNews() {
         _shareNews.value = false
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
+    }
 }

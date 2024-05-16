@@ -15,8 +15,10 @@
 
         <TextView
             android:id="@+id/titleText"
-            android:layout_width="336dp"
+            android:layout_width="0dp"
             android:layout_height="72dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:foregroundGravity="center"
             android:gravity="center"
             android:text="TextView"
@@ -31,8 +33,10 @@
 
         <ImageView
             android:id="@+id/newsImage"
-            android:layout_width="321dp"
+            android:layout_width="0dp"
             android:layout_height="228dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:clickable="true"
             android:onClick="@{() -> newsDetailsViewModel.onImageClicked()}"
             app:layout_constraintBottom_toTopOf="@+id/titleText"
@@ -45,8 +49,10 @@
 
         <TextView
             android:id="@+id/contentText"
-            android:layout_width="336dp"
+            android:layout_width="0dp"
             android:layout_height="218dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:gravity="top|left"
             android:scrollbars="vertical"
             android:text="TextView"

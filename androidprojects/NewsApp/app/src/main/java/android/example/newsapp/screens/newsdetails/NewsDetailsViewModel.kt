@@ -6,6 +6,11 @@ import androidx.lifecycle.MutableLiveData
 
 class NewsDetailsViewModel(private val application: Application) : AndroidViewModel(application) {
 
+    val title = MutableLiveData<String>()
+    val content = MutableLiveData<String>()
+    val imageUrl = MutableLiveData<String>()
+
+
     private val _isShareClicked = MutableLiveData<Boolean>()
     val isShareClicked: MutableLiveData<Boolean>
         get() = _isShareClicked
