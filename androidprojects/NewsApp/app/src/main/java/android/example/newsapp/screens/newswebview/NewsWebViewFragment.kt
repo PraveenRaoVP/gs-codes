@@ -42,58 +42,10 @@ class NewsWebViewFragment : Fragment() {
         return binding.root
     }
 
-//    class MyWebViewClient() : WebViewClient() {
-//        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-//            view?.loadUrl(url!!)
-//            return true
-//        }
-//    }
-
-    inner class MyWebViewClient : WebViewClient() {
-        override fun shouldOverrideUrlLoading(
-            view: WebView?,
-            request: WebResourceRequest?
-        ): Boolean {
-            val url = request?.url.toString()
-
-            if (isExternalAppUrl(url)) {
-                if (openExternalApp(url)) {
-                    return true
-                }
-            }
-
-            view?.loadUrl(url)
+    class MyWebViewClient() : WebViewClient() {
+        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+            view?.loadUrl(url!!)
             return true
-        }
-
-        private fun isExternalAppUrl(url: String): Boolean {
-            return url.startsWith("https://twitter.com") ||
-                    url.startsWith("https://www.youtube.com") ||
-                    url.startsWith("https://www.amazon.in")
-        }
-
-        private fun openExternalApp(url: String): Boolean {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            when {
-                url.startsWith("https://twitter.com") -> {
-                    intent.setPackage("com.twitter.android")
-                }
-
-                url.startsWith("https://www.youtube.com") -> {
-                    intent.setPackage("com.google.android.youtube")
-                }
-
-                url.startsWith("https://www.amazon.in") -> {
-                    intent.setPackage("in.amazon.mShop.android.shopping")
-                }
-
-                else -> return false
-            }
-            if (intent.resolveActivity(requireContext().packageManager) != null) {
-                startActivity(intent)
-                return true
-            }
-            return false
         }
     }
 

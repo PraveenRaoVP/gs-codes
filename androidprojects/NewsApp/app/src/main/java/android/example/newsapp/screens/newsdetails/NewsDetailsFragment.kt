@@ -141,8 +141,16 @@ class NewsDetailsFragment : Fragment(), ImageClickListener {
 
             else -> return false
         }
-        startActivity(intent)
-        return true
+
+        // check if the app is present in the phone
+        Log.i("NewsDetailsFragment", requireActivity().packageManager.toString())
+        try{
+            startActivity(intent)
+            return true
+        } catch (e: Exception) {
+            Log.e("NewsDetailsFragment", "Error opening external app: ${e.message}")
+            return false
+        }
     }
 
     companion object {

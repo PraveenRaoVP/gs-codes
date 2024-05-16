@@ -46,6 +46,7 @@ class NewsListAdapter(private val newsListViewModel: NewsListViewModel, private 
 
     override fun onBindViewHolder(holder: NewsListViewHolder, position: Int) {
         val newsProperty = getItem(position)
+
         Picasso.get().load(newsProperty.imageUrl).into(holder.newsImage)
         holder.authorText.text = newsProperty.author
         holder.titleText.text = newsProperty.title

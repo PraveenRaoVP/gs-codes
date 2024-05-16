@@ -9,6 +9,7 @@ import android.example.newsapp.models.WeatherData
 import android.example.newsapp.network.RetroInstance
 import android.example.newsapp.network.news.NewsAPIService
 import android.example.newsapp.network.weather.WeatherAPIService
+import android.example.newsapp.utils.DateFormatUtil
 import android.example.newsapp.utils.WeatherCondition
 import android.location.Location
 import android.os.Looper
@@ -283,7 +284,8 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
                             news.readMoreUrl,
                             news.time,
                             news.title,
-                            news.url
+                            news.url,
+                            DateFormatUtil.calculateFormattedDateTime(news.date, news.time)
                         )
                         dataSource.insert(newsProperty)
                     }

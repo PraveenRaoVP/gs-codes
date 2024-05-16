@@ -9,24 +9,24 @@ interface NewsDao {
     @Insert
     suspend fun insert(news: NewsProperty)
 
-    @Query("SELECT * FROM news_table ORDER BY id DESC")
+    @Query("SELECT * FROM news_table ORDER BY formattedDateString DESC")
     suspend fun getAllNews() : List<NewsProperty>
 
-    @Query("SELECT * FROM news_table WHERE category = :category ORDER BY id DESC")
+    @Query("SELECT * FROM news_table WHERE category = :category ORDER BY formattedDateString DESC")
     suspend fun getNewsByCategory(category: String) : List<NewsProperty>
 
     // pagination
-    @Query("SELECT * FROM news_table WHERE category = :category ORDER BY id DESC LIMIT :limit OFFSET :offset")
+    @Query("SELECT * FROM news_table WHERE category = :category ORDER BY formattedDateString DESC LIMIT :limit OFFSET :offset")
     suspend fun getNewsByCategoryWithLimit(category: String, limit: Int, offset: Int) : List<NewsProperty>
 
-    @Query("SELECT * FROM news_table ORDER BY id DESC LIMIT :limit OFFSET :offset")
+    @Query("SELECT * FROM news_table ORDER BY formattedDateString DESC LIMIT :limit OFFSET :offset")
     suspend fun getAllNewsWithLimit(limit: Int, offset: Int) : List<NewsProperty>
 
     // search and pagination
-    @Query("SELECT * FROM news_table WHERE title LIKE :searchQuery ORDER BY id DESC LIMIT :limit OFFSET :offset")
+    @Query("SELECT * FROM news_table WHERE title LIKE :searchQuery ORDER BY formattedDateString DESC LIMIT :limit OFFSET :offset")
     suspend fun searchNewsWithLimit(searchQuery: String, limit: Int, offset: Int) : List<NewsProperty>
 
-    @Query("SELECT * FROM news_table WHERE title LIKE :searchQuery ORDER BY id DESC")
+    @Query("SELECT * FROM news_table WHERE title LIKE :searchQuery ORDER BY formattedDateString DESC")
     suspend fun searchNews(searchQuery: String) : List<NewsProperty>
 
     @Query("DELETE FROM news_table")

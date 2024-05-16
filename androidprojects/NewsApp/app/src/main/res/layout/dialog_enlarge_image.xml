@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/transparent"
         android:backgroundTint="@color/transparent"
+        android:backgroundTintMode="add"
         android:gravity="center"
         android:orientation="vertical">
 
