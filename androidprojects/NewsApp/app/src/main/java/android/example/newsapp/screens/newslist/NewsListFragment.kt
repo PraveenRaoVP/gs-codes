@@ -1,6 +1,7 @@
 package android.example.newsapp.screens.newslist
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.example.newsapp.R
@@ -9,8 +10,11 @@ import android.example.newsapp.adapters.NewsListAdapter
 import android.example.newsapp.database.NewsDatabase
 import android.example.newsapp.databinding.FragmentNewsListBinding
 import android.example.newsapp.screens.enlargeimage.EnlargeImageDialog
+import android.example.newsapp.utils.ConnectivityHelper
 import android.example.newsapp.utils.ImageClickListener
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -28,15 +32,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
 
 
 class NewsListFragment : Fragment(), ImageClickListener {
 
     private lateinit var newsListViewModel: NewsListViewModel
+    private lateinit var connectivityHelper: ConnectivityHelper
     private lateinit var newsRecyclerView: RecyclerView
     private lateinit var categoryRecyclerView: RecyclerView
     private lateinit var binding: FragmentNewsListBinding
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +56,8 @@ class NewsListFragment : Fragment(), ImageClickListener {
 
         // fetch data only once when the fragment is created.
         newsListViewModel.populateDataFromDatabase(newsListViewModel.currentCategory.value ?: "all")
+
+        connectivityHelper = ConnectivityHelper(requireContext())
     }
 
     override fun onCreateView(
@@ -58,21 +67,29 @@ class NewsListFragment : Fragment(), ImageClickListener {
 
         binding = FragmentNewsListBinding.inflate(inflater, container, false)
 
+        // news recycler view setup
         newsRecyclerView = binding.newsListRecyclerView
         val newsItemAdapter = NewsListAdapter(newsListViewModel, this)
         newsRecyclerView.adapter = newsItemAdapter
         newsRecyclerView.layoutManager = LinearLayoutManager(this.context)
 
-
+        // category recycler view setup
         categoryRecyclerView = binding.categoryRecyclerView
         val categoryItemAdapter = ListItemAdapter(newsListViewModel)
         categoryRecyclerView.adapter = categoryItemAdapter
         categoryRecyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
         categoryItemAdapter.submitList(newsListViewModel.categories)
 
+        swipeRefreshLayout = binding.swipeRefreshLayout!!
+
         binding.lifecycleOwner = this
 
+        // get the location before fetching weather data
         requestLocationPermission()
+
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshData()
+        }
 
         newsListViewModel.categoryClicked.observe(viewLifecycleOwner) {
             if(it) {
@@ -85,7 +102,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
             }
         }
 
-        newsListViewModel.showErrorToast.observe(viewLifecycleOwner) {
+        newsListViewModel.showErrorToast.observe(viewLifecycleOwner) {//TODO find why
             if(it) {
                 Log.i("NewsListFragment", "showErrorToast")
                 val toast = Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT)
@@ -123,6 +140,15 @@ class NewsListFragment : Fragment(), ImageClickListener {
             weatherData?.let {
                 binding.tempText.text = "${it.temperature}°C"
                 Picasso.get().load(newsListViewModel.getWeatherImage(newsListViewModel.getWeatherCondition(it))).into(binding.tempImage)
+            }
+        }
+
+        newsListViewModel.showNoInternetToast.observe(viewLifecycleOwner) {
+            if(it) {
+                Log.i("NewsListFragment", "showNoInternetToast")
+                val toast = Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT)
+                toast.show()
+                newsListViewModel.onCompletedShowNoInternetToast()
             }
         }
 
@@ -231,7 +257,6 @@ class NewsListFragment : Fragment(), ImageClickListener {
         })
 
 
-
         return binding.root
     }
 
@@ -246,6 +271,16 @@ class NewsListFragment : Fragment(), ImageClickListener {
         val adapter = newsRecyclerView.adapter as NewsListAdapter
         if(newsListViewModel.newsData.value != null)
             adapter.submitList(newsListViewModel.newsData.value)
+    }
+
+    private fun refreshData() {
+        swipeRefreshLayout.isRefreshing = true
+
+        Handler().postDelayed({
+            newsListViewModel.populateDataFromDatabase(newsListViewModel.currentCategory.value ?: "all")
+            populateData()
+            swipeRefreshLayout.isRefreshing = false
+        }, 2000)
     }
 
     private fun requestLocationPermission() {

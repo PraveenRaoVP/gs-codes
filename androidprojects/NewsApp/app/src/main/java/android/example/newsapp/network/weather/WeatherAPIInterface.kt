@@ -2,11 +2,10 @@ package android.example.newsapp.network.weather
 
 import android.example.newsapp.models.WeatherData
 import android.example.newsapp.network.RetroInstance
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-private val retrofit = RetroInstance.getRetroInstance(RetroInstance.weatherApiBaseUrl)
+private val retrofit = RetroInstance.getRetroInstance(RetroInstance.WEATHER_API_BASE_URL)
 
 interface WeatherAPIInterface {
     @GET("weather/realtime")

@@ -17,13 +17,11 @@ class ListItemDiffUtil : DiffUtil.ItemCallback<String>() {
     override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
         return oldItem == newItem
     }
-
-
 }
 
 class ListItemAdapter(private val newsListViewModel: NewsListViewModel) : ListAdapter<String, ListItemAdapter.ListItemViewHolder>(ListItemDiffUtil()) {
 
-    private var lastSelectedPosition = RecyclerView.NO_POSITION
+    private var lastSelectedPosition = RecyclerView.NO_POSITION // Default value
 
     class ListItemViewHolder(private val binding: ListCategoriesItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val categoryItem = binding.categoryItem
@@ -64,6 +62,7 @@ class ListItemAdapter(private val newsListViewModel: NewsListViewModel) : ListAd
             // change the color of the selected category to #E4DDDD and the rest to white
             holder.categoryItem.setCardBackgroundColor(Color.parseColor("#E4DDDD"))
 
+            // change the rest of the categories to white
             val recyclerView = holder.itemView.parent as? RecyclerView
             recyclerView?.let { rv ->
                 for (i in 0 until rv.childCount) {
@@ -77,6 +76,7 @@ class ListItemAdapter(private val newsListViewModel: NewsListViewModel) : ListAd
 
             lastSelectedPosition = holder.adapterPosition
 
+            // change the category in the view model
             newsListViewModel.onClickCategory(category!!)
         }
     }

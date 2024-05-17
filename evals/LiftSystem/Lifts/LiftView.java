@@ -3,10 +3,10 @@ package evals.LiftSystem.Lifts;
 import java.util.Scanner;
 
 public class LiftView {
-    private LiftModel liftModel;
+    private LiftViewModel liftModel;
 
     public LiftView() {
-        this.liftModel = new LiftModel(this);
+        this.liftModel = new LiftViewModel(this);
     }
 
     public void displayLifts() {

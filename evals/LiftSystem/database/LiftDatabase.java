@@ -61,17 +61,9 @@ public class LiftDatabase {
         max_capacities[liftNumber] = cap;
     }
 
-    // public List<int[]> getCurrentCapacity(int liftNumber) {
-    //     return liftUsers.get(liftNumber) == null ? new ArrayList<>() : liftUsers.get(liftNumber); 
-    // }
-
     public int getCurrentCapacity(int liftNumber) {
         return currentCapacity[liftNumber];
     }
-
-    // public void gettingIntoLift(int liftNumber, int src, int dest) {
-    //     liftUsers.get(liftNumber).add(new int[]{src, dest});
-    // }   
 
     public void incrementCapacity(int liftNumber) {
         currentCapacity[liftNumber]++;
@@ -80,13 +72,4 @@ public class LiftDatabase {
     public void decrementCapacity(int liftNumber) {
         currentCapacity[liftNumber]--;
     }
-
-    // public void gettingOutOfLift(int liftNumber, int src ,int dest) {
-    //     for(int i=0;i<liftUsers.get(liftNumber).size();i++) {
-    //         if(liftUsers.get(liftNumber).get(i)[0] == src && liftUsers.get(liftNumber).get(i)[1] == dest) {
-    //             liftUsers.get(liftNumber).remove(i);
-    //             break;
-    //         }
-    //     }
-    // }
 }

@@ -12,6 +12,7 @@ import android.example.newsapp.network.weather.WeatherAPIService
 import android.example.newsapp.utils.DateFormatUtil
 import android.example.newsapp.utils.WeatherCondition
 import android.location.Location
+import android.net.ConnectivityManager
 import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
@@ -91,6 +92,10 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     private val _showNoNewsToast = MutableLiveData<Boolean>()
     val showNoNewsToast: LiveData<Boolean>
         get() = _showNoNewsToast
+
+    private val _showNoInternetToast = MutableLiveData<Boolean>()
+    val showNoInternetToast: LiveData<Boolean>
+        get() = _showNoInternetToast
 
     private val _weatherData = MutableLiveData<Values?>()
     val weatherData: LiveData<Values?>
@@ -324,15 +329,21 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
                     if (dataSource.getNumberOfRecords() == 0) {
                         firstTimeFlag = true
                         fetchDataFromAllCategories()
-                        fetchingDeferred.await()
+                        fetchingDeferred.await() // getting all data from api itself
                         getDataFromDatabase(currentCategory.value ?: "all")
                     } else {
                         firstTimeFlag = false
-                        fetchDataFromAllCategories()
+                        fetchDataFromAllCategories() // getting cached data and the data from api if it is not present in the db
                         getDataFromDatabase(currentCategory.value ?: "all")
                     }
                 }
             } else {
+                uiScope.launch {
+                    if (dataSource.getNumberOfRecords() == 0) {
+                        _showNoInternetToast.value = true
+                        return@launch
+                    }
+                }
                 getDataFromDatabase(currentCategory.value ?: "all")
             }
         }
@@ -543,5 +554,9 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     override fun onCleared() {
         super.onCleared()
         job.cancel()
+    }
+
+    fun onCompletedShowNoInternetToast() {
+        _showNoInternetToast.value = false
     }
 }
