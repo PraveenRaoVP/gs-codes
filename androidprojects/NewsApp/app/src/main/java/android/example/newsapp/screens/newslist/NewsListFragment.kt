@@ -45,6 +45,9 @@ class NewsListFragment : Fragment(), ImageClickListener {
     private lateinit var binding: FragmentNewsListBinding
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
+    private var isFirstLoad = true // Track first-time load
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val application = requireNotNull(this.activity).application
@@ -55,7 +58,10 @@ class NewsListFragment : Fragment(), ImageClickListener {
         Log.i("NewsListFragment", "currentCategory is ${newsListViewModel.currentCategory.value}")
 
         // fetch data only once when the fragment is created.
-        newsListViewModel.populateDataFromDatabase(newsListViewModel.currentCategory.value ?: "all")
+        if(newsListViewModel.isFirstTimeLoad.value == true) {
+            newsListViewModel.populateDataFromDatabase(newsListViewModel.currentCategory.value ?: "all")
+            newsListViewModel.isFirstTimeLoad.value = false
+        }
 
         connectivityHelper = ConnectivityHelper(requireContext())
     }
@@ -77,7 +83,8 @@ class NewsListFragment : Fragment(), ImageClickListener {
         categoryRecyclerView = binding.categoryRecyclerView
         val categoryItemAdapter = ListItemAdapter(newsListViewModel)
         categoryRecyclerView.adapter = categoryItemAdapter
-        categoryRecyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+        categoryRecyclerView.layoutManager =
+            LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
         categoryItemAdapter.submitList(newsListViewModel.categories)
 
         swipeRefreshLayout = binding.swipeRefreshLayout!!
@@ -91,11 +98,24 @@ class NewsListFragment : Fragment(), ImageClickListener {
             refreshData()
         }
 
+        connectivityHelper.isConnected.observe(viewLifecycleOwner) { isConnected ->
+            if (isConnected == true && newsListViewModel.isFirstTimeLoad.value == true) {
+                // Only fetch data if this is the first load
+                refreshData()
+                isFirstLoad = false
+            }
+        }
+
         newsListViewModel.categoryClicked.observe(viewLifecycleOwner) {
-            if(it) {
-                Log.i("NewsListFragment", "categoryClicked with category ${newsListViewModel.currentCategory.value}")
+            if (it) {
+                Log.i(
+                    "NewsListFragment",
+                    "categoryClicked with category ${newsListViewModel.currentCategory.value}"
+                )
                 newsListViewModel.prePopulating()
-                newsListViewModel.getDataFromDatabase(newsListViewModel.currentCategory.value ?: "all")
+                newsListViewModel.getDataFromDatabase(
+                    newsListViewModel.currentCategory.value ?: "all"
+                )
                 populateData()
                 newsRecyclerView.scrollToPosition(0)
                 newsListViewModel.onCompleteCategoryClicked()
@@ -103,7 +123,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
         }
 
         newsListViewModel.showErrorToast.observe(viewLifecycleOwner) {//TODO find why
-            if(it) {
+            if (it) {
                 Log.i("NewsListFragment", "showErrorToast")
                 val toast = Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT)
                 toast.show()
@@ -112,7 +132,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
         }
 
         newsListViewModel.isLoading.observe(viewLifecycleOwner) {
-            if(it) {
+            if (it) {
                 binding.loadingIndicator.visibility = View.VISIBLE
             } else {
                 binding.loadingIndicator.visibility = View.GONE
@@ -120,7 +140,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
         }
 
         newsListViewModel.isLoadingWeather.observe(viewLifecycleOwner) {
-            if(it) {
+            if (it) {
                 binding.weatherBar.visibility = View.VISIBLE
             } else {
                 binding.weatherBar.visibility = View.GONE
@@ -128,7 +148,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
         }
 
         newsListViewModel.isLocationPresent.observe(viewLifecycleOwner) {
-            if(it) {
+            if (it) {
                 binding.weatherBar.visibility = View.GONE
                 Picasso.get().load(R.drawable.cloud_off_foreground).into(binding.tempImage)
                 newsListViewModel.isLocationPresent.value = false
@@ -139,12 +159,14 @@ class NewsListFragment : Fragment(), ImageClickListener {
             // Update UI with weather data
             weatherData?.let {
                 binding.tempText.text = "${it.temperature}°C"
-                Picasso.get().load(newsListViewModel.getWeatherImage(newsListViewModel.getWeatherCondition(it))).into(binding.tempImage)
+                Picasso.get()
+                    .load(newsListViewModel.getWeatherImage(newsListViewModel.getWeatherCondition(it)))
+                    .into(binding.tempImage)
             }
         }
 
         newsListViewModel.showNoInternetToast.observe(viewLifecycleOwner) {
-            if(it) {
+            if (it) {
                 Log.i("NewsListFragment", "showNoInternetToast")
                 val toast = Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT)
                 toast.show()
@@ -153,7 +175,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
         }
 
         newsListViewModel.newsItemClicked.observe(viewLifecycleOwner) {
-            if(it) {
+            if (it) {
                 val action = NewsListFragmentDirections.actionNewsListFragmentToNewsDetailsFragment(
                     newsListViewModel.clickedCurrentNews.value?.title!!,
                     newsListViewModel.clickedCurrentNews.value?.content!!,
@@ -170,7 +192,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
         }
 
         newsListViewModel.showNoNewsToast.observe(viewLifecycleOwner) {
-            if(it) {
+            if (it) {
                 Log.i("NewsListFragment", "showNoNewsToast")
                 val toast = Toast.makeText(context, "No news available", Toast.LENGTH_SHORT)
                 toast.show()
@@ -179,7 +201,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
         }
 
         newsListViewModel.shareNews.observe(viewLifecycleOwner) {
-            if(it) {
+            if (it) {
                 startActivity(getShareIntent())
                 newsListViewModel.onCompletedShareNews()
             }
@@ -210,7 +232,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
                         categoryRecyclerView.startAnimation(slideUpAnimation)
                         categoryRecyclerView.visibility = View.GONE
                     }
-                } else if(isLandscape && dy <= 0) {
+                } else if (isLandscape && dy <= 0) {
                     isScrollingDown = false
                     //show the categoryRecyclerView smoothly
                     categoryRecyclerView.startAnimation(slideDownAnimation)
@@ -260,7 +282,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
         return binding.root
     }
 
-    private fun getShareIntent() : Intent {
+    private fun getShareIntent(): Intent {
         return ShareCompat.IntentBuilder.from(requireActivity())
             .setText("Check out this article: " + newsListViewModel.shareNewsTitle.value + "\n" + newsListViewModel.shareNewsUrl.value)
             .setType("text/plain")
@@ -269,7 +291,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
 
     private fun populateData() {
         val adapter = newsRecyclerView.adapter as NewsListAdapter
-        if(newsListViewModel.newsData.value != null)
+        if (newsListViewModel.newsData.value != null)
             adapter.submitList(newsListViewModel.newsData.value)
     }
 
@@ -277,7 +299,9 @@ class NewsListFragment : Fragment(), ImageClickListener {
         swipeRefreshLayout.isRefreshing = true
 
         Handler().postDelayed({
-            newsListViewModel.populateDataFromDatabase(newsListViewModel.currentCategory.value ?: "all")
+            newsListViewModel.populateDataFromDatabase(
+                newsListViewModel.currentCategory.value ?: "all"
+            )
             populateData()
             swipeRefreshLayout.isRefreshing = false
         }, 2000)
@@ -289,7 +313,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
         ) { isGranted: Boolean ->
             if (isGranted) {
                 // Permission granted, fetch weather data
-                Log.i("NewsListFragment","Permission granted.")
+                Log.i("NewsListFragment", "Permission granted.")
                 newsListViewModel.getCurrentLocationAndFetchWeather()
             } else {
                 // Permission denied, handle accordingly
@@ -307,5 +331,21 @@ class NewsListFragment : Fragment(), ImageClickListener {
     override fun onImageClicked(imageUrl: String) {
         val dialog = EnlargeImageDialog(requireContext(), imageUrl)
         dialog.show()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // Save the current state to the bundle
+        outState.putBoolean("isFirstLoad", newsListViewModel.isFirstTimeLoad.value ?: true)
+        outState.putString("currentCategory", newsListViewModel.currentCategory.value)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        // Restore the saved state from the bundle
+        savedInstanceState?.let {
+            newsListViewModel.isFirstTimeLoad.value = it.getBoolean("isFirstLoad")
+            newsListViewModel.currentCategory.value = it.getString("currentCategory")
+        }
     }
 }

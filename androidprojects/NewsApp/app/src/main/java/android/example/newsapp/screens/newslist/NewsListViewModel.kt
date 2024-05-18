@@ -50,6 +50,8 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
+    val isFirstTimeLoad = MutableLiveData<Boolean>()
+
 
     var firstTimeFlag = false
 
@@ -125,6 +127,7 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     private val pageSize = 4
 
     init {
+        isFirstTimeLoad.value = true
         requestLocationUpdates()
     }
 
@@ -498,6 +501,13 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
             }
         Log.d("NewsListViewModel", "Got current location")
     }
+
+    /******** NETWORK RELATED METHODS *********/
+
+    /**
+     * Check if the network is available
+     * @return boolean
+     */
 
     /**
      * Triggered when the news item is clicked
