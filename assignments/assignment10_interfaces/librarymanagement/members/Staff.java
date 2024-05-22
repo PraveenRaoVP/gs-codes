@@ -2,6 +2,11 @@ package assignments.assignment10_interfaces.librarymanagement.members;
 
 public class Staff implements Member {
 
+    int staffId;
+    String staffName;
+    String staffAddress;
+    String staffPhone;
+
     @Override
     public void issueBook() {
         System.out.println("Staff issues book");

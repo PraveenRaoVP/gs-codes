@@ -59,6 +59,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
 
         // fetch data only once when the fragment is created.
         if(newsListViewModel.isFirstTimeLoad.value == true) {
+            newsListViewModel.deleteOldData()
             newsListViewModel.populateDataFromDatabase(newsListViewModel.currentCategory.value ?: "all")
             newsListViewModel.isFirstTimeLoad.value = false
         }

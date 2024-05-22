@@ -5,14 +5,12 @@ import android.example.newsapp.R
 import android.example.newsapp.database.NewsDao
 import android.example.newsapp.database.NewsProperty
 import android.example.newsapp.models.Values
-import android.example.newsapp.models.WeatherData
 import android.example.newsapp.network.RetroInstance
 import android.example.newsapp.network.news.NewsAPIService
 import android.example.newsapp.network.weather.WeatherAPIService
 import android.example.newsapp.utils.DateFormatUtil
 import android.example.newsapp.utils.WeatherCondition
 import android.location.Location
-import android.net.ConnectivityManager
 import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
@@ -20,8 +18,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -352,6 +352,35 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
         }
     }
 
+    /**
+     * Delete old data from the database. Data older than 3 days is deleted.
+     */
+    fun deleteOldData() {
+//        // calculate the date 3 days ago
+//        val date = DateFormatUtil.getCurrentDate()
+//        Log.i("DateFormatUtil", "Current date: $date") // 2024-05-20 14:36:39
+//        val dateRegex = Regex("""(\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)""")
+//
+//        val matchResult = dateRegex.find(date) ?: return
+//        val (_, year, month, day, _, _, _) = matchResult.destructured
+//        val formattedDate = "$year-$month-$day"
+//        Log.i("DateFormatUtil", "Formatted date: $formattedDate") // 2024-05-20
+//
+//        val threeDaysAgo = with(dateRegex.find(date)!!) {
+//            val year = groupValues[1].toInt()
+//            val month = groupValues[2].toInt()
+//            val day = groupValues[3].toInt()
+//            val threeDaysAgo = day - 3
+//            "$year-$month-$threeDaysAgo"
+//        }
+//
+//        uiScope.launch {
+//            withContext(Dispatchers.IO) {
+//                dataSource.deleteOldNews(threeDaysAgo)
+//            }
+//            Log.i("NewsListViewModel", "Old data deleted")
+//        }
+    }
 
     /**
      * Get paginated data from the database
@@ -450,10 +479,8 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
      */
     @Suppress("MissingPermission")
     private fun requestLocationUpdates() {
-        val locationRequest = com.google.android.gms.location.LocationRequest.create().apply {
-            priority = com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
-            interval = 10000 // 10 seconds
-        }
+
+        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000)
 
         val locationCallback = object : LocationCallback() {
             override fun onLocationResult(p0: LocationResult) {
@@ -468,11 +495,7 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
             }
         }
 
-        fusedLocationClient.requestLocationUpdates(
-            locationRequest,
-            locationCallback,
-            Looper.getMainLooper()
-        )
+        fusedLocationClient.requestLocationUpdates(locationRequest.build(), locationCallback, Looper.getMainLooper())
     }
 
     /**

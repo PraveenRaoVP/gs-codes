@@ -3,8 +3,8 @@ package assignments.assignment12_exception_handling;
 /* Create multiple classes to imitate a bank structure with proper Exception Handling. For eg., if the user tries to withdraw more than the balance, throw "InsufficientBalanceException" (created customly) */
 
 class InsufficientBalanceException extends Exception {
-    public InsufficientBalanceException(String msg) {
-        super(msg);
+    public InsufficientBalanceException() {
+        super("Insufficient balance in the account")
     }
     
     @Override

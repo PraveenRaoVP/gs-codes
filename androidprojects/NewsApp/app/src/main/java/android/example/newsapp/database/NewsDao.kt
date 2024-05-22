@@ -38,4 +38,8 @@ interface NewsDao {
     // get number of records in the database
     @Query("SELECT COUNT(*) FROM news_table")
     suspend fun getNumberOfRecords(): Int
+
+    // delete data more than 3 days old.
+    @Query("DELETE FROM news_table WHERE formattedDateString < :date")
+    suspend fun deleteOldNews(date: String)
 }

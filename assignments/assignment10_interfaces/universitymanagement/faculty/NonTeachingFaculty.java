@@ -1,6 +1,9 @@
 package assignments.assignment10_interfaces.universitymanagement.faculty;
 
 public class NonTeachingFaculty implements Faculty {
+    int facultyId;
+    String facultyName;
+    String occupation;
 
     @Override
     public void teach() {

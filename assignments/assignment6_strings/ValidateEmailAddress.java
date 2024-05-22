@@ -28,7 +28,7 @@ public class ValidateEmailAddress {
     }
 
     public static void main(String[] args) {
-        String email = "example@example.com";
+        String email = "example()#@gmsil.com";
         System.out.println(validateEmail(email));
     }
 }

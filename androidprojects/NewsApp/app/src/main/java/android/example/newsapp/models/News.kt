@@ -1,6 +1,6 @@
 package android.example.newsapp.models
 
-data class Data(
+data class News(
     val author: String,
     val content: String,
     val date: String,

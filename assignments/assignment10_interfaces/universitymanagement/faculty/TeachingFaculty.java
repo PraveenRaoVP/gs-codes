@@ -1,6 +1,10 @@
 package assignments.assignment10_interfaces.universitymanagement.faculty;
 
 public class TeachingFaculty implements Faculty {
+    int facultyId;
+    String facultyName;
+    String qualifications;
+    int yearsOfExperience;
 
     @Override
     public void teach() {
