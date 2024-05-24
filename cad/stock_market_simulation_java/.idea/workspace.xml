@@ -5,51 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="738e35d3-54af-4c58-8eea-b20de4230ac1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sample/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sample/MainMenu/MainMenu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sample/auth/login/LoginModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sample/auth/login/LoginView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sample/auth/signup/SignUpModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sample/auth/signup/SignUpView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sample/models/Credentials.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sample/repository/CredentialsRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sample/repository/JDBCConnection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sample/utils/DateUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sample/utils/PrintersAndFormatters.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sample/utils/ValidationUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/BroadcastReceiverTrial/app/src/main/java/android/example/broadcastreceivertrial/AirplaneModeReceiver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/BroadcastReceiverTrial/app/src/main/java/android/example/broadcastreceivertrial/AirplaneModeReceiver.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/BroadcastReceiverTrial/app/src/main/java/android/example/broadcastreceivertrial/ConnectivityReceiver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/BroadcastReceiverTrial/app/src/main/java/android/example/broadcastreceivertrial/ConnectivityReceiver.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/ForegroundServicesTrialComp/app/src/main/java/android/example/foregroundservicestrialcomp/RunningApp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/ForegroundServicesTrialComp/app/src/main/java/android/example/foregroundservicestrialcomp/RunningApp.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/ForegroundServicesTrialComp/app/src/main/java/android/example/foregroundservicestrialcomp/RunningService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/ForegroundServicesTrialComp/app/src/main/java/android/example/foregroundservicestrialcomp/RunningService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/ForegroundServicesTrialComp/app/src/main/java/android/example/foregroundservicestrialcomp/TimerApp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/ForegroundServicesTrialComp/app/src/main/java/android/example/foregroundservicestrialcomp/TimerApp.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/ForegroundServicesTrialComp/app/src/main/java/android/example/foregroundservicestrialcomp/TimerService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/ForegroundServicesTrialComp/app/src/main/java/android/example/foregroundservicestrialcomp/TimerService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/ForegroundServicesTrialComp/app/src/main/res/drawable/ic_start.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/ForegroundServicesTrialComp/app/src/main/res/drawable/ic_start.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/ForegroundServicesTrialComp/app/src/main/res/drawable/ic_stop.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/ForegroundServicesTrialComp/app/src/main/res/drawable/ic_stop.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/NewsApp/app/src/main/java/android/example/newsapp/database/NewsDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/NewsApp/app/src/main/java/android/example/newsapp/database/NewsDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/NewsApp/app/src/main/java/android/example/newsapp/models/News.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/NewsApp/app/src/main/java/android/example/newsapp/models/News.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/NewsApp/app/src/main/java/android/example/newsapp/models/NewsData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/NewsApp/app/src/main/java/android/example/newsapp/models/NewsData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/NewsApp/app/src/main/java/android/example/newsapp/screens/newslist/NewsListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/NewsApp/app/src/main/java/android/example/newsapp/screens/newslist/NewsListFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/NewsApp/app/src/main/java/android/example/newsapp/screens/newslist/NewsListViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/NewsApp/app/src/main/java/android/example/newsapp/screens/newslist/NewsListViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/NewsApp/app/src/main/java/android/example/newsapp/utils/DateFormatUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/NewsApp/app/src/main/java/android/example/newsapp/utils/DateFormatUtil.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/todo_app_compose/app/src/main/java/android/example/todo_app_compose/WaterCounter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/todo_app_compose/app/src/main/java/android/example/todo_app_compose/WaterCounter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/todo_app_compose/app/src/main/java/android/example/todo_app_compose/WellnessScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/todo_app_compose/app/src/main/java/android/example/todo_app_compose/WellnessScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/todo_app_compose/app/src/main/java/android/example/todo_app_compose/WellnessTask.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/todo_app_compose/app/src/main/java/android/example/todo_app_compose/WellnessTask.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/todo_app_compose/app/src/main/java/android/example/todo_app_compose/WellnessTaskItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/todo_app_compose/app/src/main/java/android/example/todo_app_compose/WellnessTaskItem.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/todo_app_compose/app/src/main/java/android/example/todo_app_compose/WellnessTaskList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/todo_app_compose/app/src/main/java/android/example/todo_app_compose/WellnessTaskList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../androidprojects/todo_app_compose/app/src/main/java/android/example/todo_app_compose/WellnessViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/todo_app_compose/app/src/main/java/android/example/todo_app_compose/WellnessViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../assignments/assignment10_interfaces/librarymanagement/members/Staff.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../assignments/assignment10_interfaces/librarymanagement/members/Staff.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../assignments/assignment10_interfaces/universitymanagement/faculty/NonTeachingFaculty.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../assignments/assignment10_interfaces/universitymanagement/faculty/NonTeachingFaculty.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../assignments/assignment10_interfaces/universitymanagement/faculty/TeachingFaculty.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../assignments/assignment10_interfaces/universitymanagement/faculty/TeachingFaculty.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../assignments/assignment12_exception_handling/Problem4.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../assignments/assignment12_exception_handling/Problem4.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../assignments/assignment14_multithreading/Problem1.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../assignments/assignment14_multithreading/Problem1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../assignments/assignment6_strings/ValidateEmailAddress.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../assignments/assignment6_strings/ValidateEmailAddress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../androidprojects/codelab-android-compose" beforeDir="false" afterPath="$PROJECT_DIR$/../../androidprojects/codelab-android-compose" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +35,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "<unknown>",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -89,6 +45,15 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="app" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.sample.Main" />
+      <module name="stock_market_simulation_java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -105,7 +70,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1716398387888</updated>
-      <workItem from="1716398389048" duration="3446000" />
+      <workItem from="1716398389048" duration="3742000" />
     </task>
     <servers />
   </component>

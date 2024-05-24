@@ -5,30 +5,28 @@ package assignments.assignment6_strings;
 public class ValidateEmailAddress {
 
     public static boolean validateEmail(String email) {
-        boolean hasAt = false;
-        int lastOccurenceOfDot = -1;
-        for(int i=0;i<email.length();i++) {
-            if(email.charAt(i) == '@') {
-                hasAt = true;
+        for (int i = 0; i < email.length(); i++) {
+            char ch = email.charAt(i);
+            if (!((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9') || ch == '@' || ch == '.')) {
+                return false;
             }
         }
-        if(hasAt) {
-            return true;
-        }
-        for(int i=email.length()-1;i>=0;i--) {
-            if(email.charAt(i) == '.') {
-                lastOccurenceOfDot = i;
-                break;
+        
+        if (email.contains("@")) {
+            String[] parts = email.split("@");
+            if (parts.length == 2) {
+                String domain = parts[1];
+                if (domain.contains(".")) {
+                    return true;
+                }
             }
-        }
-        if(lastOccurenceOfDot != -1 && lastOccurenceOfDot != email.length()-1) {
-            return true;
         }
         return false;
+
     }
 
     public static void main(String[] args) {
-        String email = "example()#@gmsil.com";
+        String email = "example@gmail.com";
         System.out.println(validateEmail(email));
     }
 }
