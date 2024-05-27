@@ -1,7 +1,7 @@
 package android.example.newsapp.screens.newslist
 
 import android.Manifest
-import android.content.Context
+import android.app.LauncherActivity.ListItem
 import android.content.Intent
 import android.content.res.Configuration
 import android.example.newsapp.R
@@ -12,18 +12,14 @@ import android.example.newsapp.databinding.FragmentNewsListBinding
 import android.example.newsapp.screens.enlargeimage.EnlargeImageDialog
 import android.example.newsapp.utils.ConnectivityHelper
 import android.example.newsapp.utils.ImageClickListener
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
-import android.view.OrientationEventListener
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.SearchView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ShareCompat
@@ -45,7 +41,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
     private lateinit var binding: FragmentNewsListBinding
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
-    private var isFirstLoad = true // Track first-time load
+//    private var isFirstLoad = true // Track first-time load
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,7 +84,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
             LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
         categoryItemAdapter.submitList(newsListViewModel.categories)
 
-        swipeRefreshLayout = binding.swipeRefreshLayout!!
+        swipeRefreshLayout = binding.swipeRefreshLayout
 
         binding.lifecycleOwner = this
 
@@ -103,7 +99,6 @@ class NewsListFragment : Fragment(), ImageClickListener {
             if (isConnected == true && newsListViewModel.isFirstTimeLoad.value == true) {
                 // Only fetch data if this is the first load
                 refreshData()
-                isFirstLoad = false
             }
         }
 
@@ -284,7 +279,7 @@ class NewsListFragment : Fragment(), ImageClickListener {
     }
 
     private fun getShareIntent(): Intent {
-        return ShareCompat.IntentBuilder.from(requireActivity())
+        return ShareCompat.IntentBuilder(requireActivity())
             .setText("Check out this article: " + newsListViewModel.shareNewsTitle.value + "\n" + newsListViewModel.shareNewsUrl.value)
             .setType("text/plain")
             .intent

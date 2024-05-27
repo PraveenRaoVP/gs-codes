@@ -119,6 +119,8 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
     val clickedCurrentNews: LiveData<NewsProperty>
         get() = _clickedCurrentNews
 
+    val selectedCategoryPosition = MutableLiveData<Int?>()
+
     var isLocationPresent = MutableLiveData<Boolean>()
 
     var values: Values? = null
@@ -135,9 +137,10 @@ class NewsListViewModel(private val dataSource: NewsDao, private val application
      * Triggered when the categories are clicked
      * @param category The category that was clicked
      */
-    fun onClickCategory(category: String) {
+    fun onClickCategory(category: String, position: Int) {
         currentCategory.value = category
         _categoryClicked.value = true
+        selectedCategoryPosition.value = position
         Log.i("NewsListViewModel", "Category clicked: $category")
     }
 
