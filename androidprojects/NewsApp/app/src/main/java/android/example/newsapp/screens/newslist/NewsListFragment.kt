@@ -220,6 +220,12 @@ class NewsListFragment : Fragment(), ImageClickListener {
                 val totalItemCount = layoutManager.itemCount
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
+                if (newsRecyclerView.canScrollVertically(-1)) {
+                    binding.scrollToTopBtn?.visibility = View.VISIBLE
+                } else {
+                    binding.scrollToTopBtn?.visibility = View.GONE
+                }
+
                 if (isLandscape && dy > 0) {
                     // Landscape mode and scrolling down
                     if (!isScrollingDown) {
@@ -273,6 +279,13 @@ class NewsListFragment : Fragment(), ImageClickListener {
                 return false
             }
         })
+
+
+
+        // scroll to top btn functionality
+        binding.scrollToTopBtn?.setOnClickListener {
+            newsRecyclerView.smoothScrollToPosition(0)
+        }
 
 
         return binding.root
