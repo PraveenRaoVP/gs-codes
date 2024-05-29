@@ -34,7 +34,9 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnboardingScreen() {
+fun OnboardingScreen(
+    event: (OnboardingEvent) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -95,7 +97,7 @@ fun OnboardingScreen() {
                     onClick = {
                         scope.launch {
                             if (pagerState.currentPage == 2) {
-                                // Navigate to the main screen and save a value in datastore preferences
+                                event(OnboardingEvent.SaveAppEntry)
                             } else {
                                 pagerState.animateScrollToPage(
                                     page = pagerState.currentPage + 1
@@ -114,5 +116,5 @@ fun OnboardingScreen() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun OnboardingScreenPreview() {
-    OnboardingScreen()
+    OnboardingScreen(event = {})
 }

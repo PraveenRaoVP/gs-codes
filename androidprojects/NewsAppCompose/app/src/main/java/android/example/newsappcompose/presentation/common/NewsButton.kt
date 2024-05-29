@@ -1,6 +1,5 @@
 package android.example.newsappcompose.presentation.common
 
-import android.R.style
 import android.example.newsappcompose.ui.theme.WhiteGray
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button

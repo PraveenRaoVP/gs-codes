@@ -7,5 +7,6 @@
     <color name="input_background">#3A3B3C</color>
     <color name="placeholder">#DDDDDD</color>
     <color name="shimmer">#414243</color>
-
+    <color name="ic_launcher_background">#000000</color>
+    <color name="ic_launcher_foreground">#FFFFFF</color>
 </resources>
