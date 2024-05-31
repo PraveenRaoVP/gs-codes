@@ -1,5 +1,12 @@
 package android.example.newsappcompose.domain.model
 
+import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+@Entity(tableName = "Article")
 data class Article(
     val author: String,
     val content: String,
@@ -7,9 +14,9 @@ data class Article(
     val publishedAt: String,
     val source: Source,
     val title: String,
-    val url: String,
+    @PrimaryKey val url: String,
     val urlToImage: String
-)
+) : Parcelable
 
 /* what happens when we annotate the class with @Serializable and the fields with @SerializedName?
 * The class will be serialized and the fields will be serialized with the given name.

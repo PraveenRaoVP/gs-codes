@@ -1,6 +1,9 @@
 package android.example.newsappcompose.di
 
 import android.app.Application
+import android.example.newsappcompose.data.local.NewsDao
+import android.example.newsappcompose.data.local.NewsDatabase
+import android.example.newsappcompose.data.local.NewsTypeConverter
 import android.example.newsappcompose.data.manager.LocalUserManagerImpl
 import android.example.newsappcompose.data.remote.NewsApi
 import android.example.newsappcompose.data.repository.NewsRepositoryImpl
@@ -9,9 +12,15 @@ import android.example.newsappcompose.domain.repository.NewsRepository
 import android.example.newsappcompose.domain.usecases.appentry.AppEntryUsecases
 import android.example.newsappcompose.domain.usecases.appentry.ReadAppEntry
 import android.example.newsappcompose.domain.usecases.appentry.SaveAppEntry
+import android.example.newsappcompose.domain.usecases.news.DeleteArticle
 import android.example.newsappcompose.domain.usecases.news.GetNews
 import android.example.newsappcompose.domain.usecases.news.NewsUseCases
+import android.example.newsappcompose.domain.usecases.news.GetArticles
+import android.example.newsappcompose.domain.usecases.news.SearchNews
+import android.example.newsappcompose.domain.usecases.news.SelectArticle
+import android.example.newsappcompose.domain.usecases.news.UpsertArticle
 import android.example.newsappcompose.util.Constants
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,32 +43,39 @@ object AppModule {
         localUserManager: LocalUserManager
     ) = AppEntryUsecases(
         saveAppEntry = SaveAppEntry(localUserManager),
-        readAppEntry = ReadAppEntry(localUserManager )
+        readAppEntry = ReadAppEntry(localUserManager)
     )
 
     @Provides
     @Singleton
     fun provideNewsUseCases(
-        newsRepository: NewsRepository
-    ) : NewsUseCases {
+        newsRepository: NewsRepository,
+    ): NewsUseCases {
         return NewsUseCases(
-            getNews = GetNews(newsRepository = newsRepository)
+            getNews = GetNews(newsRepository = newsRepository),
+            searchNews = SearchNews(newsRepository = newsRepository),
+            upsertNews = UpsertArticle(newsRepository = newsRepository),
+            deleteNews = DeleteArticle(newsRepository = newsRepository),
+            searchArticle = GetArticles(newsRepository = newsRepository),
+            selectArticle = SelectArticle(newsRepository = newsRepository)
         )
     }
 
     @Provides
     @Singleton
     fun provideNewsRepository(
-        newsApi: NewsApi
-    ) : NewsRepository {
+        newsApi: NewsApi,
+        newsDao: NewsDao
+    ): NewsRepository {
         return NewsRepositoryImpl(
-            newsApi = newsApi
+            newsApi = newsApi,
+            newsDao = newsDao
         )
     }
 
     @Provides
     @Singleton
-    fun provideNewsApi() : NewsApi {
+    fun provideNewsApi(): NewsApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -67,7 +83,28 @@ object AppModule {
             .create(NewsApi::class.java)
     }
 
-    /*
+    @Provides
+    @Singleton
+    fun provideNewsDatabase(
+        application: Application
+    ): NewsDatabase {
+        return Room.databaseBuilder(
+            context = application,
+            klass = NewsDatabase::class.java,
+            name = "news_db"
+        ).addTypeConverter(NewsTypeConverter())
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsDao(
+        newsDatabase: NewsDatabase
+    ): NewsDao = newsDatabase.newsDao()
+}
+
+/*
     Notes:-
 - AppModule is a Dagger module that provides dependencies for the app.
 - The @InstallIn annotation tells Dagger to install the module in the SingletonComponent.
@@ -88,4 +125,3 @@ What is the purpose of the AppModule class?
 How does Provides know where to inject ?
 - The @Provides annotation tells Dagger that the method provides a dependency that can be injected into other classes.
      */
-}

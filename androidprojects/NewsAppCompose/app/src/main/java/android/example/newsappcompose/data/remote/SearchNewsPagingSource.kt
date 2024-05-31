@@ -1,14 +1,14 @@
 package android.example.newsappcompose.data.remote
 
 import android.example.newsappcompose.domain.model.Article
-import android.example.newsappcompose.util.Constants
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 
-class NewsPagingSources(
+class SearchNewsPagingSource(
     private val newsApi: NewsApi,
+    private val searchQuery: String,
     private val sources: String
-) : PagingSource<Int, Article>() { // Int is the page number and Article is the data type.
+) : PagingSource<Int, Article>() {
     override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
@@ -21,7 +21,8 @@ class NewsPagingSources(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
         val page = params.key ?: 1
         return try {
-            val newsResponse = newsApi.getNews(
+            val newsResponse = newsApi.searchNews(
+                searchQuery,
                 page,
                 sources
             )

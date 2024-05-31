@@ -64,7 +64,7 @@ fun OnboardingPage(
 fun OnboardingPagePreview() {
     NewsAppComposeTheme {
         OnboardingPage(
-            modifier = Modifier,
+            modifier = Modifier.background(color = MaterialTheme.colorScheme.background),
             page = pagesList[0]
         )
     }

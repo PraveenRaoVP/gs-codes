@@ -116,5 +116,7 @@ fun OnboardingScreen(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun OnboardingScreenPreview() {
-    OnboardingScreen(event = {})
+    OnboardingScreen(
+        event = {}
+    )
 }
