@@ -4,7 +4,6 @@ import android.example.newsappcompose.R
 import android.example.newsappcompose.domain.model.Article
 import android.example.newsappcompose.presentation.Dimens
 import android.example.newsappcompose.presentation.common.ArticlesList
-import android.example.newsappcompose.presentation.navgraph.Route
 import android.example.newsappcompose.ui.theme.NewsAppComposeTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

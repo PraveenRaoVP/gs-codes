@@ -7,13 +7,11 @@ import android.example.newsappcompose.domain.model.Source
 import android.example.newsappcompose.presentation.Dimens
 import android.example.newsappcompose.presentation.common.ArticlesList
 import android.example.newsappcompose.presentation.common.SearchBar
-import android.example.newsappcompose.presentation.navgraph.Route
 import android.example.newsappcompose.ui.theme.NewsAppComposeTheme
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -104,7 +102,7 @@ fun HomeScreen(
                 text = titles,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(Dimens.mediumPadding1)
+                    .padding(start = Dimens.mediumPadding1, end = Dimens.mediumPadding1)
                     .basicMarquee(),
                 fontSize = 13.sp,
                 color = colorResource(id = R.color.placeholder)

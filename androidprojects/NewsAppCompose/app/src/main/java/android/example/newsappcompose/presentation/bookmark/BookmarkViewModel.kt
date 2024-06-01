@@ -2,7 +2,6 @@ package android.example.newsappcompose.presentation.bookmark
 
 import android.example.newsappcompose.domain.usecases.news.NewsUseCases
 import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

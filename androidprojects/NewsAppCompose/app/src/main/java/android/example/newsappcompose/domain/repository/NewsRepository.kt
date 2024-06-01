@@ -1,7 +1,6 @@
 package android.example.newsappcompose.domain.repository
 
 import android.example.newsappcompose.domain.model.Article
-import android.example.newsappcompose.domain.model.Source
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 

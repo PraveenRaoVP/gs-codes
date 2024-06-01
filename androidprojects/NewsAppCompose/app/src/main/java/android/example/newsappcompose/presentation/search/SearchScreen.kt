@@ -5,7 +5,6 @@ import android.example.newsappcompose.domain.model.Article
 import android.example.newsappcompose.presentation.Dimens
 import android.example.newsappcompose.presentation.common.ArticlesList
 import android.example.newsappcompose.presentation.common.SearchBar
-import android.example.newsappcompose.presentation.navgraph.Route
 import android.example.newsappcompose.presentation.search.components.CategoryVerticalGrid
 import android.example.newsappcompose.ui.theme.NewsAppComposeTheme
 import androidx.compose.foundation.layout.Column
@@ -28,6 +27,7 @@ fun SearchScreen(
     navigate: (Article) -> Unit,
     onCategoryClicked: (String) -> Unit
 ) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()

@@ -1,7 +1,6 @@
 package android.example.newsappcompose.data.remote
 
 import android.example.newsappcompose.domain.model.Article
-import android.example.newsappcompose.util.Constants
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 
