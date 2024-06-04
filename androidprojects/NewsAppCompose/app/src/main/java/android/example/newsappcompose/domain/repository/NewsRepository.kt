@@ -33,4 +33,11 @@ Layers of Clean Architecture:-
 Presentation layer is the outermost layer and it contains the UI of the application.
 Domain layer is the middle layer and it contains the business logic of the application.
 Data layer is the innermost layer and it contains the data of the application.
+
+
+why should we use interfaces?
+Interfaces are used to define the contract of a class. It defines
+what the class can do but not how it does it. It is used to define the
+methods that a class should implement. It is used to achieve abstraction
+and polymorphism. It is used to define the behavior of a class.
  */
