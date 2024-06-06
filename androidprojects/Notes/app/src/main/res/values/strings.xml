@@ -1,4 +1,21 @@
 <resources>
     <string name="app_name">Notes</string>
     <string name="google_web_client_id">1033812417720-g368irhlo77aassp1nsmcu7ebk9pq5fk.apps.googleusercontent.com</string>
+    <string name="generic_error">Something wrong happeneed. Please try again.</string>
+    <string name="login_details">Sign In</string>
+    <string name="email_error">Invalid Email. Please Enter a Valid Email.</string>
+    <string name="recovery_email_sent">Recovery email sent to your email address.</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="google_sign_in_failed">Failed to Sign In Using Google. Please Try Again Later!</string>
+    <string name="password_error">Password must contain atleast six characters, one capital letter, one number</string>
+    <string name="password_match_error">Passwords do not match.</string>
+    <string name="empty_password_error">Password cannot be empty.</string>
+    <string name="new_user_text">New user? Sign up</string>
+    <string name="create_account">Create Account</string>
+    <string name="nav_to_sign_in">Already have an account? Sign In</string>
+
 </resources>

@@ -1,6 +1,8 @@
 package android.caged.notes.domain.services
 
+import android.app.Activity
 import android.caged.notes.domain.model.User
+import android.content.Intent
 import kotlinx.coroutines.flow.Flow
 
 interface AccountService {
@@ -12,5 +14,7 @@ interface AccountService {
     suspend fun linkAccount(email: String, password: String)
     suspend fun deleteAccount()
     suspend fun signOut()
-    suspend fun authenticateWithGoogle()
+    suspend fun handleGoogleSignInResult(data: Intent)
+    suspend fun getGoogleSignInIntent(): Intent
+    suspend fun authenticateWithGoogle(activity: Activity)
 }

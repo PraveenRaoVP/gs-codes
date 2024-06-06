@@ -5,8 +5,8 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
-    id("dagger.hilt.android.plugin")
     id("com.ncorti.ktfmt.gradle") version "0.10.0"
+    id("com.google.dagger.hilt.android") version "2.51.1"
     id("androidx.room")
 }
 
@@ -64,10 +64,8 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.compose:compose-bom:2023.10.00")
     implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.material:material")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material:material-icons-extended:1.5.3")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
@@ -79,12 +77,16 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
     implementation("com.google.accompanist:accompanist-permissions:0.30.1")
     implementation("com.google.dagger:hilt-android:2.47")
-    ksp("com.google.dagger:hilt-compiler:2.47")
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    ksp("com.google.dagger:hilt-compiler:2.51.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation(libs.androidx.material3.android)
 
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-perf")
@@ -105,5 +107,8 @@ dependencies {
     androidTestImplementation("com.google.truth:truth:1.1.3")
     kspAndroidTest("com.google.dagger:hilt-compiler:2.47")
     debugImplementation("androidx.compose.ui:ui-tooling")
+
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+
 
 }
