@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">NotesApplication</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="sign_in_with_google">Sign In With Google</string>
+    <string name="sign_in">Sign In</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="new_user">New Here? Sign Up</string>
+    <string name="sign_in_nav">Already a user? Sign In</string>
+    <string name="generic_error">Something wrong occurred. Please Try Again.</string>
+    <string name="email_error">Please insert a valid email.</string>
+    <string name="cancel">Cancel</string>
+    <string name="try_again">Try again</string>
+    <string name="ok">OK</string>
+    <string name="empty_password_error">Password cannot be empty.</string>
+    <string name="recovery_email_sent">A recovery mail has been sent to your email ID. Please Check Your Mail.</string>
+    <string name="invalid_credentials_error">Invalid Credentials. Please Try Again</string>
+
+    <!-- SignUpScreen -->
+    <string name="create_account">Create account</string>
+    <string name="password_error">Your password should be at least six characters long and include one digit, one lowercase letter and one uppercase letter.</string>
+    <string name="password_match_error">Passwords do not match.</string>
+    <string name="sign_up_success">Signed Up Successfully</string>
+    <string name="email_already_used">The email is already in use. Please try again with a different email.</string>
+    <!-- Dialogs -->
+    <string name="sign_out_title">Sign out?</string>
+    <string name="sign_out_description">You will have to sign in again to see your tasks.</string>
+    <string name="delete_account_title">Delete account?</string>
+    <string name="delete_account_description">You will lose all your tasks and your account will be deleted. This action is irreversible.</string>
+
+
+
+    <string name="google_web_client_id">9491078612-q9c0rselmjbshpmsu3pfjsvfrq14nknt.apps.googleusercontent.com</string>
+</resources>

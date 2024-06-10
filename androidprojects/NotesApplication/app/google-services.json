@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "9491078612",
+    "project_id": "notesapplication-fcad7",
+    "storage_bucket": "notesapplication-fcad7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9491078612:android:f505f0c5281fbd42c48a41",
+        "android_client_info": {
+          "package_name": "android.caged.notesapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9491078612-kbnhk456ptug7ugljacqhkjv74trpbi0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "android.caged.notesapplication",
+            "certificate_hash": "052f10171c9ff7b395a221f49016db0774eef91b"
+          }
+        },
+        {
+          "client_id": "9491078612-q9c0rselmjbshpmsu3pfjsvfrq14nknt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnQDdtQA_MIw8UQc-jNuznNkLBHEVJfnE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9491078612-q9c0rselmjbshpmsu3pfjsvfrq14nknt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
