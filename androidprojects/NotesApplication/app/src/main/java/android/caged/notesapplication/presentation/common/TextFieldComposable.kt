@@ -1,14 +1,18 @@
 package android.caged.notesapplication.presentation.common
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import android.caged.notesapplication.R.string as AppText
 import android.caged.notesapplication.R.drawable as AppIcon
 
@@ -37,6 +42,33 @@ fun BasicField(
         onValueChange = { onNewValue(it) },
         placeholder = { Text(stringResource(text)) }
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun BasicFieldPreview() {
+    BasicField(AppText.email, "", {})
+}
+
+@Composable
+fun NoOutlineField(
+    @StringRes text: Int,
+    value: String,
+    onNewValue: (String) -> Unit,
+    modifier : Modifier = Modifier
+) {
+    TextField(
+        value = value,
+        onValueChange = onNewValue,
+        placeholder = { Text(stringResource(text)) },
+        modifier = modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background)
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun NoOutlineFieldPreview() {
+    NoOutlineField(AppText.title, "", {})
 }
 
 @Composable

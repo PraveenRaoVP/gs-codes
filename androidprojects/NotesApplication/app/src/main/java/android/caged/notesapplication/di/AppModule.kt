@@ -5,17 +5,19 @@ import android.caged.notesapplication.data.LocalUserManagerImpl
 import android.caged.notesapplication.data.local.NotesDatabase
 import android.caged.notesapplication.data.services.AccountServiceImpl
 import android.caged.notesapplication.data.services.LogServiceImpl
+import android.caged.notesapplication.data.services.StorageServiceImpl
 import android.caged.notesapplication.domain.manager.LocalUserManager
 import android.caged.notesapplication.domain.services.AccountService
 import android.caged.notesapplication.domain.services.LogService
+import android.caged.notesapplication.domain.services.StorageService
 import android.caged.notesapplication.domain.usecases.AppEntryUseCases
 import android.caged.notesapplication.domain.usecases.ReadAppEntry
 import android.caged.notesapplication.domain.usecases.SaveAppEntry
-import androidx.compose.ui.platform.LocalContext
 import androidx.credentials.CredentialManager
 import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
@@ -67,6 +69,12 @@ object AppModule {
         return CredentialManager.create(context = context)
     }
 
+    @Provides
+    @Singleton
+    fun provideFirestore() : FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
+    }
+
     /***** SERVICE PROVIDERS ******/
 
     @Provides
@@ -89,7 +97,18 @@ object AppModule {
         return LogServiceImpl()
     }
 
+    @Provides
+    @Singleton
+    fun provideStorageService(
+        accountService: AccountService,
+        firestore: FirebaseFirestore
+    ) : StorageService {
+        return StorageServiceImpl(firestore = firestore, accountService = accountService)
+    }
+
+
     /***** ROOM PROVIDERS ******/
+
     @Provides
     @Singleton
     fun provideDatabase(application: Application) : NotesDatabase {

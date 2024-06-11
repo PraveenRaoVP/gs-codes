@@ -29,7 +29,8 @@
     <string name="delete_account_title">Delete account?</string>
     <string name="delete_account_description">You will lose all your tasks and your account will be deleted. This action is irreversible.</string>
 
-
+    <string name="title">Title</string>
+    <string name="content">Write your content....</string>
 
     <string name="google_web_client_id">9491078612-q9c0rselmjbshpmsu3pfjsvfrq14nknt.apps.googleusercontent.com</string>
 </resources>

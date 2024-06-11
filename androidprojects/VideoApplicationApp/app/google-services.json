@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1025519122842",
+    "firebase_url": "https://videocallapp-4c5f6-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "videocallapp-4c5f6",
+    "storage_bucket": "videocallapp-4c5f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025519122842:android:73495c32d63481e24a2223",
+        "android_client_info": {
+          "package_name": "android.caged.videoapplicationapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXPAvVuZmkmS5TdTp1mVbakycgB0fVg0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
