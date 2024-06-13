@@ -2,6 +2,8 @@ package android.caged.videoapplicationapp.di
 
 import android.app.Application
 import android.caged.videoapplicationapp.firebase.FirebaseClient
+import android.caged.videoapplicationapp.repository.MainRepository
+import android.caged.videoapplicationapp.services.MainServiceRepository
 import android.content.Context
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -40,5 +42,17 @@ class AppModule {
     @Singleton
     fun providesFirebaseClient(databaseReference: DatabaseReference, gson : Gson) : FirebaseClient {
         return FirebaseClient(databaseReference, gson)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMainRepository(firebaseClient: FirebaseClient) : MainRepository {
+        return MainRepository(firebaseClient)
+    }
+
+    @Provides
+    @Singleton
+    fun providesMainServiceRepository(context: Context) : MainServiceRepository {
+        return MainServiceRepository(context)
     }
 }
