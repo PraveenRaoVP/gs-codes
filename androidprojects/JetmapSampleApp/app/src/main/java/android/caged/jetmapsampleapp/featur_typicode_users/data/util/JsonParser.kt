@@ -1,4 +1,4 @@
-package com.example.jetmap.featur_typicode_users.data.util
+package android.caged.jetmapsampleapp.featur_typicode_users.data.util
 
 import java.lang.reflect.Type
 

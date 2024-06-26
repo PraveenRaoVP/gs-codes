@@ -1,4 +1,4 @@
-package com.example.jetmap
+package android.caged.jetmapsampleapp
 
 interface MapKey {
     companion object {

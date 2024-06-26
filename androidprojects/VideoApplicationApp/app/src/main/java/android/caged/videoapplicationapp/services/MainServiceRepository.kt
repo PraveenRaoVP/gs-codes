@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import org.webrtc.SurfaceViewRenderer
 import javax.inject.Inject
 
 class MainServiceRepository @Inject constructor(
@@ -32,4 +33,27 @@ class MainServiceRepository @Inject constructor(
         val intent = Intent(context, MainService::class.java)
         context.stopService(intent)
     }
+
+    fun setupViews(isVideoCall: Boolean, isCaller: Boolean, target: String) {
+        MainService.remoteSurfaceView = SurfaceViewRenderer(context)
+        MainService.localSurfaceView = SurfaceViewRenderer(context)
+    }
+
+    fun toggleAudio(isMicrophoneMuted: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    fun toggleVideo(isCameraMuted: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    fun toggleAudioDevice(audioMode: String) {
+        TODO("Not yet implemented")
+    }
+
+    fun toggleScreenShare(screenShared: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+
 }

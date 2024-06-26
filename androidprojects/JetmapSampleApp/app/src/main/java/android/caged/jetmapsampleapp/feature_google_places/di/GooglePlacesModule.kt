@@ -1,9 +1,9 @@
-package com.example.jetmap.feature_google_places.di
+package android.caged.jetmapsampleapp.feature_google_places.di
 
-import com.example.jetmap.feature_google_places.data.remote.GooglePlacesApi
-import com.example.jetmap.feature_google_places.data.repository.GooglePlacesInfoRepositoryImplementation
-import com.example.jetmap.feature_google_places.domain.repository.GooglePlacesInfoRepository
-import com.example.jetmap.feature_google_places.domain.use_case.GetDirectionInfo
+import android.caged.jetmapsampleapp.feature_google_places.data.remote.GooglePlacesApi
+import android.caged.jetmapsampleapp.feature_google_places.data.repository.GooglePlacesInfoRepositoryImplementation
+import android.caged.jetmapsampleapp.feature_google_places.domain.repository.GooglePlacesInfoRepository
+import android.caged.jetmapsampleapp.feature_google_places.domain.use_case.GetDirectionInfo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,19 +18,19 @@ object GooglePlacesModule {
 
     @Provides
     @Singleton
-    fun provideGetDirectionInfo(repository: GooglePlacesInfoRepository): GetDirectionInfo{
+    fun provideGetDirectionInfo(repository: GooglePlacesInfoRepository): GetDirectionInfo {
         return GetDirectionInfo(repository = repository)
     }
 
     @Provides
     @Singleton
-    fun provideDirectionInfoRepository(api: GooglePlacesApi): GooglePlacesInfoRepository{
+    fun provideDirectionInfoRepository(api: GooglePlacesApi): GooglePlacesInfoRepository {
         return GooglePlacesInfoRepositoryImplementation(api = api)
     }
 
     @Provides
     @Singleton
-    fun provideGooglePlacesApi(): GooglePlacesApi{
+    fun provideGooglePlacesApi(): GooglePlacesApi {
         return Retrofit.Builder()
             .baseUrl(GooglePlacesApi.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

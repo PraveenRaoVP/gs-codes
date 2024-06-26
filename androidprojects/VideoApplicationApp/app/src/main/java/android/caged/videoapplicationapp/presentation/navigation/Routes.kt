@@ -5,7 +5,5 @@ sealed class Routes(val route: String) {
     data object HomeRoute : Routes("home/{username}") {
         fun createRoute(username: String) = "home/$username"
     }
-    data object VideoDetailRoute : Routes("videoDetail") {
-//        fun createRoute() =
-    }
+    data object VideoDetailRoute : Routes("videoDetail")
 }

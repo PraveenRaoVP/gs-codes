@@ -1,6 +1,6 @@
-package com.example.jetmap.feature_google_places.data.remote.dto
+package android.caged.jetmapsampleapp.feature_google_places.data.remote.dto
 
-import com.example.jetmap.feature_google_places.domain.model.Routes
+import android.caged.jetmapsampleapp.feature_google_places.domain.model.Routes
 
 data class RoutesDto(
     val summary: String,
@@ -8,7 +8,7 @@ data class RoutesDto(
     val legs: List<LegsDto>
 )
 {
-    fun toRoutes(): Routes{
+    fun toRoutes(): Routes {
         return Routes(
             summary = summary,
             overview_polyline = overview_polyline.toOverviewPolyline(),

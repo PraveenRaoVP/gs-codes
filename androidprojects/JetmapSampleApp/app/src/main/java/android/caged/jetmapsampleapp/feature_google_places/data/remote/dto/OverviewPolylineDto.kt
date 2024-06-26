@@ -1,12 +1,11 @@
-package com.example.jetmap.feature_google_places.data.remote.dto
+package android.caged.jetmapsampleapp.feature_google_places.data.remote.dto
 
-import com.example.jetmap.feature_google_places.domain.model.OverviewPolyline
-import com.google.android.gms.maps.model.LatLng
+import android.caged.jetmapsampleapp.feature_google_places.domain.model.OverviewPolyline
 
 data class OverviewPolylineDto(
     val points: String
 ){
-    fun toOverviewPolyline(): OverviewPolyline{
+    fun toOverviewPolyline(): OverviewPolyline {
         return OverviewPolyline(
             points = points
         )

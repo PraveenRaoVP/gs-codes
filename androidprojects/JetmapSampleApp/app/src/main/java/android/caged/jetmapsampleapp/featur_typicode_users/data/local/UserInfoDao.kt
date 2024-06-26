@@ -1,10 +1,10 @@
-package com.example.jetmap.featur_typicode_users.data.local
+package android.caged.jetmapsampleapp.featur_typicode_users.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.jetmap.featur_typicode_users.data.local.entity.UserInfoEntity
+import android.caged.jetmapsampleapp.featur_typicode_users.data.local.entity.UserInfoEntity
 
 @Dao
 interface UserInfoDao {

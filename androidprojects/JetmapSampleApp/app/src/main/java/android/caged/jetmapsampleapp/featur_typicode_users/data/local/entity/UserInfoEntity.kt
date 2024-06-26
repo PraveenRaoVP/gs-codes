@@ -1,10 +1,8 @@
-package com.example.jetmap.featur_typicode_users.data.local.entity
+package android.caged.jetmapsampleapp.featur_typicode_users.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.jetmap.featur_typicode_users.domain.model.Address
-import com.example.jetmap.featur_typicode_users.domain.model.Company
-import com.example.jetmap.featur_typicode_users.domain.model.UserInfo
+import android.caged.jetmapsampleapp.featur_typicode_users.domain.model.UserInfo
 
 @Entity
 data class UserInfoEntity(
@@ -17,7 +15,7 @@ data class UserInfoEntity(
 //    val address: Address,
 //    val company: Company,
 ){
-    fun toUserInfo(): UserInfo{
+    fun toUserInfo(): UserInfo {
         return UserInfo(
             id = id,
             name = name,

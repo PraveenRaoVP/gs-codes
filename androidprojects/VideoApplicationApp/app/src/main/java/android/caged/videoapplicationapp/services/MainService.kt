@@ -30,6 +30,7 @@ class MainService : Service(), MainRepository.Listener {
     private lateinit var notificationManager: NotificationManager
 
     companion object {
+        var screenPermissionIntent: Intent? = null
         var listener: ServiceListener? = null
         var endCallListener: EndCallListener? = null
         var remoteSurfaceView: SurfaceViewRenderer? = null

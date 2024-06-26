@@ -1,13 +1,13 @@
-package com.example.jetmap.feature_google_places.presentation
+package android.caged.jetmapsampleapp.feature_google_places.presentation
 
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.jetmap.TAG
-import com.example.jetmap.core.util.Resource
-import com.example.jetmap.feature_google_places.domain.use_case.GetDirectionInfo
+import android.caged.jetmapsampleapp.TAG
+import android.caged.jetmapsampleapp.util.Resource
+import android.caged.jetmapsampleapp.feature_google_places.domain.use_case.GetDirectionInfo
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -60,7 +60,11 @@ class GooglePlacesInfoViewModel @Inject constructor(private val getDirectionInfo
                         }
                     }
                     is Resource.Error -> {
-                        _eventFlow.emit(UIEvent.ShowSnackBar(message = res.message ?: "Unknown Error"))
+                        _eventFlow.emit(
+                            UIEvent.ShowSnackBar(
+                                message = res.message ?: "Unknown Error"
+                            )
+                        )
                     }
                     is Resource.Loading -> {
                         _googlePlacesInfoState.value = googlePlacesInfoState.value.copy(

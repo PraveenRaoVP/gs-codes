@@ -1,15 +1,16 @@
-package com.example.jetmap.feature_google_places.data.repository
+package android.caged.jetmapsampleapp.feature_google_places.data.repository
 
-import com.example.jetmap.core.util.Resource
-import com.example.jetmap.feature_google_places.data.remote.GooglePlacesApi
-import com.example.jetmap.feature_google_places.domain.model.GooglePlacesInfo
-import com.example.jetmap.feature_google_places.domain.repository.GooglePlacesInfoRepository
+import android.caged.jetmapsampleapp.util.Resource
+import android.caged.jetmapsampleapp.feature_google_places.data.remote.GooglePlacesApi
+import android.caged.jetmapsampleapp.feature_google_places.domain.model.GooglePlacesInfo
+import android.caged.jetmapsampleapp.feature_google_places.domain.repository.GooglePlacesInfoRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 
-class GooglePlacesInfoRepositoryImplementation(private val api: GooglePlacesApi): GooglePlacesInfoRepository {
+class GooglePlacesInfoRepositoryImplementation(private val api: GooglePlacesApi):
+    GooglePlacesInfoRepository {
     override fun getDirection(
         origin: String,
         destination: String,

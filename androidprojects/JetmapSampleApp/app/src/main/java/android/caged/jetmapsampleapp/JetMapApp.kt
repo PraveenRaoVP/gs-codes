@@ -1,4 +1,4 @@
-package com.example.jetmap
+package android.caged.jetmapsampleapp
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

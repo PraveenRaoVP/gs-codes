@@ -1,6 +1,6 @@
-package com.example.jetmap.feature_google_places.data.remote
+package android.caged.jetmapsampleapp.feature_google_places.data.remote
 
-import com.example.jetmap.feature_google_places.domain.model.GooglePlacesInfo
+import android.caged.jetmapsampleapp.feature_google_places.domain.model.GooglePlacesInfo
 import retrofit2.http.GET
 import retrofit2.http.Query
 

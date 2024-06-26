@@ -1,12 +1,11 @@
-package com.example.jetmap.featur_typicode_users.presentation
+package android.caged.jetmapsampleapp.featur_typicode_users.presentation
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.jetmap.core.util.Resource
-import com.example.jetmap.featur_typicode_users.domain.model.UserInfo
-import com.example.jetmap.featur_typicode_users.domain.use_case.GetUsersInfo
+import android.caged.jetmapsampleapp.util.Resource
+import android.caged.jetmapsampleapp.featur_typicode_users.domain.use_case.GetUsersInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -42,7 +41,11 @@ class UserInfoViewModel @Inject constructor(private val getUsersInfo: GetUsersIn
                             usersInfo = res.data ?: emptyList(),
                             isLoading = false
                         )
-                        _eventFlow.emit(UIEvent.ShowSnackBar(message = res.message?:"Unknown Error"))
+                        _eventFlow.emit(
+                            UIEvent.ShowSnackBar(
+                                message = res.message ?: "Unknown Error"
+                            )
+                        )
                     }
                     is Resource.Loading -> {
                         _userInfoState.value = usersInfoState.value.copy(

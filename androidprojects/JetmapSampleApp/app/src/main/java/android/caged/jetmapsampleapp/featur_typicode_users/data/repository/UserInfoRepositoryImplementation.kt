@@ -1,10 +1,10 @@
-package com.example.jetmap.featur_typicode_users.data.repository
+package android.caged.jetmapsampleapp.featur_typicode_users.data.repository
 
-import com.example.jetmap.core.util.Resource
-import com.example.jetmap.featur_typicode_users.data.local.UserInfoDao
-import com.example.jetmap.featur_typicode_users.data.remote.UserApi
-import com.example.jetmap.featur_typicode_users.domain.model.UserInfo
-import com.example.jetmap.featur_typicode_users.domain.repository.UserInfoRepository
+import android.caged.jetmapsampleapp.util.Resource
+import android.caged.jetmapsampleapp.featur_typicode_users.data.local.UserInfoDao
+import android.caged.jetmapsampleapp.featur_typicode_users.data.remote.UserApi
+import android.caged.jetmapsampleapp.featur_typicode_users.domain.model.UserInfo
+import android.caged.jetmapsampleapp.featur_typicode_users.domain.repository.UserInfoRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

@@ -41,12 +41,14 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.CalculateRandomPointWithinRadiusOfCurrentLocation -> {
                 val destinationLocation = calculateRandomPointWithinCircumference(event.radiusInKms, event.currentLocation)
             }
-            HomeEvent.StartJourney -> TODO()
+            HomeEvent.StartJourney -> {
+                TODO()
+            }
         }
     }
 
     private fun calculateRandomPointWithinCircumference(radiusInKms: Double, currentLocation: Location): Location {
-
+        TODO()
     }
 
 

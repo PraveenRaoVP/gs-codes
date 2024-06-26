@@ -1,7 +1,6 @@
-package com.example.jetmap.featur_typicode_users.data.remote.dto
+package android.caged.jetmapsampleapp.featur_typicode_users.data.remote.dto
 
-import com.example.jetmap.featur_typicode_users.data.local.entity.UserInfoEntity
-import com.example.jetmap.featur_typicode_users.domain.model.UserInfo
+import android.caged.jetmapsampleapp.featur_typicode_users.data.local.entity.UserInfoEntity
 
 data class UserInfoDto(
 //    val address: AddressDto,
@@ -13,7 +12,7 @@ data class UserInfoDto(
     val username: String,
     val website: String
 ){
-    fun toUserInfoEntity(): UserInfoEntity{
+    fun toUserInfoEntity(): UserInfoEntity {
         return UserInfoEntity(
 //            address= address.toAddress(),
 //            company = company.toCompany(),

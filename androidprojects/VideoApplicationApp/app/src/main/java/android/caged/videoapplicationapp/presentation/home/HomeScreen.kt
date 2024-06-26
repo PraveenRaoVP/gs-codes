@@ -3,6 +3,7 @@ package android.caged.videoapplicationapp.presentation.home
 import android.Manifest
 import android.caged.videoapplicationapp.presentation.home.components.ActionBar
 import android.caged.videoapplicationapp.presentation.home.components.UserItem
+import android.caged.videoapplicationapp.presentation.navigation.Routes
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -42,6 +43,7 @@ fun HomeScreen(
     ) { isGranted ->
         if (isGranted) {
             viewModel.notifyTarget(true)
+            onNavigate(Routes.VideoDetailRoute.route+"/true/${viewModel.currentUser}/true", Routes.HomeRoute.route)
         } else {
             // Handle permission denial
 //            Toast.makeText(LocalContext.current, "Camera permission denied", Toast.LENGTH_SHORT).show()
@@ -53,6 +55,7 @@ fun HomeScreen(
     ) { isGranted ->
         if (isGranted) {
             viewModel.notifyTarget(false)
+            onNavigate(Routes.VideoDetailRoute.route+"/false/${viewModel.currentUser}/true", Routes.HomeRoute.route)
         } else {
             // Handle permission denial
 //            Toast.makeText(LocalContext.current, "Audio permission denied", Toast.LENGTH_SHORT).show()
@@ -79,6 +82,7 @@ fun HomeScreen(
                         Row {
                             Button(onClick = {
                                 viewModel.acceptCall(onNavigate)
+                                onNavigate(Routes.VideoDetailRoute.route+"/true/${viewModel.currentUser}/false", Routes.HomeRoute.route)
                             }) {
                                 Text("Accept")
                             }

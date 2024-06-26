@@ -1,6 +1,6 @@
-package com.example.jetmap.featur_typicode_users.data.remote.dto
+package android.caged.jetmapsampleapp.featur_typicode_users.data.remote.dto
 
-import com.example.jetmap.featur_typicode_users.domain.model.Address
+import android.caged.jetmapsampleapp.featur_typicode_users.domain.model.Address
 
 data class AddressDto(
     val city: String,
@@ -9,7 +9,7 @@ data class AddressDto(
     val suite: String,
     val zipcode: String
 ){
-    fun toAddress(): Address{
+    fun toAddress(): Address {
         return Address(
             city = city,
             geo = geo.toGeo(),

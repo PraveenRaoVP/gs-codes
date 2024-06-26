@@ -1,5 +1,6 @@
 package android.caged.notesapplication.presentation.common
 
+import android.caged.notesapplication.ext.isValidEmail
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -78,6 +79,7 @@ fun EmailField(value: String, onNewValue: (String) -> Unit, modifier: Modifier =
         modifier = modifier,
         value = value,
         onValueChange = { onNewValue(it) },
+        isError = !value.isValidEmail(),
         placeholder = { Text(stringResource(AppText.email)) },
         leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
     )
@@ -124,6 +126,7 @@ private fun PasswordField(
                 Icon(painter = icon, contentDescription = "Visibility")
             }
         },
+        isError = value.isBlank(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         visualTransformation = visualTransformation
     )

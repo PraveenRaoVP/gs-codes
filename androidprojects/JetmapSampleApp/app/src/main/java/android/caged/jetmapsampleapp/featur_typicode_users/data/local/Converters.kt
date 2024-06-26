@@ -1,10 +1,10 @@
-package com.example.jetmap.featur_typicode_users.data.local
+package android.caged.jetmapsampleapp.featur_typicode_users.data.local
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.google.gson.reflect.TypeToken
-import com.example.jetmap.featur_typicode_users.domain.model.UserInfo
-import com.example.jetmap.featur_typicode_users.data.util.JsonParser
+import android.caged.jetmapsampleapp.featur_typicode_users.domain.model.UserInfo
+import android.caged.jetmapsampleapp.featur_typicode_users.data.util.JsonParser
 
 
 @ProvidedTypeConverter

@@ -65,11 +65,8 @@ class SignUpViewModel @Inject constructor(
         launchCatching {
             try {
                 Log.i("SignUpViewModel","onSignUpClicked")
-//                accountService.linkAccount(email, password)
                 trace(AccountServiceImpl.LINK_ACCOUNT_TRACE) {
                     auth.createUserWithEmailAndPassword(email, password).await()
-//                    val credential = EmailAuthProvider.getCredential(email, password)
-//                    auth.currentUser!!.linkWithCredential(credential).await()
                 }
                 SnackbarManager.showMessage(AppText.sign_up_success)
                 navigateAndPopup(Routes.SignInRoute.route, Routes.SignUpRoute.route)

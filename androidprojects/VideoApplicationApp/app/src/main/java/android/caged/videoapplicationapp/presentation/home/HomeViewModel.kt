@@ -23,7 +23,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel(), MainService.ServiceListener {
 
     var username: String? = null
-    private var currentUser: Pair<String, String>? = null
+    var currentUser: Pair<String, String>? = null
 
     var uiState = mutableStateOf(HomeUiState())
         private set
@@ -88,7 +88,9 @@ class HomeViewModel @Inject constructor(
     }
 
     fun acceptCall(navigateTo: (String, String) -> Unit) {
-        Log.i("HomeViewModel", "Accepting call from ${currentUser!!.first}") // TODO: currentUser is returning null, fix it
+//        Log.i("HomeViewModel", "Accepting call from ${currentUser!!.first}") // TODO: currentUser is returning null, fix it
+////        val route = Routes.VideoDetailRoute.createRoute()
+//        //
     }
 
     fun rejectCall() {

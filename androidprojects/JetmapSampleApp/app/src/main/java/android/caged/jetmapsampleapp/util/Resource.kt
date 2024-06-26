@@ -1,6 +1,4 @@
-package com.example.jetmap.core.util
-
-import androidx.annotation.StringRes
+package android.caged.jetmapsampleapp.util
 
 typealias SimpleResource = Resource<Unit>
 

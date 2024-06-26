@@ -1,7 +1,7 @@
 [versions]
 accompanistPermissions = "0.30.1"
 activityComposeVersion = "1.8.0"
-agp = "8.4.1"
+agp = "8.5.0"
 coilCompose = "2.6.0"
 credentials = "1.2.2"
 datastorePreferences = "1.1.1"

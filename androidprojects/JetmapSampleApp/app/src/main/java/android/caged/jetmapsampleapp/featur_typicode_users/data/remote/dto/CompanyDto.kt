@@ -1,13 +1,13 @@
-package com.example.jetmap.featur_typicode_users.data.remote.dto
+package android.caged.jetmapsampleapp.featur_typicode_users.data.remote.dto
 
-import com.example.jetmap.featur_typicode_users.domain.model.Company
+import android.caged.jetmapsampleapp.featur_typicode_users.domain.model.Company
 
 data class CompanyDto(
     val bs: String,
     val catchPhrase: String,
     val name: String
 ){
-    fun toCompany(): Company{
+    fun toCompany(): Company {
         return Company(
             bs=bs,
             name = name

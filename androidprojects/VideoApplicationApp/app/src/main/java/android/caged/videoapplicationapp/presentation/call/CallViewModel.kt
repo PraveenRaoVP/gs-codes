@@ -2,6 +2,7 @@ package android.caged.videoapplicationapp.presentation.call
 
 import android.caged.videoapplicationapp.services.MainService
 import android.caged.videoapplicationapp.services.MainServiceRepository
+import android.caged.videoapplicationapp.webrtc.RTCAudioManager
 import android.content.Context
 import android.content.Intent
 import android.media.projection.MediaProjectionManager
@@ -36,7 +37,7 @@ class CallViewModel @Inject constructor(
     }
 
     fun onStart() {
-        // Initialize screen capture launcher
+        // TODO: Initialize screen capture launcher
     }
 
     fun initCall(target: String, isVideoCall: Boolean, isCaller: Boolean) {
@@ -48,7 +49,7 @@ class CallViewModel @Inject constructor(
     }
 
     private fun setupCall() {
-//        serviceRepository.setupViews(isVideoCall.value, isCaller.value, target!!)
+        serviceRepository.setupViews(isVideoCall.value, isCaller.value, target!!)
     }
 
     private fun startCallTimer() {
@@ -64,19 +65,19 @@ class CallViewModel @Inject constructor(
 
     fun toggleMicrophone() {
         isMicrophoneMuted.value = !isMicrophoneMuted.value
-//        serviceRepository.toggleAudio(isMicrophoneMuted.value)
+        serviceRepository.toggleAudio(isMicrophoneMuted.value)
     }
 
     fun toggleCamera() {
         isCameraMuted.value = !isCameraMuted.value
-//        serviceRepository.toggleVideo(isCameraMuted.value)
+        serviceRepository.toggleVideo(isCameraMuted.value)
     }
 
     fun toggleAudioDevice() {
         if (isSpeakerMode.value) {
-//            serviceRepository.toggleAudioDevice(RTCAudioManager.AudioDevice.EARPIECE.name)
+            serviceRepository.toggleAudioDevice(RTCAudioManager.AudioDevice.EARPIECE.name)
         } else {
-//            serviceRepository.toggleAudioDevice(RTCAudioManager.AudioDevice.SPEAKER_PHONE.name)
+            serviceRepository.toggleAudioDevice(RTCAudioManager.AudioDevice.SPEAKER_PHONE.name)
         }
         isSpeakerMode.value = !isSpeakerMode.value
     }
@@ -90,10 +91,10 @@ class CallViewModel @Inject constructor(
     fun toggleScreenShare() {
         if (!isScreenCasting.value) {
             isScreenCasting.value = true
-//            serviceRepository.toggleScreenShare(true)
+            serviceRepository.toggleScreenShare(true)
         } else {
             isScreenCasting.value = false
-//            serviceRepository.toggleScreenShare(false)
+            serviceRepository.toggleScreenShare(false)
         }
     }
 
@@ -103,10 +104,10 @@ class CallViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-//        MainService.remoteSurfaceView?.release()
-//        MainService.remoteSurfaceView = null
-//
-//        MainService.localSurfaceView?.release()
-//        MainService.localSurfaceView = null
+        MainService.remoteSurfaceView?.release()
+        MainService.remoteSurfaceView = null
+
+        MainService.localSurfaceView?.release()
+        MainService.localSurfaceView = null
     }
 }

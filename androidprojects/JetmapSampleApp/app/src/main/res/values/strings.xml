@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">JetmapSampleApp</string>
+    <string name="MAPS_API_KEY">AIzaSyBpDkR1Nxe2NV6OeI9FKQYZfWcOZNAgN5c</string>
+
+</resources>

@@ -1,6 +1,6 @@
-package com.example.jetmap.feature_google_places.data.remote.dto
+package android.caged.jetmapsampleapp.feature_google_places.data.remote.dto
 
-import com.example.jetmap.feature_google_places.domain.model.Legs
+import android.caged.jetmapsampleapp.feature_google_places.domain.model.Legs
 
 data class LegsDto(
     val distance: DistanceDto,

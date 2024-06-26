@@ -58,7 +58,7 @@ fun CallScreen(
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val intent = result.data
-//            MainService.screenPermissionIntent = intent
+            MainService.screenPermissionIntent = intent
             viewModel.toggleScreenShare()
         }
     }
@@ -67,7 +67,7 @@ fun CallScreen(
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             Text(text = "In call with $target", modifier = Modifier.padding(16.dp))
-            Text(text = "callTime.toString()", modifier = Modifier.padding(16.dp))
+            Text(text = callTime.toString(), modifier = Modifier.padding(16.dp))
 
             if (isVideoCall) {
                 RemoteView(modifier = Modifier.weight(1f), remoteSurfaceView, eglContext)
