@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "9146711123",
+    "project_id": "jogfit-8ce56",
+    "storage_bucket": "jogfit-8ce56.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9146711123:android:9286af56b83a7afe5a5aa6",
+        "android_client_info": {
+          "package_name": "android.caged.jogfit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9146711123-6rk301qlthgs138utep2jj8jdr8sgvj9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "android.caged.jogfit",
+            "certificate_hash": "052f10171c9ff7b395a221f49016db0774eef91b"
+          }
+        },
+        {
+          "client_id": "9146711123-8d8dnoambb2iojacskb9q60mdsevhri0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw9aIi44naNkcRlTcMsQJOs_WIuj-xyYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9146711123-8d8dnoambb2iojacskb9q60mdsevhri0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
